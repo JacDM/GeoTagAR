@@ -1,4 +1,4 @@
-# geotagar
+# GeoTagAR
 
 A new Flutter project.
 
