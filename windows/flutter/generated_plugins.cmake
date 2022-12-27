@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  flutter_unity_widget
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

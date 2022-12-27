@@ -26,9 +26,8 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
-    print(flutter.ndkVersion)
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,8 +47,8 @@ android {
         applicationId "com.example.geotagar"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 24
-        targetSdkVersion 28
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -60,25 +59,13 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
-        debug {
-            signingConfig signingConfigs.debug
-        }
-        profile {
-            signingConfig signingConfigs.debug
-        }
-        innerTest {
-            matchingFallbacks = ['debug', 'release']
-        }
-   }
+    }
 }
 
 flutter {
     source '../..'
 }
 
-
 dependencies {
-    implementation project(':unityLibrary')
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
