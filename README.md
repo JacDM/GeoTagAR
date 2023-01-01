@@ -1,6 +1,15 @@
 # GeoTagAR
-
 A new Flutter project.
+##General Details
+unity Version: 2022.2.1f1
+flutter_unity_widget: ^2022.2.0 //https://github.com/juicycleff/flutter-unity-view-widget/tree/master
+NDK Version: r23b //should install automatically when downloading editor in unity hub, if not then lookup 'r23b unity'
+
+if you want to launch the project and build for a specific platrorm:
+1. open the unityAR project in unity version 2022.2.1f1
+2. on the top menu bar select the flutter section and click export <chosen platform> debug
+3. the unityLibrary folder will get deleted and remade then type flutter run in the console to initiiate the build.
+
 
 ## Getting Started
 
