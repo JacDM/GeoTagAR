@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/main.dart';
 import 'package:geotagar/methods/methods.dart';
+import 'package:geotagar/screens/forgot_password.dart';
 import 'package:geotagar/screens/register.dart';
 import 'package:geotagar/screens/homepage.dart';
 
@@ -20,7 +21,7 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/LogIn_bg.png'),
                 fit: BoxFit.cover)),
@@ -48,7 +49,7 @@ class _LogInState extends State<LogIn> {
                         "Password", true, _passwordTextController),
                     SizedBox(height: 15),
                     // Modify this button further
-                    logInSignUpButton(context, "Log In", () {
+                    button(context, "Log In", () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -62,7 +63,7 @@ class _LogInState extends State<LogIn> {
                             context,
                             MaterialPageRoute(
                                 // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
-                                builder: (context) => RegisterPage()));
+                                builder: (context) => ForgotPassword()));
                       },
                       child: const Text(
                         "Forgot Password?",
