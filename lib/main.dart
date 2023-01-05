@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/log_in.dart';
 import 'package:geotagar/screens/unityAR.dart';
 import 'package:geotagar/screens/default.dart';
 
@@ -12,9 +13,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const DefaultMyApp(),
+      home: LogIn(),
     );
   }
 }

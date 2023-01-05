@@ -23,7 +23,6 @@ TextField reusableTextField(
     obscureText: passwordType,
     enableSuggestions: !passwordType,
     autocorrect: !passwordType,
-    //cursorColor: Colors.white,
     style: TextStyle(color: Color.fromARGB(255, 75, 75, 75).withOpacity(0.9)),
     decoration: InputDecoration(
         contentPadding:
@@ -34,7 +33,7 @@ TextField reusableTextField(
         labelStyle:
             // Make this strong
             TextStyle(
-                color: Color.fromARGB(255, 82, 82, 82).withOpacity(0.9),
+                color: Color.fromARGB(255, 126, 126, 126).withOpacity(0.9),
                 fontWeight: FontWeight.bold),
         filled: true,
         floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -49,7 +48,7 @@ TextField reusableTextField(
   );
 }
 
-Container logInSignUpButton(
+Container button(
     BuildContext context, String title, Function onTap, Color color) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.25,
@@ -67,9 +66,6 @@ Container logInSignUpButton(
       ),
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
-            //if (states.contains(MaterialState.pressed)) {
-            //  return Color.fromARGB(255, 125, 173, 194);
-            //}
             return color;
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

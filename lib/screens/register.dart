@@ -21,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/registerBG.png'),
                 fit: BoxFit.cover)),
@@ -62,8 +62,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                   "Password", true, _passwordTextController),
                               SizedBox(height: 25),
                               // Add password validation and extra rows i.e., date of birth etc
-                              logInSignUpButton(context, "Sign Up", () {},
-                                  Color.fromARGB(255, 214, 238, 120)),
+                              button(context, "Sign Up", () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
+                                        builder: (context) => LogIn()));
+                              }, Color.fromARGB(255, 214, 238, 120)),
                               SizedBox(height: 20),
                               // Maybe remove this
                               signInLink(),
