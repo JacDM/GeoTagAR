@@ -7254,6 +7254,11 @@ static  void UnresolvedInstanceCall_479 (void* __this, uint8_t p1, const Runtime
 	void* args[] = {&p1};
 	method->invoker_method(il2cpp_codegen_get_direct_method_pointer(method), method, __this, args, NULL);
 }
+static  void UnresolvedStaticCall_479 (uint8_t p1, const RuntimeMethod* method)
+{
+	void* args[] = {&p1};
+	method->invoker_method(il2cpp_codegen_get_direct_method_pointer(method), method, NULL, args, NULL);
+}
 static  void UnresolvedVirtualCall_480 (RuntimeObject* __this, uint8_t p1, intptr_t p2, const RuntimeMethod* method)
 {
 	void* args[] = {&p1,&p2};
@@ -10552,7 +10557,7 @@ const Il2CppMethodPointer g_UnresolvedStaticMethodPointers[675] =
 	NULL,
 	NULL,
 	NULL,
-	NULL,
+	(const Il2CppMethodPointer)UnresolvedStaticCall_479,
 	(const Il2CppMethodPointer)UnresolvedStaticCall_480,
 	NULL,
 	NULL,

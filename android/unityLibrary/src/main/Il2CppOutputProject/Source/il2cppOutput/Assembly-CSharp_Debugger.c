@@ -15,27 +15,27 @@
 #if IL2CPP_MONO_DEBUGGER
 static const Il2CppMethodExecutionContextInfo g_methodExecutionContextInfos[21] = 
 {
-	{ 17114, 0,  1 },
-	{ 15197, 1,  2 },
-	{ 17175, 2,  2 },
-	{ 9565, 3,  2 },
-	{ 9499, 4,  2 },
-	{ 13467, 5,  3 },
-	{ 17777, 6,  3 },
-	{ 17777, 7,  3 },
-	{ 16184, 8,  3 },
-	{ 13467, 9,  4 },
-	{ 16184, 10,  5 },
-	{ 13467, 9,  7 },
-	{ 15439, 11,  8 },
-	{ 16184, 12,  9 },
+	{ 17125, 0,  1 },
+	{ 15208, 1,  2 },
+	{ 17186, 2,  2 },
+	{ 9568, 3,  2 },
+	{ 9502, 4,  2 },
+	{ 13478, 5,  3 },
+	{ 17788, 6,  3 },
+	{ 17788, 7,  3 },
+	{ 16195, 8,  3 },
+	{ 13478, 9,  4 },
+	{ 16195, 10,  5 },
+	{ 13478, 9,  7 },
+	{ 15450, 11,  8 },
+	{ 16195, 12,  9 },
 	{ 1166, 13,  11 },
-	{ 13670, 14,  12 },
-	{ 13670, 15,  13 },
-	{ 13467, 16,  14 },
-	{ 13670, 15,  14 },
-	{ 14367, 17,  15 },
-	{ 17546, 14,  16 },
+	{ 13681, 14,  12 },
+	{ 13681, 15,  13 },
+	{ 13478, 16,  14 },
+	{ 13681, 15,  14 },
+	{ 14378, 17,  15 },
+	{ 17557, 14,  16 },
 };
 #else
 static const Il2CppMethodExecutionContextInfo g_methodExecutionContextInfos[1] = { { 0, 0, 0 } };
@@ -657,11 +657,11 @@ Il2CppSequencePoint g_sequencePointsAssemblyU2DCSharp[1] = { { 0, 0, 0, 0, 0, 0,
 #endif
 #if IL2CPP_MONO_DEBUGGER
 static const Il2CppCatchPoint g_catchPoints[] = {
-{ 58973, 11972, 83, 0, -1 },
-{ 58974, 11972, 32, 0, -1 },
-{ 58975, 11972, 37, 0, -1 },
-{ 58976, 11972, 37, 0, -1 },
-{ 58977, 11972, 37, 0, -1 },
+{ 58973, 11983, 83, 0, -1 },
+{ 58974, 11983, 32, 0, -1 },
+{ 58975, 11983, 37, 0, -1 },
+{ 58976, 11983, 37, 0, -1 },
+{ 58977, 11983, 37, 0, -1 },
 };
 #else
 static const Il2CppCatchPoint g_catchPoints[1] = { { 0, 0, 0, 0, } };
@@ -669,15 +669,15 @@ static const Il2CppCatchPoint g_catchPoints[1] = { { 0, 0, 0, 0, } };
 #if IL2CPP_MONO_DEBUGGER
 static const Il2CppSequencePointSourceFile g_sequencePointSourceFiles[] = {
 { "", { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\ExampleAssets\\Scripts\\AnchorCreator.cs", { 214, 172, 61, 103, 253, 35, 115, 36, 112, 33, 179, 196, 160, 52, 33, 161} },
-{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\ExampleAssets\\Scripts\\ARFeatheredPlaneMeshVisualizer.cs", { 117, 189, 172, 170, 49, 199, 116, 182, 76, 67, 127, 210, 116, 43, 164, 152} },
-{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\Demo\\GameManager.cs", { 145, 39, 73, 71, 34, 65, 139, 54, 217, 56, 12, 121, 170, 113, 159, 116} },
-{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\Demo\\Rotate.cs", { 147, 48, 225, 57, 9, 180, 197, 150, 161, 66, 247, 248, 71, 8, 24, 33} },
-{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\Demo\\SceneLoader.cs", { 167, 59, 184, 78, 179, 210, 229, 254, 34, 90, 44, 93, 67, 171, 197, 104} },
+{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\ExampleAssets\\Scripts\\AnchorCreator.cs", { 251, 249, 67, 219, 85, 92, 132, 141, 166, 122, 98, 204, 55, 221, 95, 157} },
+{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\ExampleAssets\\Scripts\\ARFeatheredPlaneMeshVisualizer.cs", { 19, 17, 205, 109, 10, 68, 124, 87, 1, 56, 38, 148, 206, 102, 118, 0} },
+{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\Demo\\GameManager.cs", { 67, 29, 200, 77, 44, 163, 5, 185, 193, 72, 163, 47, 236, 18, 90, 213} },
+{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\Demo\\Rotate.cs", { 230, 74, 157, 60, 224, 78, 219, 236, 28, 1, 152, 253, 207, 134, 5, 230} },
+{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\Demo\\SceneLoader.cs", { 145, 34, 243, 44, 186, 21, 150, 0, 118, 16, 111, 33, 89, 37, 136, 94} },
 { "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Unity.SourceGenerators\\Unity.MonoScriptGenerator.MonoScriptInfoGenerator\\AssemblyMonoScriptTypes.gen.cs", { 57, 16, 31, 80, 17, 107, 213, 157, 141, 134, 24, 71, 143, 173, 199, 119} },
-{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\NativeAPI.cs", { 208, 173, 158, 8, 252, 97, 99, 5, 225, 12, 39, 165, 168, 50, 231, 197} },
-{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\SingletonMonoBehaviour.cs", { 254, 153, 156, 7, 125, 80, 54, 232, 43, 224, 131, 171, 6, 216, 148, 232} },
-{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\UnityMessageManager.cs", { 14, 154, 138, 160, 236, 233, 194, 210, 188, 196, 124, 245, 176, 103, 184, 123} },
+{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\NativeAPI.cs", { 132, 244, 12, 28, 111, 202, 87, 188, 18, 151, 58, 193, 86, 179, 196, 51} },
+{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\SingletonMonoBehaviour.cs", { 6, 54, 29, 99, 60, 193, 151, 119, 58, 108, 148, 253, 7, 156, 13, 66} },
+{ "C:\\Users\\jackd\\Workspace\\F29PD\\geotagar\\unity\\ARProject\\Assets\\FlutterUnityIntegration\\UnityMessageManager.cs", { 215, 160, 9, 171, 232, 219, 214, 181, 46, 20, 231, 125, 182, 72, 73, 178} },
 };
 #else
 static const Il2CppSequencePointSourceFile g_sequencePointSourceFiles[1] = { NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
