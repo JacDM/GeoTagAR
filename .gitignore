@@ -35,11 +35,6 @@ build/
 
 android/unityLibrary
 
-#example/
-example/unity/DemoApp/Builds/
-example/unity/DemoApp/Library/
-example/unity/DemoApp/Logs/
-example/unity/DemoApp/Temp/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -83,7 +78,6 @@ example/unity/DemoApp/Temp/
 !**/ios/**/default.perspectivev3
 !/unitypackages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
-example/unity/DemoApp/test
-example/ios/UnityLibrary
-example/android/unityLibrary
-example/web/unityLibrary
+ios/UnityLibrary
+android/unityLibrary
+web/unityLibrary
