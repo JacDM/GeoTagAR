@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/userAccountScreens/edit_profile.dart';
+import 'package:geotagar/screens/userAccountScreens/account_settings.dart';
+import 'package:geotagar/screens/userAccountScreens/privacy_and_security.dart';
+import 'package:geotagar/screens/userAccountScreens/report.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -79,7 +83,14 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 //Edit Profile
                 TextButton(
-                  onPressed: null,
+                  onPressed:(){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context){
+                        return const EditProfile() ;
+                      })
+                    );
+                  } ,
                   child: Text('Edit User Profile',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -96,7 +107,14 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 //Account Settings
                 TextButton(
-                  onPressed: null,
+                  onPressed:(){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const AccountSettings() ;
+                        })
+                    );
+                  } ,
                   child: Text('Account Settings',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -113,7 +131,14 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 //Privacy and Security
                 TextButton(
-                  onPressed: null,
+                  onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const PrivacyAndSecurity() ;
+                        })
+                    );
+                  } ,
                   child: Text('Privacy and Security',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -130,7 +155,14 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 //Report a Problem
                 TextButton(
-                  onPressed: null,
+                  onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const Report() ;
+                        })
+                    );
+                  } ,
                   child: Text('Report a Problem',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,

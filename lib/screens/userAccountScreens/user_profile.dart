@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/userAccountScreens/user_settings.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -58,7 +59,14 @@ class _UserProfileState extends State<UserProfile> {
                           backgroundColor: Colors.black,
                           radius: 22.0,
                           child: FloatingActionButton(
-                            onPressed: _incrementCounter,
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context){
+                                  return const SettingsPage() ;
+                                })
+                              );
+                            },
                             tooltip: 'Settings',
                             child: const Icon(
                               Icons.settings,
