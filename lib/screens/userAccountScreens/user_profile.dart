@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/user_settings.dart';
+import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -9,15 +10,9 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  int _counter = 0;
   bool pressedMemoriesTab = true;
   bool pressedTagsTab = false;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +20,6 @@ class _UserProfileState extends State<UserProfile> {
       //appbar
       appBar: AppBar(
         title: const Center(child: Text('USER PROFILE PAGE')),
-        backgroundColor: Colors.blueGrey[800],
-          shadowColor: Colors.teal[900],
       ),
 
       backgroundColor: Colors.blueGrey[200],
@@ -81,13 +74,20 @@ class _UserProfileState extends State<UserProfile> {
                   ),
 
                   //profile picture
-                  const Positioned(
-                    bottom: -55.0,
-                    left: 145.0,
-                    child: CircleAvatar(
-                      radius: 60.0,
-                      backgroundImage: NetworkImage(
-                          'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
+                  const Positioned.fill(
+                    //bottom: -55.0,
+                    //left: 145.0,
+                    child: Align(
+                      alignment: Alignment(0,2.75),
+                      child: CircleAvatar(
+                        radius: 75.0,
+                        backgroundColor: Colors.white38,
+                        child: CircleAvatar(
+                          radius: 70.0,
+                          backgroundImage: NetworkImage(
+                              'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -285,19 +285,27 @@ class _UserProfileState extends State<UserProfile> {
                     mainAxisSpacing: 10.0,
                   ),
                   children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      //: Colors.teal[100],
-                      decoration:  BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 3,
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context){
+                            return const Post() ;
+                          })
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        //: Colors.teal[100],
+                        decoration:  BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 3,
+                          ),
+                          image: const DecorationImage(
+                              image: NetworkImage('https://www.numerama.com/wp-content/uploads/2022/08/image5-min.jpg'),
+                              fit: BoxFit.cover,
+                          ),
+
                         ),
-                        image: const DecorationImage(
-                            image: NetworkImage('https://www.numerama.com/wp-content/uploads/2022/08/image5-min.jpg'),
-                            fit: BoxFit.cover,
-                        ),
-                        
                       ),
                     ),
 
@@ -401,13 +409,7 @@ class _UserProfileState extends State<UserProfile> {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
+
     );
   }
 
