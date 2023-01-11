@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "310321124196",
+    "project_id": "geotagar-d2d9d",
+    "storage_bucket": "geotagar-d2d9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310321124196:android:6220eccc09989090e52071",
+        "android_client_info": {
+          "package_name": "com.example.geotagar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310321124196-j2oulcld3b2f4dfunv2gb2clb1j0c6va.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW-UyIFH9fRUjbVSZz2Mg6qRsd8-q64E8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310321124196-j2oulcld3b2f4dfunv2gb2clb1j0c6va.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "310321124196-c8onnlv0d2qs1je97senjpjko08ievq0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.geotagar"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
