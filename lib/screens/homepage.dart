@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geotagar/screens/log_in.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,8 +32,17 @@ class _HomePageState extends State<HomePage> {
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             body: Center(
-              child: body[_currentIndex],
-            ),
+
+                //child: body[_currentIndex],
+                child: ElevatedButton(
+                    child: Text("Sign out"),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut().then((value) {
+                        print("User has signed out");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => const LogIn()));
+                      });
+                    })),
             bottomNavigationBar: SizedBox(
                 height: 83,
                 child: BottomNavigationBar(
@@ -45,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
                       label: 'Home',
-                      backgroundColor: Colors.deepOrange,                
+                      backgroundColor: Colors.deepOrange,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.location_on),

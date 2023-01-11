@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/methods/methods.dart';
 import 'package:geotagar/screens/homepage.dart';
@@ -61,12 +62,28 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               reusableTextField("example@email.com", false,
                                   _emailTextController),
                               const SizedBox(height: 15),
-                              button(context, "Reset password", () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) => const LogIn())));
-                              }, const Color.fromARGB(255, 164, 228, 255)),
+                              forgotPasswordButton(),
+                              // button(context, "Reset password", () {
+                              //   Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //           builder: ((context) => const LogIn())));
+                              // }, const Color.fromARGB(255, 164, 228, 255)),
                             ]))))));
+  }
+
+  Row forgotPasswordButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Add extra page and form validation too
+        button(context, "Reset password", () {
+          FirebaseAuth.instance
+              .sendPasswordResetEmail(email: _emailTextController.text);
+          Navigator.push(context,
+              MaterialPageRoute(builder: ((context) => const LogIn())));
+        }, const Color.fromARGB(255, 164, 228, 255)),
+      ],
+    );
   }
 }

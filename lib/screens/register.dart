@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -53,21 +54,34 @@ class _RegisterPageState extends State<RegisterPage> {
                                   height: MediaQuery.of(context).size.height *
                                       0.08),
                               reusableTextField(
-                                  "Email", false, _emailTextController),
+                                  "Username", false, _usernameTextController),
                               SizedBox(height: 20),
                               reusableTextField(
-                                  "Username", false, _emailTextController),
+                                  "E-mail", false, _emailTextController),
                               SizedBox(height: 20),
                               reusableTextField(
                                   "Password", true, _passwordTextController),
                               SizedBox(height: 25),
                               // Add password validation and extra rows i.e., date of birth etc
                               button(context, "Sign Up", () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
-                                        builder: (context) => LogIn()));
+                                // Requires validation
+                                FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(
+                                        email: _emailTextController.text,
+                                        password: _passwordTextController.text)
+                                    .then((value) => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
+                                            builder: (context) =>
+                                                LogIn())).onError(
+                                        (error, stackTrace) =>
+                                            print("#${error.toString()}")));
+                                //Navigator.push(
+                                //context,
+                                //MaterialPageRoute(
+                                // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
+                                //builder: (context) => LogIn()));
                               }, Color.fromARGB(255, 214, 238, 120)),
                               SizedBox(height: 20),
                               // Maybe remove this

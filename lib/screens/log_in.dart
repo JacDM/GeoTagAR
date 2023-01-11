@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/main.dart';
 import 'package:geotagar/methods/methods.dart';
@@ -42,18 +43,21 @@ class _LogInState extends State<LogIn> {
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.125),
                     //modify font weight
-                    reusableTextField(
-                        "Email or Username", false, _emailTextController),
+                    reusableTextField("Email", false, _emailTextController),
                     SizedBox(height: 20),
                     reusableTextField(
                         "Password", true, _passwordTextController),
                     SizedBox(height: 15),
                     // Modify this button further
                     button(context, "Log In", () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => HomePage())));
+                      FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                              email: _emailTextController.text,
+                              password: _passwordTextController.text)
+                          .then((value) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => HomePage()))));
                     }, Color.fromARGB(255, 164, 228, 255)),
                     SizedBox(height: 2),
                     // Further modify this to be a function (maybe)
