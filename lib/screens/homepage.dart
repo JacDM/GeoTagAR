@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/feed.dart';
+import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,8 +31,18 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
-            body: Center(
-              child: body[_currentIndex],
+            //body: Center(
+            //  child: body[_currentIndex],
+            //),
+            body: IndexedStack(
+              index: _currentIndex,
+              children: [
+                HomeFeed(),
+                Container(),
+                Container(),
+                Container(),
+                UserProfile(),
+              ],
             ),
             bottomNavigationBar: SizedBox(
                 height: 83,
@@ -45,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
                       label: 'Home',
-                      backgroundColor: Colors.deepOrange,                
+                      backgroundColor: Colors.deepOrange,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.location_on),
@@ -64,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.person),
                       label: 'Profile',
-                      //backgroundColor: Colors.red,
+                      //backgroundColor: Color.fromARGB(255, 114, 167, 0)
                     ),
                   ],
                 ))));
