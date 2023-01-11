@@ -19,6 +19,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
+
+      //Theme set for User Account Screens
+      theme: ThemeData(
+        accentColor: Colors.black,
+        scaffoldBackgroundColor: Colors.blueGrey[100],
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blueGrey[800],
+          shadowColor: Colors.teal[900],
+          toolbarHeight: 50.0,
+        ),
+      ),
+
+
       //home: UnityAR(),
       home: UnityAR(),
     );

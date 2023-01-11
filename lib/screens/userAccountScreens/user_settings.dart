@@ -22,11 +22,9 @@ class _SettingsPageState extends State<SettingsPage> {
       //appbar
       appBar: AppBar(
         title: const Center(child: Text('SETTINGS')),
-        backgroundColor: Colors.blueGrey[800],
-          shadowColor: Colors.teal[900],
       ),
 
-      backgroundColor: Colors.blueGrey[200],
+      //backgroundColor: Colors.blueGrey[100],
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -35,28 +33,29 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(
               children: <Widget>[
                 //Profile pic and username row
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const <Widget>[
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: NetworkImage(
-                          'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
-                    ),
-                    Text(
-                      '@DATTEBAYOOO',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: 'FiraCode',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                  const CircleAvatar(
+                  radius: 75.0,
+                  backgroundColor: Colors.white38,
+                  child: CircleAvatar(
+                    radius: 70.0,
+                    backgroundImage: NetworkImage(
+                        'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
+                  ),
                 ),
 
-                const SizedBox(
-                  height: 10.0,
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    '@DATTEBAYOOO',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontFamily: 'FiraCode',
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
+
+
                 const SizedBox(
                   child: Divider(
                     color: Colors.black,
@@ -72,8 +71,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 //Version 1.0
                 const Text('Version 1.0',
                   style: TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.black38,
+                    fontSize: 33.0,
+                    color: Colors.blueGrey,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
 
@@ -179,9 +179,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 //Dark Mode
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Dark Mode',
+                    Text('Dark Mode   ',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25.0,
@@ -189,18 +189,14 @@ class _SettingsPageState extends State<SettingsPage> {
                         color: Colors.teal[900],
                       ),
                     ),
+                    
 
-                    const CircleAvatar(
-                      backgroundColor: Colors.black,
-                      radius: 22.0,
-                      child: FloatingActionButton(
-                        onPressed: null,
-                        tooltip: 'Settings',
-                        child: Icon(
-                          Icons.dark_mode_outlined,
-                          size: 35.0,
-                          color: Colors.white,
-                        ),
+                    GestureDetector(
+                      onTap: null,
+                      child: Icon(
+                        Icons.toggle_off,
+                        size: 70.0,
+                        color: Colors.blueGrey[900],
                       ),
                     ),
                     
