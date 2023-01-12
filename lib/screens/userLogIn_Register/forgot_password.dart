@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/methods/methods.dart';
 import 'package:geotagar/screens/homepage.dart';
-import 'package:geotagar/screens/log_in.dart';
+import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -79,7 +79,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         // Add extra page and form validation too
         button(context, "Reset password", () {
           FirebaseAuth.instance
-              .sendPasswordResetEmail(email: _emailTextController.text);
+              .sendPasswordResetEmail(email: _emailTextController.text.trim());
           Navigator.push(context,
               MaterialPageRoute(builder: ((context) => const LogIn())));
         }, const Color.fromARGB(255, 164, 228, 255)),

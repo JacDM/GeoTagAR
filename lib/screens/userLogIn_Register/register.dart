@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:geotagar/methods/methods.dart';
-import 'package:geotagar/screens/log_in.dart';
+import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -15,9 +15,43 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _usernameTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _usernameTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _confirmPasswordTextController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _usernameTextController.dispose();
+    _passwordTextController.dispose();
+    _confirmPasswordTextController.dispose();
+  }
+
+  Future register() async {
+    if (passwordMatch()) {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _emailTextController.text.trim(),
+              password: _passwordTextController.text.trim())
+          .then((value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
+                  builder: (context) => LogIn())).onError(
+              (error, stackTrace) => print("#${error.toString()}")));
+    }
+  }
+
+  bool passwordMatch() {
+    if (_passwordTextController.text.trim() ==
+        _confirmPasswordTextController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,22 +95,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               SizedBox(height: 20),
                               reusableTextField(
                                   "Password", true, _passwordTextController),
-                              SizedBox(height: 25),
+                              SizedBox(height: 20),
                               // Add password validation and extra rows i.e., date of birth etc
+                              reusableTextField("Confirm Password", true,
+                                  _confirmPasswordTextController),
+                              SizedBox(height: 20),
                               button(context, "Sign Up", () {
                                 // Requires validation
-                                FirebaseAuth.instance
-                                    .createUserWithEmailAndPassword(
-                                        email: _emailTextController.text,
-                                        password: _passwordTextController.text)
-                                    .then((value) => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
-                                            builder: (context) =>
-                                                LogIn())).onError(
-                                        (error, stackTrace) =>
-                                            print("#${error.toString()}")));
+                                register();
                                 //Navigator.push(
                                 //context,
                                 //MaterialPageRoute(

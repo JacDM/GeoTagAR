@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:geotagar/screens/log_in.dart';
+import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

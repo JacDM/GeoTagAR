@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/main.dart';
 import 'package:geotagar/methods/methods.dart';
-import 'package:geotagar/screens/forgot_password.dart';
-import 'package:geotagar/screens/register.dart';
+import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
+import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
 
 class LogIn extends StatefulWidget {
@@ -16,8 +16,14 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +58,8 @@ class _LogInState extends State<LogIn> {
                     button(context, "Log In", () {
                       FirebaseAuth.instance
                           .signInWithEmailAndPassword(
-                              email: _emailTextController.text,
-                              password: _passwordTextController.text)
+                              email: _emailTextController.text.trim(),
+                              password: _passwordTextController.text.trim())
                           .then((value) => Navigator.push(
                               context,
                               MaterialPageRoute(
