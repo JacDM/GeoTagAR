@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geotagar/screens/userAccountScreens/bottom_screen_popup.dart';
 
 const _username = '@DATTEBAYOOO';
 const _location = 'Hidden Leaf Village';
@@ -86,7 +87,7 @@ class _PostState extends State<Post> {
                               onTap: () {
                                 //Display screen with :
                                 // Edit, Save, Link, Delete
-                                null;
+                                bottomSheetPopup(context);
                               },
 
                               child: const Icon(Icons.more_horiz, size: 37.0, color: Colors.black,)
@@ -200,6 +201,5 @@ class _PostState extends State<Post> {
 
     );
   }
-
 
 }
