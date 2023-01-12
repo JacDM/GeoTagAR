@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:geotagar/firebase_options.dart';
-import 'package:geotagar/screens/log_in.dart';
+import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/unityAR.dart';
