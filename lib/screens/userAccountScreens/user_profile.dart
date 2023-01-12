@@ -71,12 +71,12 @@ class _UserProfileState extends State<UserProfile> {
                   //Profile Picture
                   Positioned(
                     bottom: -55.0,
-                    right: MediaQuery.of(context).size.width * 0.37,
+                    right: MediaQuery.of(context).size.width * 0.35,
                     child: CircleAvatar(
-                      radius: MediaQuery.of(context).size.width * 0.13,
+                      radius: MediaQuery.of(context).size.width * 0.15,
                       backgroundColor: Colors.white38,
                       child: CircleAvatar(
-                        radius: MediaQuery.of(context).size.width * 0.12,
+                        radius: MediaQuery.of(context).size.width * 0.14,
                         backgroundImage: NetworkImage(
                             'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
                       ),
