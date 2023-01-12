@@ -33,17 +33,6 @@ android/.idea/
 .pub/
 build/
 
-android/unityLibrary
-
-<<<<<<< HEAD
-#example/
-unity/ARProject/Builds/
-unity/ARProject/Library/
-unity/ARProject/Logs/
-unity/ARProject/Temp/
-=======
->>>>>>> b341965550e62f3039b91192b7d874b941637015
-
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -87,9 +76,5 @@ unity/ARProject/Temp/
 !/unitypackages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 ios/UnityLibrary
-android/unityLibrary
-<<<<<<< HEAD
+#android/unityLibrary
 web/unityLibrary
-=======
-web/unityLibrary
->>>>>>> b341965550e62f3039b91192b7d874b941637015

@@ -35,12 +35,8 @@ class MyApp extends StatelessWidget {
       ),
 
 
-      home: const UserProfile(),
+      home: const UnityAR(),
       //home: UnityAR(),
-<<<<<<< HEAD
-      home: GlobePage(),
-=======
->>>>>>> b341965550e62f3039b91192b7d874b941637015
     );
   }
 }
