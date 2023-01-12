@@ -73,7 +73,7 @@ void bottomSheetPopup(context){
                       ),
                     ),
 
-                    Divider(color: Colors.grey[900], height: 1.0, thickness: 1.0, endIndent: 20.0, indent: 20.0,),
+                    Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                     //Add to scrapbook
                     const Expanded(
@@ -83,7 +83,7 @@ void bottomSheetPopup(context){
                       ),
                     ),
 
-                    Divider(color: Colors.grey[900], height: 1.0, thickness: 1.0, endIndent: 20.0, indent: 20.0,),
+                    Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                     //Archive
                     const Expanded(
@@ -93,7 +93,7 @@ void bottomSheetPopup(context){
                       ),
                     ),
 
-                    Divider(color: Colors.grey[900], height: 1.0, thickness: 1.0, endIndent: 20.0, indent: 20.0,),
+                    Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                     //Delete
                     Expanded(

@@ -8,8 +8,8 @@ class ReusableContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Container(
-      margin: const EdgeInsets.all(5.0),
-      padding: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.all(10.0),
+      //padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: colour,
         borderRadius: BorderRadius.circular(10.0),
