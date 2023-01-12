@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/log_in.dart';
 import 'package:geotagar/screens/unityAR.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: UnityAR(),
-      home: UserProfile(),
+      home: GlobePage(),
     );
   }
 }
