@@ -18,10 +18,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+
+    //removed 'const' keyword from return const MaterialApp
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+
+      //Theme set for User Account Screens
+      theme: ThemeData(
+        accentColor: Colors.black,
+        scaffoldBackgroundColor: Colors.blueGrey[100],
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blueGrey[800],
+          shadowColor: Colors.teal[900],
+          toolbarHeight: 50.0,
+        ),
+      ),
+
+
+      home: const UserProfile(),
       //home: UnityAR(),
+<<<<<<< HEAD
       home: GlobePage(),
+=======
+>>>>>>> b341965550e62f3039b91192b7d874b941637015
     );
   }
 }

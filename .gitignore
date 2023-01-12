@@ -35,11 +35,14 @@ build/
 
 android/unityLibrary
 
+<<<<<<< HEAD
 #example/
 unity/ARProject/Builds/
 unity/ARProject/Library/
 unity/ARProject/Logs/
 unity/ARProject/Temp/
+=======
+>>>>>>> b341965550e62f3039b91192b7d874b941637015
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -85,4 +88,8 @@ unity/ARProject/Temp/
 
 ios/UnityLibrary
 android/unityLibrary
+<<<<<<< HEAD
 web/unityLibrary
+=======
+web/unityLibrary
+>>>>>>> b341965550e62f3039b91192b7d874b941637015
