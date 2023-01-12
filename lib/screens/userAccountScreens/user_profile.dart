@@ -32,66 +32,57 @@ class _UserProfileState extends State<UserProfile> {
               //header - profile pic, background pic and settings button
               Stack(
                 clipBehavior: Clip.none,
-                children: [
-                  //background pic and settings
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children:  [
+                //alignment: Alignment.center,
+                children:  [
 
-                      //background pic
-                      const Image(
-                        image: NetworkImage(
-                            'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
-                      ),
-
-                      //settings
-                      Positioned(
-                        top: 10.0,
-                        right: 10.0,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black,
-                          radius: 22.0,
-                          child: FloatingActionButton(
-                            onPressed: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context){
-                                  return const SettingsPage() ;
-                                })
-                              );
-                            },
-                            tooltip: 'Settings',
-                            child: const Icon(
-                              Icons.settings,
-                              size: 35.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-
-                      ),
-                    ],
+                  //Background Picture
+                  const Image(
+                    image: NetworkImage(
+                        'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
                   ),
 
-                  //profile picture
-                  const Positioned.fill(
-                    //bottom: -55.0,
-                    //left: 145.0,
-                    child: Align(
-                      alignment: Alignment(0,2.75),
-                      child: CircleAvatar(
-                        radius: 75.0,
-                        backgroundColor: Colors.white38,
-                        child: CircleAvatar(
-                          radius: 70.0,
-                          backgroundImage: NetworkImage(
-                              'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
+                  //Settings
+                  Positioned(
+                    top: 10.0,
+                    right: 10.0,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.black,
+                      radius: 22.0,
+                      child: FloatingActionButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context){
+                              return const SettingsPage() ;
+                            })
+                          );
+                        },
+                        tooltip: 'Settings',
+                        child: const Icon(
+                          Icons.settings,
+                          size: 35.0,
+                          color: Colors.white,
                         ),
+                      ),
+                    ),
+
+                  ),
+
+                  //Profile Picture
+                  const Positioned(
+                    bottom: -55.0,
+                    left: 126.0,
+                    child: CircleAvatar(
+                      radius: 75.0,
+                      backgroundColor: Colors.white38,
+                      child: CircleAvatar(
+                        radius: 70.0,
+                        backgroundImage: NetworkImage(
+                            'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
                       ),
                     ),
                   ),
                 ],
-
               ),
 
               //Spacing
@@ -415,3 +406,5 @@ class _UserProfileState extends State<UserProfile> {
 
 
 }
+
+
