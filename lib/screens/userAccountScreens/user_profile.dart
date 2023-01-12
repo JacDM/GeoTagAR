@@ -32,7 +32,7 @@ class _UserProfileState extends State<UserProfile> {
               //header - profile pic, background pic and settings button
               Stack(
                 clipBehavior: Clip.none,
-                //alignment: Alignment.center,
+
                 children:  [
 
                   //Background Picture
@@ -69,14 +69,14 @@ class _UserProfileState extends State<UserProfile> {
                   ),
 
                   //Profile Picture
-                  const Positioned(
+                  Positioned(
                     bottom: -55.0,
-                    left: 126.0,
+                    right: MediaQuery.of(context).size.width * 0.37,
                     child: CircleAvatar(
-                      radius: 75.0,
+                      radius: MediaQuery.of(context).size.width * 0.13,
                       backgroundColor: Colors.white38,
                       child: CircleAvatar(
-                        radius: 70.0,
+                        radius: MediaQuery.of(context).size.width * 0.12,
                         backgroundImage: NetworkImage(
                             'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
                       ),
@@ -97,6 +97,7 @@ class _UserProfileState extends State<UserProfile> {
                   fontSize: 30.0,
                   fontFamily: 'Lobster',
                 ),
+                textAlign: TextAlign.center,
               ),
 
               //Username
@@ -107,6 +108,7 @@ class _UserProfileState extends State<UserProfile> {
                   fontFamily: 'FiraCode',
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
 
               //Bio/description (List)
@@ -118,6 +120,7 @@ class _UserProfileState extends State<UserProfile> {
                     style: TextStyle(
                       fontSize: 20.0,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
