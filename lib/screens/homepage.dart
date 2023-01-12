@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/feed.dart';
+import 'package:geotagar/screens/create_memory.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
+import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,9 +38,9 @@ class _HomePageState extends State<HomePage> {
             body: IndexedStack(
               index: _currentIndex,
               children: [
-                HomeFeed(),
+                Post(),
                 Container(),
-                Container(),
+                CreateMemory(),
                 Container(),
                 UserProfile(),
               ],
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                     BottomNavigationBarItem(
                         icon: Icon(Icons.circle_outlined, size: 50),
                         label: '',
-                        backgroundColor: Colors.greenAccent),
+                        backgroundColor: Color.fromARGB(255, 58, 197, 65)),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.groups),
                       label: 'Discover',
