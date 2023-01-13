@@ -8,6 +8,8 @@ import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
 import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
 
+import '../../methods/text_Field.dart';
+
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
 
@@ -23,6 +25,16 @@ class _LogInState extends State<LogIn> {
   void dispose() {
     _emailTextController.dispose();
     _passwordTextController.dispose();
+    super.dispose();
+  }
+
+  Future logIn() async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: _emailTextController.text.trim(),
+            password: _passwordTextController.text.trim())
+        .then((value) => Navigator.push(
+            context, MaterialPageRoute(builder: ((context) => HomePage()))));
   }
 
   @override
@@ -49,21 +61,19 @@ class _LogInState extends State<LogIn> {
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.125),
                     //modify font weight
-                    reusableTextField("Email", false, _emailTextController),
+                    ReusableTextField(
+                        hintText: "Email",
+                        obscure: false,
+                        controller: _emailTextController),
                     SizedBox(height: 20),
-                    reusableTextField(
-                        "Password", true, _passwordTextController),
+                    ReusableTextField(
+                        hintText: "Password",
+                        obscure: true,
+                        controller: _passwordTextController),
                     SizedBox(height: 15),
                     // Modify this button further
                     button(context, "Log In", () {
-                      FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
-                              email: _emailTextController.text.trim(),
-                              password: _passwordTextController.text.trim())
-                          .then((value) => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => HomePage()))));
+                      logIn();
                     }, Color.fromARGB(255, 164, 228, 255)),
                     SizedBox(height: 2),
                     // Further modify this to be a function (maybe)
