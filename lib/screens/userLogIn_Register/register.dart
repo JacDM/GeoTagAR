@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:geotagar/methods/methods.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
+
+import '../../methods/text_Field.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -20,6 +23,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
       TextEditingController();
+  // Ask whether full name (like instagram)
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  // MODIFY WITH DATE OF BIRTH
+  final TextEditingController _ageController = TextEditingController();
+  String emailError = '';
 
   @override
   void dispose() {
@@ -27,6 +36,10 @@ class _RegisterPageState extends State<RegisterPage> {
     _usernameTextController.dispose();
     _passwordTextController.dispose();
     _confirmPasswordTextController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _ageController.dispose();
+    super.dispose();
   }
 
   Future register() async {
@@ -49,7 +62,25 @@ class _RegisterPageState extends State<RegisterPage> {
         _confirmPasswordTextController.text.trim()) {
       return true;
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Passwords do not match.")));
       return false;
+    }
+  }
+
+  void emailValidator() {
+    if (EmailValidator.validate(_emailTextController.text.trim())) {
+      print("Valid email");
+    } else if (_emailTextController.text.trim().isEmpty) {
+      setState(() {
+        emailError = "Email can not be empty";
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Email address cannot be empty.")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please enter a valid email address.")));
+      print("Invalid email");
     }
   }
 
@@ -87,21 +118,49 @@ class _RegisterPageState extends State<RegisterPage> {
                               SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.08),
-                              reusableTextField(
-                                  "Username", false, _usernameTextController),
+                              // ReusableTextField(
+                              //   hintText: "Age Test",
+                              //   obscure: false,
+                              //   controller: _ageController,
+                              // ),
                               SizedBox(height: 20),
-                              reusableTextField(
-                                  "E-mail", false, _emailTextController),
+                              ReusableTextField(
+                                  hintText: "First Name",
+                                  obscure: false,
+                                  controller: _firstNameController),
                               SizedBox(height: 20),
-                              reusableTextField(
-                                  "Password", true, _passwordTextController),
+                              ReusableTextField(
+                                  hintText: "Last Name",
+                                  obscure: false,
+                                  controller: _lastNameController),
+                              SizedBox(height: 20),
+                              ReusableTextField(
+                                  hintText: "Username",
+                                  obscure: false,
+                                  controller: _usernameTextController),
+                              SizedBox(height: 20),
+                              ReusableTextField(
+                                hintText: "Email",
+                                obscure: false,
+                                controller: _emailTextController,
+                              ),
+                              //ReusableTextField1(
+                              //    "E-mail", false, _emailTextController),
+                              SizedBox(height: 20),
+                              ReusableTextField(
+                                  hintText: "Password",
+                                  obscure: true,
+                                  controller: _passwordTextController),
                               SizedBox(height: 20),
                               // Add password validation and extra rows i.e., date of birth etc
-                              reusableTextField("Confirm Password", true,
-                                  _confirmPasswordTextController),
+                              ReusableTextField(
+                                  hintText: "Confirm Password",
+                                  obscure: true,
+                                  controller: _confirmPasswordTextController),
                               SizedBox(height: 20),
                               button(context, "Sign Up", () {
                                 // Requires validation
+                                emailValidator();
                                 register();
                                 //Navigator.push(
                                 //context,
@@ -110,7 +169,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                 //builder: (context) => LogIn()));
                               }, Color.fromARGB(255, 214, 238, 120)),
                               SizedBox(height: 20),
+                              // Red validator
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Text(
+                              //     _errorMessage,
+                              //     style: TextStyle(color: Colors.red),
+                              //   ),
+                              // ),
                               // Maybe remove this
+                              SizedBox(height: 20),
                               signInLink(),
                             ]))))));
   }
