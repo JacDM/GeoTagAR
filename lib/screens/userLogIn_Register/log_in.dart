@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/main.dart';
@@ -20,6 +21,7 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
+  String _emailError = "";
 
   @override
   void dispose() {
@@ -35,6 +37,22 @@ class _LogInState extends State<LogIn> {
             password: _passwordTextController.text.trim())
         .then((value) => Navigator.push(
             context, MaterialPageRoute(builder: ((context) => HomePage()))));
+  }
+
+  void emailValidator() {
+    if (EmailValidator.validate(_emailTextController.text.trim())) {
+      print("Valid email");
+    } else if (_emailTextController.text.trim().isEmpty) {
+      setState(() {
+        _emailError = "Email can not be empty";
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Email address cannot be empty.")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please enter a valid email address.")));
+      print("Invalid email");
+    }
   }
 
   @override
@@ -73,6 +91,7 @@ class _LogInState extends State<LogIn> {
                     SizedBox(height: 15),
                     // Modify this button further
                     button(context, "Log In", () {
+                      emailValidator();
                       logIn();
                     }, Color.fromARGB(255, 164, 228, 255)),
                     SizedBox(height: 2),
