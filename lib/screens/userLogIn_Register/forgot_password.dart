@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/methods/methods.dart';
@@ -15,11 +16,28 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _emailTextController = TextEditingController();
+  String _emailError = "";
 
   @override
   void dispose() {
     _emailTextController.dispose();
     super.dispose();
+  }
+
+  void emailValidator() {
+    if (EmailValidator.validate(_emailTextController.text.trim())) {
+      print("Valid email");
+    } else if (_emailTextController.text.trim().isEmpty) {
+      setState(() {
+        _emailError = "Email can not be empty";
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Email address cannot be empty.")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please enter a valid email address.")));
+      print("Invalid email");
+    }
   }
 
   @override
@@ -88,6 +106,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       children: [
         // Add extra page and form validation too
         button(context, "Reset password", () {
+          emailValidator();
           FirebaseAuth.instance
               .sendPasswordResetEmail(email: _emailTextController.text.trim());
           Navigator.push(context,
