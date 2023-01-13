@@ -2,6 +2,9 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
+
+GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
 class ReusableTextField extends StatelessWidget {
   const ReusableTextField(
       {super.key,
