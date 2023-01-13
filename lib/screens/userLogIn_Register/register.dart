@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -18,6 +19,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  _genderState() {
+    _selectedGender = _gender[0];
+  }
+
+  // Variables
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _usernameTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
@@ -28,7 +34,17 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _lastNameController = TextEditingController();
   // MODIFY WITH DATE OF BIRTH
   final TextEditingController _ageController = TextEditingController();
-  String emailError = '';
+  //final TextEditingController _genderController = TextEditingController();
+  String _emailError = '';
+  // Prefer not to say?
+  final _gender = ["Male", "Female", "Other"];
+  String? _selectedGender = "";
+
+  String email = "";
+  String username = "";
+  String firstName = "";
+  String lastName = "";
+  int age = 0;
 
   @override
   void dispose() {
@@ -43,18 +59,47 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future register() async {
+    // Authentication
     if (passwordMatch()) {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _emailTextController.text.trim(),
               password: _passwordTextController.text.trim())
           .then((value) => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
-                  builder: (context) => LogIn())).onError(
-              (error, stackTrace) => print("#${error.toString()}")));
+                  context, MaterialPageRoute(builder: (context) => LogIn()))
+              .onError((error, stackTrace) => print("#${error.toString()}")));
     }
+  }
+
+  Future createUser(
+      {required String email,
+      required String username,
+      String? firstName,
+      required String lastName,
+      required int age}) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc();
+
+    final data = {
+      'email': email,
+      'username': username,
+      'firstName': firstName,
+      'lastName': lastName,
+      'age': age
+    };
+
+    await docUser
+        .set(data)
+        .then((value) => print("$username added to FireStore."));
+  }
+
+  void convert() {
+    setState(() {
+      username = _usernameTextController.text.trim();
+      email = _emailTextController.text.trim();
+      firstName = _firstNameController.text.trim();
+      lastName = _lastNameController.text.trim();
+      age = int.parse(_ageController.text.trim());
+    });
   }
 
   bool passwordMatch() {
@@ -73,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
       print("Valid email");
     } else if (_emailTextController.text.trim().isEmpty) {
       setState(() {
-        emailError = "Email can not be empty";
+        _emailError = "Email can not be empty";
       });
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Email address cannot be empty.")));
@@ -104,83 +149,163 @@ class _RegisterPageState extends State<RegisterPage> {
                 //width: MediaQuery.of(context).size.width,
                 //height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
-                    child: Padding(
-                        padding: EdgeInsets.fromLTRB(20,
-                            MediaQuery.of(context).size.height * 0.2, 20, 0),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Modify this later
-                              SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.0001),
-                              logo('assets/images/UpscaledLogoWhite.png'),
-                              SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.08),
-                              // ReusableTextField(
-                              //   hintText: "Age Test",
-                              //   obscure: false,
-                              //   controller: _ageController,
-                              // ),
-                              SizedBox(height: 20),
-                              ReusableTextField(
-                                  hintText: "First Name",
-                                  obscure: false,
-                                  controller: _firstNameController),
-                              SizedBox(height: 20),
-                              ReusableTextField(
-                                  hintText: "Last Name",
-                                  obscure: false,
-                                  controller: _lastNameController),
-                              SizedBox(height: 20),
-                              ReusableTextField(
-                                  hintText: "Username",
-                                  obscure: false,
-                                  controller: _usernameTextController),
-                              SizedBox(height: 20),
-                              ReusableTextField(
-                                hintText: "Email",
-                                obscure: false,
-                                controller: _emailTextController,
-                              ),
-                              //ReusableTextField1(
-                              //    "E-mail", false, _emailTextController),
-                              SizedBox(height: 20),
-                              ReusableTextField(
-                                  hintText: "Password",
-                                  obscure: true,
-                                  controller: _passwordTextController),
-                              SizedBox(height: 20),
-                              // Add password validation and extra rows i.e., date of birth etc
-                              ReusableTextField(
-                                  hintText: "Confirm Password",
-                                  obscure: true,
-                                  controller: _confirmPasswordTextController),
-                              SizedBox(height: 20),
-                              button(context, "Sign Up", () {
-                                // Requires validation
-                                emailValidator();
-                                register();
-                                //Navigator.push(
-                                //context,
-                                //MaterialPageRoute(
-                                // Should take to forgot password screen, yet to be implemented since its linked w/ firebase
-                                //builder: (context) => LogIn()));
-                              }, Color.fromARGB(255, 214, 238, 120)),
-                              SizedBox(height: 20),
-                              // Red validator
-                              // Padding(
-                              //   padding: const EdgeInsets.all(8.0),
-                              //   child: Text(
-                              //     _errorMessage,
-                              //     style: TextStyle(color: Colors.red),
-                              //   ),
-                              // ),
-                              // Maybe remove this
-                              SizedBox(height: 20),
-                              signInLink(),
-                            ]))))));
+                    child: Form(
+                        key: formKey,
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                20,
+                                MediaQuery.of(context).size.height * 0.2,
+                                20,
+                                0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Modify this later
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.0001),
+                                  logo('assets/images/UpscaledLogoWhite.png'),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.04),
+                                  SizedBox(height: 20),
+                                  ReusableTextField(
+                                    hintText: "First Name",
+                                    obscure: false,
+                                    controller: _firstNameController,
+                                  ),
+                                  SizedBox(height: 20),
+                                  ReusableTextField(
+                                      hintText: "Last Name",
+                                      obscure: false,
+                                      controller: _lastNameController),
+                                  SizedBox(height: 20),
+                                  ReusableTextField(
+                                      hintText: "Username",
+                                      obscure: false,
+                                      controller: _usernameTextController,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Username cannot be empty";
+                                        }
+                                        return null;
+                                      }),
+                                  SizedBox(height: 20),
+                                  ReusableTextField(
+                                      hintText: "Email",
+                                      obscure: false,
+                                      controller: _emailTextController,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Email cannot be empty";
+                                        }
+                                        return null;
+                                      }),
+                                  SizedBox(height: 20),
+                                  ReusableTextField(
+                                      hintText: "Password",
+                                      obscure: true,
+                                      controller: _passwordTextController,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Password cannot be empty!";
+                                        }
+                                        return null;
+                                      }),
+                                  SizedBox(height: 20),
+                                  // Add password validation and extra rows i.e., date of birth etc
+                                  ReusableTextField(
+                                      hintText: "Confirm Password",
+                                      obscure: true,
+                                      controller:
+                                          _confirmPasswordTextController),
+                                  SizedBox(height: 20),
+                                  ReusableTextField(
+                                      hintText: "Age",
+                                      obscure: false,
+                                      controller: _ageController),
+                                  SizedBox(height: 20),
+                                  DropdownButtonFormField(
+                                    items: _gender
+                                        .map((e) => DropdownMenuItem(
+                                              child: Text(e),
+                                              value: e,
+                                            ))
+                                        .toList(),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        _selectedGender = val.toString();
+                                      });
+                                    },
+                                    icon: const Icon(Icons.arrow_drop_down),
+                                    //dropdownColor:
+                                    // Gender or sex idk
+                                    style: TextStyle(
+                                        color: const Color.fromARGB(
+                                                255, 58, 58, 58)
+                                            .withOpacity(0.9),
+                                        fontWeight: FontWeight.bold),
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      hintText: "Select Gender",
+                                      filled: true,
+                                      fillColor: const Color.fromARGB(
+                                              255, 122, 122, 122)
+                                          .withOpacity(0.3),
+                                      hintStyle: TextStyle(
+                                          color: const Color.fromARGB(
+                                                  255, 126, 126, 126)
+                                              .withOpacity(0.9),
+                                          fontWeight: FontWeight.bold),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 12, horizontal: 20),
+                                      border: (OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(7.0),
+                                        borderSide: const BorderSide(
+                                            width: 0, style: BorderStyle.none),
+                                      )),
+                                    ),
+                                  ),
+
+                                  SizedBox(height: 20),
+                                  button(context, "Sign Up", () {
+                                    // Requires validation
+                                    // final name =
+                                    //   _usernameTextController.text.trim();
+                                    setState(() {
+                                      if (formKey.currentState!.validate()) {
+                                        print("Validated");
+                                        convert();
+                                        createUser(
+                                            username: username,
+                                            email: email,
+                                            firstName: firstName,
+                                            lastName: lastName,
+                                            age: age);
+                                        emailValidator();
+                                        register();
+                                      } else {
+                                        print("Not Validated");
+                                      }
+                                    });
+                                  }, Color.fromARGB(255, 214, 238, 120)),
+                                  SizedBox(height: 20),
+                                  // Red validator
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(8.0),
+                                  //   child: Text(
+                                  //     _errorMessage,
+                                  //     style: TextStyle(color: Colors.red),
+                                  //   ),
+                                  // ),
+                                  // Maybe remove this
+                                  SizedBox(height: 20),
+                                  signInLink(),
+                                ])))))));
   }
 
   Row signInLink() {
