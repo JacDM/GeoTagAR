@@ -16,25 +16,29 @@ Image background(String img) {
   );
 }
 
-TextField reusableTextField(
+TextField reusableTextField1(
     String text, bool passwordType, TextEditingController controller) {
   return TextField(
     controller: controller,
     obscureText: passwordType,
     enableSuggestions: !passwordType,
     autocorrect: !passwordType,
+
+    //autofillHints: const [AutofillHints.email],
     style: TextStyle(color: Color.fromARGB(255, 75, 75, 75).withOpacity(0.9)),
     decoration: InputDecoration(
         contentPadding:
             const EdgeInsets.only(left: 18, right: 12, top: 12, bottom: 12),
         isDense: true,
-        labelText: text,
-        //contentPadding: const EdgeInsets.all(12),
-        labelStyle:
-            // Make this strong
-            TextStyle(
-                color: Color.fromARGB(255, 126, 126, 126).withOpacity(0.9),
-                fontWeight: FontWeight.bold),
+        hintText: text,
+        hintStyle: TextStyle(
+            color: const Color.fromARGB(255, 126, 126, 126).withOpacity(0.9),
+            fontWeight: FontWeight.bold),
+        // labelStyle:
+        //     // Make this strong
+        //     TextStyle(
+        //         color: Color.fromARGB(255, 126, 126, 126).withOpacity(0.9),
+        //         fontWeight: FontWeight.bold),
         filled: true,
         floatingLabelBehavior: FloatingLabelBehavior.never,
         fillColor: Color.fromARGB(255, 122, 122, 122).withOpacity(0.3),
@@ -62,7 +66,8 @@ Container button(
       child: Text(
         title,
         style: const TextStyle(
-            color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),textAlign: TextAlign.center,
+            color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
+        textAlign: TextAlign.center,
       ),
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
