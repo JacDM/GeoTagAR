@@ -4,6 +4,8 @@ import 'package:geotagar/methods/methods.dart';
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
+import '../../methods/text_Field.dart';
+
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
 
@@ -13,6 +15,12 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _emailTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +67,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold)),
                               const SizedBox(height: 13),
-                              reusableTextField("example@email.com", false,
-                                  _emailTextController),
+                              ReusableTextField(
+                                  hintText: "example@email.com",
+                                  obscure: false,
+                                  controller: _emailTextController),
                               const SizedBox(height: 15),
                               forgotPasswordButton(),
                               // button(context, "Reset password", () {
