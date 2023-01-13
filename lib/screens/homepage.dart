@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 // Temporary homepage, will be modified later
 class _HomePageState extends State<HomePage> {
+  final user = FirebaseAuth.instance.currentUser;
   int _currentIndex = 0;
 
   List<Widget> body = const [
@@ -39,8 +40,10 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       FirebaseAuth.instance.signOut().then((value) {
                         print("User has signed out");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => const LogIn()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LogIn()));
                       });
                     })),
             bottomNavigationBar: SizedBox(
