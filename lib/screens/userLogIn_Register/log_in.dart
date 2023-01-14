@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/main.dart';
 import 'package:geotagar/methods/methods.dart';
-import 'package:geotagar/screens/forgot_password.dart';
-import 'package:geotagar/screens/register.dart';
+import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
+import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
+
+import '../../methods/text_Field.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -15,8 +19,41 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  String _emailError = "";
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+    super.dispose();
+  }
+
+  Future logIn() async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: _emailTextController.text.trim(),
+            password: _passwordTextController.text.trim())
+        .then((value) => Navigator.push(
+            context, MaterialPageRoute(builder: ((context) => HomePage()))));
+  }
+
+  void emailValidator() {
+    if (EmailValidator.validate(_emailTextController.text.trim())) {
+      print("Valid email");
+    } else if (_emailTextController.text.trim().isEmpty) {
+      setState(() {
+        _emailError = "Email can not be empty";
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Email address cannot be empty.")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please enter a valid email address.")));
+      print("Invalid email");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,18 +79,20 @@ class _LogInState extends State<LogIn> {
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.125),
                     //modify font weight
-                    reusableTextField(
-                        "Email or Username", false, _emailTextController),
+                    ReusableTextField(
+                        hintText: "Email",
+                        obscure: false,
+                        controller: _emailTextController),
                     SizedBox(height: 20),
-                    reusableTextField(
-                        "Password", true, _passwordTextController),
+                    ReusableTextField(
+                        hintText: "Password",
+                        obscure: true,
+                        controller: _passwordTextController),
                     SizedBox(height: 15),
                     // Modify this button further
                     button(context, "Log In", () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => HomePage())));
+                      emailValidator();
+                      logIn();
                     }, Color.fromARGB(255, 164, 228, 255)),
                     SizedBox(height: 2),
                     // Further modify this to be a function (maybe)

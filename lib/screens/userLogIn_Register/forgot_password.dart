@@ -1,7 +1,11 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/methods/methods.dart';
 import 'package:geotagar/screens/homepage.dart';
-import 'package:geotagar/screens/log_in.dart';
+import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
+
+import '../../methods/text_Field.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -12,6 +16,29 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _emailTextController = TextEditingController();
+  String _emailError = "";
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    super.dispose();
+  }
+
+  void emailValidator() {
+    if (EmailValidator.validate(_emailTextController.text.trim())) {
+      print("Valid email");
+    } else if (_emailTextController.text.trim().isEmpty) {
+      setState(() {
+        _emailError = "Email can not be empty";
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Email address cannot be empty.")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please enter a valid email address.")));
+      print("Invalid email");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +85,34 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold)),
                               const SizedBox(height: 13),
-                              reusableTextField("example@email.com", false,
-                                  _emailTextController),
+                              ReusableTextField(
+                                  hintText: "example@email.com",
+                                  obscure: false,
+                                  controller: _emailTextController),
                               const SizedBox(height: 15),
-                              button(context, "Reset password", () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) => const LogIn())));
-                              }, const Color.fromARGB(255, 164, 228, 255)),
+                              forgotPasswordButton(),
+                              // button(context, "Reset password", () {
+                              //   Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //           builder: ((context) => const LogIn())));
+                              // }, const Color.fromARGB(255, 164, 228, 255)),
                             ]))))));
+  }
+
+  Row forgotPasswordButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Add extra page and form validation too
+        button(context, "Reset password", () {
+          emailValidator();
+          FirebaseAuth.instance
+              .sendPasswordResetEmail(email: _emailTextController.text.trim());
+          Navigator.push(context,
+              MaterialPageRoute(builder: ((context) => const LogIn())));
+        }, const Color.fromARGB(255, 164, 228, 255)),
+      ],
+    );
   }
 }
