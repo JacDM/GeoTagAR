@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:geotagar/firebase_options.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
-
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/unityAR.dart';
 import 'package:geotagar/screens/default.dart';
 import 'package:geotagar/screens/userAccountScreens/privacy_and_security.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/user_settings.dart';
+import 'package:geotagar/screens/globe.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,10 +24,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+
+    //removed 'const' keyword from return const MaterialApp
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //home: UnityAR(),
-      home: LogIn(),
+
+      //Theme set for User Account Screens
+      theme: ThemeData(
+        accentColor: Colors.black,
+        scaffoldBackgroundColor: Colors.blueGrey[100],
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blueGrey[800],
+          shadowColor: Colors.teal[900],
+          toolbarHeight: 50.0,
+        ),
+      ),
+
+
+      home: const UnityAR(),
+      //home: LogIn(),
     );
   }
 }

@@ -18,8 +18,6 @@ class _ReportState extends State<Report> {
       //appbar
       appBar: AppBar(
         title: const Center(child: Text('REPORT')),
-        backgroundColor: Colors.blueGrey[800],
-        shadowColor: Colors.teal[900],
       ),
 
       backgroundColor: Colors.blueGrey[200],
@@ -30,13 +28,13 @@ class _ReportState extends State<Report> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
 
-              children: const <Widget>[
+              children:  <Widget>[
 
-                SizedBox(
+                const SizedBox(
                   height: 30.0,
                 ),
 
-                Text('Briefly explain the Problem you want to Report',
+                const Text('Briefly explain the Problem you want to Report',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25.0,
@@ -44,28 +42,51 @@ class _ReportState extends State<Report> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30.0,
                 ),
 
                 //Text Box
-                TextField(
+                const TextField(
+                  maxLines: 6,
+                  textAlign: TextAlign.left,
                   maxLength: 500,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+
+                    ),
                     labelText: 'Type here...',
                   ),
                 ),
 
-                SizedBox(
-                  height: 30.0,
+                const SizedBox(
+                  height: 20.0,
                 ),
 
                 //Submit Button
-                ElevatedButton(
-                    onPressed: null,
-                    child: Text('SUBMIT'),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    height: 50.0,
+                    width: 120.0,
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: ElevatedButton(
+                      onPressed: null,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.teal),
+                      ),
+                      child: const Text(
+                        'SUBMIT',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
+
+
 
               ],
             ),

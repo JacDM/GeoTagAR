@@ -33,9 +33,6 @@ android/.idea/
 .pub/
 build/
 
-android/unityLibrary
-
-
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -79,5 +76,5 @@ android/unityLibrary
 !/unitypackages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 ios/UnityLibrary
-android/unityLibrary
+#android/unityLibrary
 web/unityLibrary

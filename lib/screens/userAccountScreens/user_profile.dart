@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/user_settings.dart';
+import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -9,15 +10,9 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  int _counter = 0;
   bool pressedMemoriesTab = true;
   bool pressedTagsTab = false;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +20,6 @@ class _UserProfileState extends State<UserProfile> {
       //appbar
       appBar: AppBar(
         title: const Center(child: Text('USER PROFILE PAGE')),
-        backgroundColor: Colors.blueGrey[800],
-          shadowColor: Colors.teal[900],
       ),
 
       backgroundColor: Colors.blueGrey[200],
@@ -39,59 +32,57 @@ class _UserProfileState extends State<UserProfile> {
               //header - profile pic, background pic and settings button
               Stack(
                 clipBehavior: Clip.none,
-                children: [
-                  //background pic and settings
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children:  [
 
-                      //background pic
-                      const Image(
-                        image: NetworkImage(
-                            'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
-                      ),
+                children:  [
 
-                      //settings
-                      Positioned(
-                        top: 10.0,
-                        right: 10.0,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black,
-                          radius: 22.0,
-                          child: FloatingActionButton(
-                            onPressed: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context){
-                                  return const SettingsPage() ;
-                                })
-                              );
-                            },
-                            tooltip: 'Settings',
-                            child: const Icon(
-                              Icons.settings,
-                              size: 35.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-
-                      ),
-                    ],
+                  //Background Picture
+                  const Image(
+                    image: NetworkImage(
+                        'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
                   ),
 
-                  //profile picture
-                  const Positioned(
-                    bottom: -55.0,
-                    left: 145.0,
+                  //Settings
+                  Positioned(
+                    top: 10.0,
+                    right: 10.0,
                     child: CircleAvatar(
-                      radius: 60.0,
-                      backgroundImage: NetworkImage(
-                          'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
+                      backgroundColor: Colors.black,
+                      radius: 22.0,
+                      child: FloatingActionButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context){
+                              return const SettingsPage() ;
+                            })
+                          );
+                        },
+                        tooltip: 'Settings',
+                        child: const Icon(
+                          Icons.settings,
+                          size: 35.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+
+                  ),
+
+                  //Profile Picture
+                  Positioned(
+                    bottom: -55.0,
+                    right: MediaQuery.of(context).size.width * 0.35,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.15,
+                      backgroundColor: Colors.white38,
+                      child: CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.14,
+                        backgroundImage: NetworkImage(
+                            'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
+                      ),
                     ),
                   ),
                 ],
-
               ),
 
               //Spacing
@@ -106,6 +97,7 @@ class _UserProfileState extends State<UserProfile> {
                   fontSize: 30.0,
                   fontFamily: 'Lobster',
                 ),
+                textAlign: TextAlign.center,
               ),
 
               //Username
@@ -116,6 +108,7 @@ class _UserProfileState extends State<UserProfile> {
                   fontFamily: 'FiraCode',
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
 
               //Bio/description (List)
@@ -127,6 +120,7 @@ class _UserProfileState extends State<UserProfile> {
                     style: TextStyle(
                       fontSize: 20.0,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -285,19 +279,27 @@ class _UserProfileState extends State<UserProfile> {
                     mainAxisSpacing: 10.0,
                   ),
                   children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      //: Colors.teal[100],
-                      decoration:  BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 3,
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context){
+                            return const Post() ;
+                          })
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        //: Colors.teal[100],
+                        decoration:  BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 3,
+                          ),
+                          image: const DecorationImage(
+                              image: NetworkImage('https://www.numerama.com/wp-content/uploads/2022/08/image5-min.jpg'),
+                              fit: BoxFit.cover,
+                          ),
+
                         ),
-                        image: const DecorationImage(
-                            image: NetworkImage('https://www.numerama.com/wp-content/uploads/2022/08/image5-min.jpg'),
-                            fit: BoxFit.cover,
-                        ),
-                        
                       ),
                     ),
 
@@ -401,15 +403,11 @@ class _UserProfileState extends State<UserProfile> {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
+
     );
   }
 
 
 }
+
+
