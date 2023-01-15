@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/createMemoryRoute.dart';
 import 'package:geotagar/screens/create_memory.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Post(),
                 Container(),
-                CreateMemory(),
+                CMRoute(),
                 Container(),
                 UserProfile(),
               ],
