@@ -15,7 +15,6 @@ class CreateMemory extends StatefulWidget {
 class _CreateMemoryState extends State<CreateMemory> {
   late CameraController _cam;
   bool _isrearCam = true;
-  //late Future<void> future_CamInit;
   TextEditingController textController = TextEditingController();
 
   @override
@@ -34,7 +33,7 @@ class _CreateMemoryState extends State<CreateMemory> {
   }
 
   Future initCamera(CameraDescription camDesc) async {
-    _cam = CameraController(camDesc, ResolutionPreset.high);
+    _cam = CameraController(camDesc, ResolutionPreset.max);
     try {
       await _cam.initialize().then((_) {
         if (!mounted) return;
@@ -52,8 +51,6 @@ class _CreateMemoryState extends State<CreateMemory> {
   }
 
   Widget getBody() {
-    var size = MediaQuery.of(context).size;
-
     return SafeArea(
         child: Stack(
       children: [
@@ -61,17 +58,17 @@ class _CreateMemoryState extends State<CreateMemory> {
             ? CameraPreview(_cam)
             : Container(
                 color: Colors.black,
-                child: const Center(child: CircularProgressIndicator())),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: size.height * 0.20,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-              //color: Colors.black,
-            ),
+            height: MediaQuery.of(context).size.height * 0.20,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 IconButton(
                   onPressed: () {
@@ -79,7 +76,7 @@ class _CreateMemoryState extends State<CreateMemory> {
                     initCamera(widget.cameras![_isrearCam ? 0 : 1]);
                   },
                   icon: const Icon(
-                    Icons.circle_outlined,
+                    Icons.flip_camera_ios,
                     color: Colors.white,
                   ),
                   iconSize: 30,
@@ -95,28 +92,30 @@ class _CreateMemoryState extends State<CreateMemory> {
 
   Widget getFloatingButtons() {
     return Padding(
-        padding: const EdgeInsets.only(top: 50, left: 35),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //search bar
-                Container(
-                    width: 80,
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.search_rounded),
-                      color: Colors.white.withOpacity(0.75),
-                    )),
-              ],
-            )
-          ],
-        ));
+      //search bar
+      padding: const EdgeInsets.only(top: 50, left: 35),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 80,
+                height: 40,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.search_rounded),
+                  color: Colors.white.withOpacity(0.75),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
