@@ -5,6 +5,8 @@ import 'package:geotagar/screens/userAccountScreens/privacy_and_security.dart';
 import 'package:geotagar/screens/userAccountScreens/report.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
 
+const spacing =  SizedBox(height: 25.0,);
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
