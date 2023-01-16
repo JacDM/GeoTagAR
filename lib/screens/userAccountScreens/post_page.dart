@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geotagar/screens/userAccountScreens/bottom_screen_popup.dart';
 
 const _username = '@DATTEBAYOOO';
 const _location = 'Hidden Leaf Village';
@@ -86,7 +87,7 @@ class _PostState extends State<Post> {
                               onTap: () {
                                 //Display screen with :
                                 // Edit, Save, Link, Delete
-                                null;
+                                bottomSheetPopup(context);
                               },
 
                               child: const Icon(Icons.more_horiz, size: 37.0, color: Colors.black,)
@@ -132,13 +133,16 @@ class _PostState extends State<Post> {
                 //Caption written
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: RichText(
-                    text: const TextSpan(
-                      style: TextStyle(color: Colors.black), //apply style to all
-                      children: [
-                        TextSpan(text: _username, style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        TextSpan(text: '  $_caption', style: TextStyle(fontSize: 15.0, ),),
-                      ],
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: RichText(
+                      text: const TextSpan(
+                        style: TextStyle(color: Colors.black), //apply style to all
+                        children: [
+                          TextSpan(text: _username, style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                          TextSpan(text: '  $_caption', style: TextStyle(fontSize: 15.0, ),),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -200,6 +204,5 @@ class _PostState extends State<Post> {
 
     );
   }
-
 
 }

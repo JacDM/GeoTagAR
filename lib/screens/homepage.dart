@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/createMemoryRoute.dart';
-import 'package:geotagar/screens/create_memory.dart';
+import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
+import 'package:geotagar/screens/memory_related/create_memory.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 // Temporary homepage, will be modified later
 class _HomePageState extends State<HomePage> {
+  final user = FirebaseAuth.instance.currentUser;
   int _currentIndex = 0;
 
   List<Widget> body = const [
@@ -33,9 +36,6 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
-            //body: Center(
-            //  child: body[_currentIndex],
-            //),
             body: IndexedStack(
               index: _currentIndex,
               children: [
@@ -46,6 +46,20 @@ class _HomePageState extends State<HomePage> {
                 UserProfile(),
               ],
             ),
+            // Center(
+
+            //     //child: body[_currentIndex],
+            //     child: ElevatedButton(
+            //         child: Text("Sign out"),
+            //         onPressed: () {
+            //           FirebaseAuth.instance.signOut().then((value) {
+            //             print("User has signed out");
+            //             Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                     builder: (context) => const LogIn()));
+            //           });
+            //         })),
             bottomNavigationBar: SizedBox(
                 height: 83,
                 child: BottomNavigationBar(
