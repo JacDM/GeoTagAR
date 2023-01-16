@@ -36,13 +36,15 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.blueGrey[800],
           shadowColor: Colors.teal[900],
-          toolbarHeight: 50.0,
+          toolbarHeight: 60.0,
         ),
       ),
 
 
       home: const UnityAR(),
       //home: LogIn(),
+      //home: const UserProfile(),
+
     );
   }
 }

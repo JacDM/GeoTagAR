@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
+
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
