@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
+
+
+const spacing =  SizedBox(height: 25.0,);
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
@@ -17,12 +21,9 @@ class _AccountSettingsState extends State<AccountSettings> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('PRIVACY AND SECURITY')),
-        backgroundColor: Colors.blueGrey[800],
-        shadowColor: Colors.teal[900],
+        title: const Center(child: Text('ACCOUNT SETTINGS')),
       ),
 
-      backgroundColor: Colors.blueGrey[200],
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -32,144 +33,36 @@ class _AccountSettingsState extends State<AccountSettings> {
 
               children: <Widget>[
 
-                const SizedBox(
-                  height: 30.0,
-                ),
-
                 //Personal Information
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Personal Information',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30.0,
-                ),
+                PageTab(onPressed: () {
+                  setState(() {
+                    null;
+                  });
+                }, pageTabLabel: 'Personal Information'),
+                spacing,
 
                 //Language
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Language',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30.0,
-                ),
+                PageTab(onPressed: () {
+                  setState(() {
+                    null;
+                  });
+                }, pageTabLabel: 'Language'),
+                spacing,
 
                 //Sensitive Content Control
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Sensitive Content Control',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30.0,
-                ),
-
+                PageTab(onPressed: () {
+                  setState(() {
+                    null;
+                  });
+                }, pageTabLabel: 'Sensitive Content Control'),
+                spacing,
                 //Data Usage
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Data Usage',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30.0,
-                ),
-
-                //Request Verification
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Request Verification',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 40.0,
-                ),
+                PageTab(onPressed: () {
+                  setState(() {
+                    null;
+                  });
+                }, pageTabLabel: 'Data Usage'),
+                spacing,
 
                 //Delete Account
                 TextButton(

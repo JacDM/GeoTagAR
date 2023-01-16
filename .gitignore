@@ -77,4 +77,5 @@ build/
 
 ios/UnityLibrary
 #android/unityLibrary
+android/unityLibrary
 web/unityLibrary
