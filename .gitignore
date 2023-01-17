@@ -79,3 +79,4 @@ build/
 ios/UnityLibrary
 android/unityLibrary
 web/unityLibrary
+.flutter-plugins-dependencies
