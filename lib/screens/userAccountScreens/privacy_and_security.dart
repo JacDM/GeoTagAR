@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
+import 'package:geotagar/screens/userAccountScreens/acc_visibility.dart';
 
 const spacing =  SizedBox(height: 25.0,);
 
@@ -36,7 +37,12 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
                 //Account Visibility
                 PageTab(onPressed: () {
                   setState(() {
-                    null;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context){
+                        return const AccVisibility() ;
+                      })
+                  );
                   });
                 }, pageTabLabel: 'Account Visibility'),
                 spacing,
