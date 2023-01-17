@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
+import 'package:geotagar/screens/userAccountScreens/acc_visibility.dart';
+
+const spacing =  SizedBox(height: 25.0,);
 
 class PrivacyAndSecurity extends StatefulWidget {
   const PrivacyAndSecurity({super.key});
@@ -18,8 +22,6 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
       //appbar
       appBar: AppBar(
         title: const Center(child: Text('PRIVACY AND SECURITY')),
-        backgroundColor: Colors.blueGrey[800],
-        shadowColor: Colors.teal[900],
       ),
 
       backgroundColor: Colors.blueGrey[200],
@@ -32,144 +34,46 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
 
               children: <Widget>[
 
-                const SizedBox(
-                  height: 30.0,
-                ),
-
                 //Account Visibility
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Account Visibility',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30.0,
-                ),
-
+                PageTab(onPressed: () {
+                  setState(() {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context){
+                        return const AccVisibility() ;
+                      })
+                  );
+                  });
+                }, pageTabLabel: 'Account Visibility'),
+                spacing,
                 //Password
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Change Password',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30.0,
-                ),
-
+                PageTab(onPressed: () {
+                  setState(() {
+                    null;
+                  });
+                }, pageTabLabel: 'Change Password'),
+                spacing,
                 //Login Activity
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Login Activity',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30.0,
-                ),
-
+                PageTab(onPressed: () {
+                  setState(() {
+                    null;
+                  });
+                }, pageTabLabel: 'Login Activity'),
+                spacing,
                 //Blocked Accounts
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Blocked Accounts',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30.0,
-                ),
-
+                PageTab(onPressed: () {
+                  setState(() {
+                    null;
+                  });
+                }, pageTabLabel: 'Blocked Accounts'),
+                spacing,
                 //Activity Status
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Activity Status',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 17.0,
-                        color: Colors.teal[900],
-                      ),
-                    ],
-                  ),
-                ),
+                PageTab(onPressed: () {
+                  setState(() {
+                    null;
+                  });
+                }, pageTabLabel: 'Activity Status'),
 
-                const SizedBox(
-                  height: 30.0,
-                ),
               ],
             ),
           ),
