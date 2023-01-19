@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
-import 'package:geotagar/screens/userAccountScreens/PrivacyAndSecurity/acc_visibility.dart';
-import 'package:geotagar/screens/userAccountScreens/PrivacyAndSecurity/activity_status.dart';
-
+import '../reusableWidgets/page_tabs.dart';
+import '../PrivacyAndSecurity/acc_visibility.dart';
+import '../PrivacyAndSecurity/reset_password.dart';
+import '../PrivacyAndSecurity/activity_status.dart';
 const spacing =  SizedBox(height: 25.0,);
 
 class PrivacyAndSecurity extends StatefulWidget {
@@ -25,7 +25,6 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
         title: const Center(child: Text('PRIVACY AND SECURITY')),
       ),
 
-      backgroundColor: Colors.blueGrey[200],
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -39,21 +38,28 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
                 PageTab(onPressed: () {
                   setState(() {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context){
-                        return const AccVisibility() ;
-                      })
-                  );
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const AccVisibility() ;
+                        })
+                    );
                   });
                 }, pageTabLabel: 'Account Visibility'),
                 spacing,
-                //Password
+
+                //Reset Password
                 PageTab(onPressed: () {
                   setState(() {
-                    null;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const ResetPassword() ;
+                        })
+                    );
                   });
-                }, pageTabLabel: 'Change Password'),
+                }, pageTabLabel: 'Reset Password'),
                 spacing,
+
                 //Login Activity
                 PageTab(onPressed: () {
                   setState(() {
@@ -61,6 +67,7 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
                   });
                 }, pageTabLabel: 'Login Activity'),
                 spacing,
+
                 //Blocked Accounts
                 PageTab(onPressed: () {
                   setState(() {
@@ -68,15 +75,16 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
                   });
                 }, pageTabLabel: 'Blocked Accounts'),
                 spacing,
+
                 //Activity Status
                 PageTab(onPressed: () {
                   setState(() {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context){
-                        return const ActivityStatus() ;
-                      })
-                  );
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const ActivityStatus() ;
+                        })
+                    );
                   });
                 }, pageTabLabel: 'Activity Status'),
 

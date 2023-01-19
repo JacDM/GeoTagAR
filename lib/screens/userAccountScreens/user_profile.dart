@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/userAccountScreens/user_settings.dart';
+import 'package:geotagar/screens/userAccountScreens/UserSettings/user_settings.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 
 class UserProfile extends StatefulWidget {
