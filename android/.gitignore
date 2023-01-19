@@ -1,13 +1,11 @@
 *.iml
 .gradle
 /local.properties
-<<<<<<< Updated upstream
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
 /build
 /captures
-=======
 /unityLibrary
 GeneratedPluginRegistrant.java
 
@@ -16,6 +14,3 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
-#**/*.so
-`
->>>>>>> Stashed changes

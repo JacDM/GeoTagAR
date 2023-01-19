@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
+import 'package:geotagar/screens/memory_related/create_memory.dart';
+import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
+import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
@@ -32,20 +36,30 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
-            body: Center(
+            body: IndexedStack(
+              index: _currentIndex,
+              children: [
+                Post(),
+                Container(),
+                CMRoute(),
+                Container(),
+                UserProfile(),
+              ],
+            ),
+            // Center(
 
-                //child: body[_currentIndex],
-                child: ElevatedButton(
-                    child: Text("Sign out"),
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut().then((value) {
-                        print("User has signed out");
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LogIn()));
-                      });
-                    })),
+            //     //child: body[_currentIndex],
+            //     child: ElevatedButton(
+            //         child: Text("Sign out"),
+            //         onPressed: () {
+            //           FirebaseAuth.instance.signOut().then((value) {
+            //             print("User has signed out");
+            //             Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                     builder: (context) => const LogIn()));
+            //           });
+            //         })),
             bottomNavigationBar: SizedBox(
                 height: 83,
                 child: BottomNavigationBar(
@@ -69,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                     BottomNavigationBarItem(
                         icon: Icon(Icons.circle_outlined, size: 50),
                         label: '',
-                        backgroundColor: Colors.greenAccent),
+                        backgroundColor: Color.fromARGB(255, 58, 197, 65)),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.groups),
                       label: 'Discover',
@@ -78,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.person),
                       label: 'Profile',
-                      //backgroundColor: Colors.red,
+                      //backgroundColor: Color.fromARGB(255, 114, 167, 0)
                     ),
                   ],
                 ))));

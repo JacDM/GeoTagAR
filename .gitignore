@@ -77,6 +77,7 @@ build/
 !/unitypackages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 ios/UnityLibrary
+#android/unityLibrary
 android/unityLibrary
 web/unityLibrary
 .flutter-plugins-dependencies
