@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 
 Widget k_divider = Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,);
+Widget k_spacing = const SizedBox(height: 10.0,);
 const k_textStyle = TextStyle(fontSize: 20.0);
 const k_selectedtextStyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
 const k_containerColor = Color(0xFFBDBDBD);  //grey[400]
@@ -10,14 +11,14 @@ enum Options{
   option1, option2, option3, option4
 }
 
-class AccVisibility extends StatefulWidget {
-  const AccVisibility({super.key});
+class ActivityStatus extends StatefulWidget {
+  const ActivityStatus({super.key});
 
   @override
-  State<AccVisibility> createState() => _AccVisibility();
+  State<ActivityStatus> createState() => _ActivityStatus();
 }
 
-class _AccVisibility extends State<AccVisibility> {
+class _ActivityStatus extends State<ActivityStatus> {
   TextStyle bg_option1 = k_textStyle;
   TextStyle bg_option2 = k_textStyle;
   TextStyle bg_option3 = k_textStyle;
@@ -37,7 +38,7 @@ class _AccVisibility extends State<AccVisibility> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('ACCOUNT VISIBILITY')),
+        title: const Center(child: Text('ACTIVITY STATUS')),
       ),
 
 
@@ -50,7 +51,7 @@ class _AccVisibility extends State<AccVisibility> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
 
-                const SizedBox(height: 10.0,),
+                k_spacing,
 
                 const Padding(
                   padding: EdgeInsets.all(10.0),
@@ -58,14 +59,14 @@ class _AccVisibility extends State<AccVisibility> {
                 ),
 
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * .37,
+                  height: MediaQuery.of(context).size.height * .30,
                   child: ReusableContainer(
                     colour: k_containerColor,  //grey[400]
                     containerChild: Column(
                       //mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget> [
-
+                        
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -77,7 +78,7 @@ class _AccVisibility extends State<AccVisibility> {
                               colour: k_containerColor,
                               containerChild: Row(
                                 children: [
-                                  Text('Everyone', style: bg_option1),
+                                  Text('Online', style: bg_option1),
                                 ],
                               ),
                             ),
@@ -97,7 +98,7 @@ class _AccVisibility extends State<AccVisibility> {
                               colour: k_containerColor,
                               containerChild: Row(
                                 children: [
-                                  Text('Only My Contacts', style: bg_option2,),
+                                  Text('Appear Away', style: bg_option2,),
                                 ],
                               ),
                             ),
@@ -117,32 +118,13 @@ class _AccVisibility extends State<AccVisibility> {
                               colour: k_containerColor,
                               containerChild: Row(
                                 children: [
-                                  Text('Only My Contacts except...', style: bg_option3,),
+                                  Text('Appear Offline', style: bg_option3,),
                                 ],
                               ),
                             ),
                           ),
                         ),
 
-                        k_divider,
-
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                deselectOptions(Options.option4);
-                              });
-                            },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
-                                children: [
-                                  Text('Nobody', style: bg_option4,),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
 
                       ],
                     ),
