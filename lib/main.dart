@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       ),
 
       //home: UnityAR(),
-      home: UnityAR(),
+      home: HomePage(),
     );
   }
 }

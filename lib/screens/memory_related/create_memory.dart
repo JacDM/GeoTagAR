@@ -1,7 +1,12 @@
+import 'dart:html';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/homepage.dart';
+import 'package:geotagar/screens/memory_related/post_memory.dart';
+import 'package:image_picker/image_picker.dart';
 
 //import 'package:anim_search_bar/anim_search_bar.dart';
 
@@ -17,8 +22,11 @@ class CreateMemory extends StatefulWidget {
 class _CreateMemoryState extends State<CreateMemory> {
   late CameraController _cam;
   bool _isrearCam = true;
-  TextEditingController textController = TextEditingController();
-  XFile? image;
+  //TextEditingController textController = TextEditingController();
+  static XFile? imagefile;
+
+  late ImageStream? _imageStream;
+  late Uint8List? _bytes;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +59,13 @@ class _CreateMemoryState extends State<CreateMemory> {
   void dispose() {
     _cam.dispose();
     super.dispose();
+  }
+
+  _openGallery() async {
+    //Navigator.pop(context);
+
+    imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {});
   }
 
   Widget getBody() {
@@ -88,31 +103,30 @@ class _CreateMemoryState extends State<CreateMemory> {
                 IconButton(
                   onPressed: () async {
                     try {
-                      if (_cam != null) {
-                        if (_cam!.value.isInitialized) {
-                          image = await _cam.takePicture();
-                        }
+                      if (_cam.value.isInitialized) {
+                        //imagefile = await _cam.takePicture();
+                        setState(() {
+                          //this.imagefile = _image;
+                        });
                       }
                     } catch (e) {
-                      print(e);
+                      debugPrint('Camera exception $e');
                     }
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.circle_outlined,
                     color: Colors.white,
                   ),
                   iconSize: 35,
                   padding: const EdgeInsets.only(bottom: 15),
-                  selectedIcon: Icon(
+                  selectedIcon: const Icon(
                     Icons.circle,
                     color: Colors.white,
                   ),
                 ),
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      ;
-                    });
+                    _openGallery();
                   },
                   icon: Icon(
                     Icons.add_to_photos_rounded,
