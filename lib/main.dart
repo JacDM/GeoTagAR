@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/firebase_options.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/homepage.dart';
@@ -11,6 +12,7 @@ import 'package:geotagar/screens/userAccountScreens/privacy_and_security.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/user_settings.dart';
 import 'package:geotagar/screens/globe.dart';
+import 'package:geotagar/screens/unity_flutter_communication.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       ),
-      home: const UserProfile(),
+      home: HomePage(),
     );
   }
 }
