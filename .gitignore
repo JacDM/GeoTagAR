@@ -31,8 +31,8 @@ android/.idea/
 .packages
 .pub-cache/
 .pub/
-.flutter-plugins-dependencies
 build/
+.flutter-plugins-dependencies
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -80,4 +80,3 @@ ios/UnityLibrary
 #android/unityLibrary
 android/unityLibrary
 web/unityLibrary
-.flutter-plugins-dependencies
