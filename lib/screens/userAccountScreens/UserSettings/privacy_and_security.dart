@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
-import 'package:geotagar/screens/userAccountScreens/acc_visibility.dart';
-import 'package:geotagar/screens/userAccountScreens/activity_status.dart';
+import 'package:geotagar/screens/userAccountScreens/PrivacyAndSecurity/acc_visibility.dart';
+import 'package:geotagar/screens/userAccountScreens/PrivacyAndSecurity/activity_status.dart';
 
 const spacing =  SizedBox(height: 25.0,);
 
