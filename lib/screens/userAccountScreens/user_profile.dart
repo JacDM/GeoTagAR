@@ -22,7 +22,7 @@ class _UserProfileState extends State<UserProfile> {
         title: const Center(child: Text('USER PROFILE PAGE')),
       ),
 
-      backgroundColor: Colors.blueGrey[200],
+      //backgroundColor: Colors.blueGrey[200],
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -47,9 +47,10 @@ class _UserProfileState extends State<UserProfile> {
                     right: 10.0,
                     child: CircleAvatar(
                       backgroundColor: Colors.black,
-                      radius: 22.0,
-                      child: FloatingActionButton(
-                        onPressed: (){
+                      //22.0
+                      radius: MediaQuery.of(context).size.width * 0.0525,
+                      child: GestureDetector(
+                        onTap: (){
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context){
@@ -57,10 +58,10 @@ class _UserProfileState extends State<UserProfile> {
                             })
                           );
                         },
-                        tooltip: 'Settings',
-                        child: const Icon(
+                        child: Icon(
                           Icons.settings,
-                          size: 35.0,
+                          //35.0
+                          size: MediaQuery.of(context).size.width * 0.08,
                           color: Colors.white,
                         ),
                       ),

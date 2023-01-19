@@ -14,9 +14,9 @@ import 'package:geotagar/screens/unity_flutter_communication.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -34,14 +34,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.blueGrey[100],
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.blueGrey[800],
-          shadowColor: Colors.teal[900],
+          iconTheme: const IconThemeData(size: 40.0, color: Colors.white),
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blueGrey[900],
+          //shadowColor: Colors.teal[900],
           toolbarHeight: 60.0,
+          elevation: 0,
+
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       ),
-      //home: HomePage(),
-      home: UserProfile(),
+      home: HomePage(),
+      //home: UserProfile(),
     );
   }
 }
