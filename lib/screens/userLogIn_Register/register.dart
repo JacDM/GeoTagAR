@@ -9,6 +9,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:geotagar/methods/methods.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
+import '../../core/constants/constants.dart';
 import '../../methods/text_Field.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -134,7 +135,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/registerBG.png'),
+                image: AssetImage(Constants.registerBGPath),
                 fit: BoxFit.cover)),
         child: Scaffold(
             extendBodyBehindAppBar: true,
@@ -165,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.0001),
-                                  logo('assets/images/UpscaledLogoWhite.png'),
+                                  logo(Constants.logoPath),
                                   SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height *
@@ -303,8 +304,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                   //   ),
                                   // ),
                                   // Maybe remove this
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 30),
                                   signInLink(),
+                                  SizedBox(height: 100),
                                 ])))))));
   }
 
