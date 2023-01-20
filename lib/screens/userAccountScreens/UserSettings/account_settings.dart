@@ -54,7 +54,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                   setState(() {
                     null;
                   });
-                }, pageTabLabel: 'Sensitive Content Control'),
+                }, pageTabLabel: 'Content Control'),
                 spacing,
                 //Data Usage
                 PageTab(onPressed: () {
