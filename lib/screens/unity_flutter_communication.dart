@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
-class NoInteractionScreen extends StatefulWidget {
-  const NoInteractionScreen({required Key key}) : super(key: key);
+class Unity extends StatefulWidget {
+  Unity({Key? key}) : super(key: key);
 
   @override
-  _NoInteractionScreenState createState() => _NoInteractionScreenState();
+  _UnityState createState() => _UnityState();
 }
 
-class _NoInteractionScreenState extends State<NoInteractionScreen> {
+class _UnityState extends State<Unity> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
 
   late UnityWidgetController _unityWidgetController;
+  double _sliderValue = 0.0;
 
   @override
   void initState() {
@@ -31,39 +32,53 @@ class _NoInteractionScreenState extends State<NoInteractionScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('No Interaction Screen'),
+        title: Text('Simple Screen'),
       ),
       body: Card(
-        margin: const EdgeInsets.all(8),
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Stack(
-          children: [
-            UnityWidget(
-              onUnityCreated: _onUnityCreated,
-              onUnityMessage: onUnityMessage,
-              //onUnitySceneLoaded: onUnitySceneLoaded,
-              useAndroidViewSurface: true,
-              borderRadius: BorderRadius.all(Radius.circular(70)),
-            ),
-            PointerInterceptor(
-              child: Positioned(
-                bottom: 20,
-                left: 20,
-                right: 20,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/simple');
-                  },
-                  child: Text('Switch Flutter Screen'),
+          margin: const EdgeInsets.all(0),
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Stack(
+            children: [
+              UnityWidget(
+                onUnityCreated: _onUnityCreated,
+                onUnityMessage: onUnityMessage,
+                useAndroidViewSurface: false,
+                borderRadius: BorderRadius.all(Radius.circular(70)),
+              ),
+              PointerInterceptor(
+                child: Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Card(
+                    elevation: 10,
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Text("Rotation speed:"),
+                        ),
+                        Slider(
+                          onChanged: (value) {
+                            setState(() {
+                              _sliderValue = value;
+                            });
+                            setRotationSpeed(value.toString());
+                          },
+                          value: _sliderValue,
+                          min: 0.0,
+                          max: 1.0,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          )),
     );
   }
 
@@ -79,10 +94,9 @@ class _NoInteractionScreenState extends State<NoInteractionScreen> {
     print('Received message from unity: ${message.toString()}');
   }
 
-  bool onUnitySceneLoaded(SceneLoaded scene) {
+  void onUnitySceneLoaded(SceneLoaded scene) {
     print('Received scene loaded from unity: ${scene.name}');
     print('Received scene loaded from unity buildIndex: ${scene.buildIndex}');
-    return true;
   }
 
   // Callback that connects the created controller to the unity controller

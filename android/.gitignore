@@ -6,6 +6,7 @@
 .DS_Store
 /build
 /captures
+/unityLibrary
 GeneratedPluginRegistrant.java
 
 # Remember to never publicly share your keystore.
@@ -13,4 +14,3 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
-*/*.so
