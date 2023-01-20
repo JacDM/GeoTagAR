@@ -65,7 +65,11 @@ class _CreateMemoryState extends State<CreateMemory> {
     //Navigator.pop(context);
 
     imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
+
     setState(() {});
+    //if (!context.mounted) return;
+    Navigator.push(
+        context, MaterialPageRoute(builder: (builder) => PreviewPage()));
   }
 
   Widget getBody() {
@@ -125,9 +129,7 @@ class _CreateMemoryState extends State<CreateMemory> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    _openGallery();
-                  },
+                  onPressed: () => _openGallery(),
                   icon: Icon(
                     Icons.add_to_photos_rounded,
                     color: Colors.white.withOpacity(0.5),

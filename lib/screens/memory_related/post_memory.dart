@@ -19,6 +19,8 @@ class AddPost extends StatefulWidget {
 
 class _AddPostState extends State<AddPost> {
   Uint8List? _file;
+  bool isLoading = false;
+  final TextEditingController _descCtrler = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +43,38 @@ class _AddPostState extends State<AddPost> {
       body: Container(
         child: Column(children: [
           //linear indicator
+          isLoading
+              ? const LinearProgressIndicator()
+              : const Padding(padding: EdgeInsets.all(0)),
+          const Divider(),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [CircleAvatar()],
+            children: <Widget>[
+              //the pic
+              Container(
+                height: 220,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Center(
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              alignment: FractionalOffset.topCenter,
+                              image: FileImage(file))),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          Container(
+            height: 300,
+            width: 100,
+            child: Center(),
           )
         ]),
       ),
@@ -55,5 +85,29 @@ class _AddPostState extends State<AddPost> {
     //     onPressed: () {},
     //   ),
     // );
+  }
+}
+
+//
+//
+//
+//
+//
+//
+
+class PreviewPage extends StatelessWidget {
+  const PreviewPage({
+    super.key,
+    //required this.path
+  });
+  //final String path;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
+    );
   }
 }
