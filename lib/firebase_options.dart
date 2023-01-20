@@ -44,40 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBiwFKdthbm1nZ7XdZ2FPOe9kjAt_FoDts',
-    appId: '1:310321124196:web:d47f93023b9e29bde52071',
-    messagingSenderId: '310321124196',
-    projectId: 'geotagar-d2d9d',
-    authDomain: 'geotagar-d2d9d.firebaseapp.com',
-    storageBucket: 'geotagar-d2d9d.appspot.com',
-    measurementId: 'G-YQM768L8D1',
+    apiKey: 'AIzaSyALmRTiDlxU1DGEuxtg0AcCuLpSA9d863I',
+    appId: '1:765761477112:web:766d30d080583ff9db1e0d',
+    messagingSenderId: '765761477112',
+    projectId: 'geotagar-bb01a',
+    authDomain: 'geotagar-bb01a.firebaseapp.com',
+    storageBucket: 'geotagar-bb01a.appspot.com',
+    measurementId: 'G-4E5F2NMP3J',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDW-UyIFH9fRUjbVSZz2Mg6qRsd8-q64E8',
-    appId: '1:310321124196:android:6220eccc09989090e52071',
-    messagingSenderId: '310321124196',
-    projectId: 'geotagar-d2d9d',
-    storageBucket: 'geotagar-d2d9d.appspot.com',
+    apiKey: 'AIzaSyDaoBmW3cJoEEql9fuFSvjPvwR8vxdb8Ps',
+    appId: '1:765761477112:android:1c394a44984a2309db1e0d',
+    messagingSenderId: '765761477112',
+    projectId: 'geotagar-bb01a',
+    storageBucket: 'geotagar-bb01a.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBouyg0I0FVs_tl4VCyKw4zdlP3hkmd4Fw',
-    appId: '1:310321124196:ios:39e6e128895fe6f4e52071',
-    messagingSenderId: '310321124196',
-    projectId: 'geotagar-d2d9d',
-    storageBucket: 'geotagar-d2d9d.appspot.com',
-    iosClientId: '310321124196-c8onnlv0d2qs1je97senjpjko08ievq0.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBNWxmrM0GimosKRPv1tYuH0CTrBqGZ7U8',
+    appId: '1:765761477112:ios:9f101c94c31a5f36db1e0d',
+    messagingSenderId: '765761477112',
+    projectId: 'geotagar-bb01a',
+    storageBucket: 'geotagar-bb01a.appspot.com',
+    iosClientId: '765761477112-s4r0rkljdnr2lor5k9rg54avct6ren43.apps.googleusercontent.com',
     iosBundleId: 'com.example.geotagar',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBouyg0I0FVs_tl4VCyKw4zdlP3hkmd4Fw',
-    appId: '1:310321124196:ios:39e6e128895fe6f4e52071',
-    messagingSenderId: '310321124196',
-    projectId: 'geotagar-d2d9d',
-    storageBucket: 'geotagar-d2d9d.appspot.com',
-    iosClientId: '310321124196-c8onnlv0d2qs1je97senjpjko08ievq0.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBNWxmrM0GimosKRPv1tYuH0CTrBqGZ7U8',
+    appId: '1:765761477112:ios:9f101c94c31a5f36db1e0d',
+    messagingSenderId: '765761477112',
+    projectId: 'geotagar-bb01a',
+    storageBucket: 'geotagar-bb01a.appspot.com',
+    iosClientId: '765761477112-s4r0rkljdnr2lor5k9rg54avct6ren43.apps.googleusercontent.com',
     iosBundleId: 'com.example.geotagar',
   );
 }
