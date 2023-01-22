@@ -73,6 +73,10 @@ flutter:
       fonts:
         - asset: fonts/FiraCode-VariableFont_wght.ttf
           style: italic
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-VariableFont_wght.ttf
+          style: italic
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/LogIn_bg.png

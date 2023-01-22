@@ -106,7 +106,7 @@ class _UserProfileState extends State<UserProfile> {
                 '@DATTEBAYOOO',
                 style: TextStyle(
                   fontSize: 17.0,
-                  fontFamily: 'FiraCode',
+                  //fontFamily: 'FiraCode',
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
