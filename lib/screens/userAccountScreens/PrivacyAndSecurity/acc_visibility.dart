@@ -37,7 +37,7 @@ class _AccVisibility extends State<AccVisibility> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('ACCOUNT VISIBILITY')),
+        title: const Text('ACCOUNT VISIBILITY'),
       ),
 
 

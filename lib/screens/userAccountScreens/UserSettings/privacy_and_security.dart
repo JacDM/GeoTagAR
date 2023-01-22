@@ -22,7 +22,7 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('PRIVACY AND SECURITY')),
+        title: const Text('PRIVACY AND SECURITY'),
       ),
 
 

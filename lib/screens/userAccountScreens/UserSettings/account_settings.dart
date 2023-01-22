@@ -24,7 +24,7 @@ class _AccountSettingsState extends State<AccountSettings> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('ACCOUNT SETTINGS')),
+        title: const Text('ACCOUNT SETTINGS'),
       ),
 
 
