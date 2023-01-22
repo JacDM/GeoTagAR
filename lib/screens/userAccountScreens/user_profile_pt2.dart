@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geotaggar_user_profile_page/bottom_screen_user_profile.dart';
-import 'package:geotaggar_user_profile_page/post_page.dart';
+import 'package:geotagar/screens/userAccountScreens/bottom_screen_user_profile.dart';
+import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 
 const k_username = '@uchiha_forever';
 const k_bgImage = 'https://wallpapers.com/images/featured/9u4dx0obug15i974.jpg';

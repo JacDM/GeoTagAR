@@ -9,6 +9,7 @@ import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/unityAR.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
+import 'package:geotagar/screens/userAccountScreens/user_profile_pt2.dart';
 import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
 
@@ -48,7 +49,8 @@ class MyApp extends StatelessWidget {
       ),
       
       //home: HomePage(),
-      home: UserProfile(),
+      //home: UserProfile(),
+      home: UserProfilePt2(),
     );
   }
 }
