@@ -13,10 +13,10 @@ import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(const MyApp());
 }
 
@@ -32,9 +32,11 @@ class MyApp extends StatelessWidget {
 
       //Theme set for User Account Screens
       theme: ThemeData(
+        textTheme: const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')),
         scaffoldBackgroundColor: Colors.blueGrey[100],
         appBarTheme: AppBarTheme(
-          iconTheme: const IconThemeData(size: 40.0, color: Colors.white),
+          centerTitle: true,
+          iconTheme: const IconThemeData(size: 35.0, color: Colors.white),
           foregroundColor: Colors.white,
           backgroundColor: Colors.blueGrey[900],
           //shadowColor: Colors.teal[900],
@@ -44,8 +46,9 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       ),
-      home: HomePage(),
-      //home: UserProfile(),
+      
+      //home: HomePage(),
+      home: UserProfile(),
     );
   }
 }
