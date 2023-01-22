@@ -85,6 +85,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// </summary>
         public Text DebugText;
 
+        public Text myDebugText;
+
         /// <summary>
         /// The button to save the typed name.
         /// </summary>
@@ -318,7 +320,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// </summary>
         public void Update()
         {
-            DebugText.text =  Application.persistentDataPath;
+            myDebugText.text = Application.companyName;
             // Give ARCore some time to prepare for hosting or resolving.
             if (_timeSinceStart < _startPrepareTime)
             {
@@ -757,7 +759,19 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         }
 
         public void getFilepath(){
-            DebugText.text =  Application.persistentDataPath;
+            myDebugText.text =  GetAndroidExternalStoragePath();
+        }
+
+        private string GetAndroidExternalStoragePath()
+        {
+            if (Application.platform != RuntimePlatform.Android)
+                return Application.persistentDataPath;
+
+            var jc = new AndroidJavaClass("android.os.Environment");
+            var path = jc.CallStatic<AndroidJavaObject>("getExternalStoragePublicDirectory", 
+                jc.GetStatic<string>("DIRECTORY_DCIM"))
+                .Call<string>("getAbsolutePath");
+            return path;
         }
     }
 }

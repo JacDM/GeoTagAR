@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:geotagar/screens/memory_related/create_memory.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
               index: _currentIndex,
               children: [
                 Post(),
-                Container(),
+                GlobePage(),
                 Unity(),
                 Container(),
                 UserProfile(),
