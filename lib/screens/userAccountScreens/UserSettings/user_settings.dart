@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/userAccountScreens/edit_profile.dart';
-import 'package:geotagar/screens/userAccountScreens/account_settings.dart';
-import 'package:geotagar/screens/userAccountScreens/privacy_and_security.dart';
-import 'package:geotagar/screens/userAccountScreens/report.dart';
-import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
+import '../UserSettings/edit_profile.dart';
+import '../UserSettings/account_settings.dart';
+import '../UserSettings/privacy_and_security.dart';
+import '../UserSettings/report.dart';
+import '../reusableWidgets/page_tabs.dart';
+
+const Color k_SwitchIconColour =  Color(0xFF263238);  //bluegrey[900]
+const Color k_UsernameColour = Colors.black;
+const Color k_versionColor = Colors.blueGrey;
+const Color k_dividerColor = Colors.grey;
+const Color k_darkModeFontTextColor = Color(0xFF004D40);   //teal[900]
+const Color k_logoutFontTextColor = Color(0xFFC62828) ;    //red[800]
 
 const spacing =  SizedBox(height: 25.0,);
+int counter = 0;
+enum ViewMode{
+  light,
+  dark
+}
+ViewMode viewMode = ViewMode.light;
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -15,6 +28,26 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  Icon darkModeSwitch = const Icon(
+    Icons.toggle_on_outlined,
+    size: 75.0,
+    color: k_SwitchIconColour,
+  );
+  Icon lightModeSwitch = const Icon(
+    Icons.toggle_off_outlined,
+    size: 75.0,
+    color: k_SwitchIconColour,
+  );
+
+
+  //determine dark/light mode based on
+  void darkMode (){
+    setState(() {
+      counter++;
+      viewMode = counter%2 == 0 ? ViewMode.light : ViewMode.dark;
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('SETTINGS')),
+        title: const Text('SETTINGS'),
       ),
 
 
@@ -49,8 +82,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     '@DATTEBAYOOO',
                     style: TextStyle(
                       fontSize: 25.0,
-                      fontFamily: 'FiraCode',
-                      color: Colors.black,
+                      //fontFamily: 'FiraCode',
+                      color: k_UsernameColour,
                     ),
                   ),
                 ),
@@ -59,7 +92,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 const Text('Version 1.0',
                   style: TextStyle(
                     fontSize: 25.0,
-                    color: Colors.blueGrey,
+                    color: k_versionColor,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -67,7 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 const SizedBox(
                   height: 40.0,
                   child: Divider(
-                    color: Colors.grey,
+                    color: k_dividerColor,
                     thickness: 2.0,
                   ),
                 ),
@@ -121,22 +154,18 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('Dark Mode   ',
+                      const Text('Dark Mode',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 26.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
+                          //fontFamily: 'FiraCode',
+                          color: k_darkModeFontTextColor,
                         ),
                       ),
 
                       GestureDetector(
-                        onTap: null,
-                        child: Icon(
-                          Icons.toggle_off,
-                          size: 75.0,
-                          color: Colors.blueGrey[900],
-                        ),
+                        onTap: darkMode,
+                        child: viewMode == ViewMode.dark ? darkModeSwitch : lightModeSwitch,
                       ),
 
                     ],
@@ -144,14 +173,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
 
                 //Logout
-                TextButton(
+                const TextButton(
                   onPressed: null,
                   child: Text('Log Out',
                     style: TextStyle(
                       //fontWeight: FontWeight.bold,
                       fontSize: 30.0,
                       //fontFamily: 'FiraCode',
-                      color: Colors.red[800],
+                      color: k_logoutFontTextColor,
                     ),
                   ),
                 ),

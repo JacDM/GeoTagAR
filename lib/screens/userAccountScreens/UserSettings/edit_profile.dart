@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const Color k_subHeadingsColor = Color(0xFF004D40);   //teal[900]
+const Color k_fontTextColour = Colors.black;
+
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
 
@@ -17,12 +20,9 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('EDIT PROFILE')),
-        backgroundColor: Colors.blueGrey[800],
-        shadowColor: Colors.teal[900],
+        title: const Text('EDIT PROFILE'),
       ),
 
-      backgroundColor: Colors.blueGrey[200],
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -49,25 +49,31 @@ class _EditProfileState extends State<EditProfile> {
 
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const <Widget> [
                       Text('Change Profile Picture  ',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          //fontWeight: FontWeight.bold,
                           fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
+                          //fontFamily: 'FiraCode',
+                          color: k_subHeadingsColor,
                         ),
                       ),
 
-                      CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: Colors.white70,
-                        child: Icon(
+                      // CircleAvatar(
+                      //   radius: 20.0,
+                      //   backgroundColor: Colors.white70,
+                      //   child: Icon(
+                      //     Icons.edit ,
+                      //     size: 25.0,
+                      //     color: k_subHeadingsColor,
+                      //   ),
+                      // ),
+
+                      Icon(
                           Icons.edit ,
                           size: 25.0,
-                          color: Colors.teal[900],
+                          color: k_subHeadingsColor,
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -78,10 +84,10 @@ class _EditProfileState extends State<EditProfile> {
                 //Username
                 const Text('@DATTEBAYOOO',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    //fontWeight: FontWeight.bold,
                     fontSize: 25.0,
-                    fontFamily: 'FiraCode',
-                    color: Colors.black,
+                    //fontFamily: 'FiraCode',
+                    color: k_fontTextColour,
                   ),
                 ),
                 TextButton(
@@ -89,13 +95,13 @@ class _EditProfileState extends State<EditProfile> {
 
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Text('Edit Username ',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          //fontWeight: FontWeight.bold,
                           fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
+                          //fontFamily: 'FiraCode',
+                          color: k_subHeadingsColor,
                         ),
                       ),
 
@@ -103,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
                       Icon(
                         Icons.edit ,
                         size: 25.0,
-                        color: Colors.teal[900],
+                        color: k_subHeadingsColor,
                         ),
 
                     ],
@@ -116,10 +122,10 @@ class _EditProfileState extends State<EditProfile> {
                 //Name
                 const Text('Uzumaki Naruto',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    //fontWeight: FontWeight.bold,
                     fontSize: 25.0,
-                    fontFamily: 'FiraCode',
-                    color: Colors.black,
+                    //fontFamily: 'FiraCode',
+                    color: k_fontTextColour,
                   ),
                 ),
                 TextButton(
@@ -127,13 +133,13 @@ class _EditProfileState extends State<EditProfile> {
 
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Text('Edit Name ',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          //fontWeight: FontWeight.bold,
                           fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
+                          //fontFamily: 'FiraCode',
+                          color: k_subHeadingsColor,
                         ),
                       ),
 
@@ -141,7 +147,7 @@ class _EditProfileState extends State<EditProfile> {
                       Icon(
                         Icons.edit ,
                         size: 25.0,
-                        color: Colors.teal[900],
+                        color: k_subHeadingsColor,
                       ),
 
                     ],
@@ -158,9 +164,9 @@ class _EditProfileState extends State<EditProfile> {
                          title: Text(
                            'Naruto Uzumaki, a young ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village.',
                            style: TextStyle(
-                             fontFamily: 'FiraCode',
+                             //fontFamily: 'FiraCode',
                              fontSize: 20.0,
-                             fontWeight: FontWeight.bold,
+                             //fontWeight: FontWeight.bold,
                            ),
                          ),
                        ),
@@ -170,13 +176,13 @@ class _EditProfileState extends State<EditProfile> {
 
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Text('Edit Bio/Description ',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          //fontWeight: FontWeight.bold,
                           fontSize: 20.0,
-                          fontFamily: 'FiraCode',
-                          color: Colors.teal[900],
+                          //fontFamily: 'FiraCode',
+                          color: k_subHeadingsColor,
                         ),
                       ),
 
@@ -184,7 +190,7 @@ class _EditProfileState extends State<EditProfile> {
                       Icon(
                         Icons.edit ,
                         size: 25.0,
-                        color: Colors.teal[900],
+                        color: k_subHeadingsColor,
                       ),
 
                     ],

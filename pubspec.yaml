@@ -48,6 +48,7 @@ dependencies:
 
   # Email validator
   email_validator: ^2.1.17
+  file_picker: ^5.2.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -72,6 +73,10 @@ flutter:
     - family: FiraCode
       fonts:
         - asset: fonts/FiraCode-VariableFont_wght.ttf
+          style: italic
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-VariableFont_wght.ttf
           style: italic
   # To add assets to your application, add an assets section, like this:
   assets:

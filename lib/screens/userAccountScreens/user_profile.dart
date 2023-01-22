@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/userAccountScreens/user_settings.dart';
+import 'package:geotagar/screens/userAccountScreens/UserSettings/user_settings.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 
 class UserProfile extends StatefulWidget {
@@ -19,10 +19,10 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('USER PROFILE PAGE')),
+        title: const Text('USER PROFILE PAGE'),
       ),
 
-      backgroundColor: Colors.blueGrey[200],
+      //backgroundColor: Colors.blueGrey[200],
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -47,9 +47,10 @@ class _UserProfileState extends State<UserProfile> {
                     right: 10.0,
                     child: CircleAvatar(
                       backgroundColor: Colors.black,
-                      radius: 22.0,
-                      child: FloatingActionButton(
-                        onPressed: (){
+                      //22.0
+                      radius: MediaQuery.of(context).size.width * 0.0525,
+                      child: GestureDetector(
+                        onTap: (){
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context){
@@ -57,10 +58,10 @@ class _UserProfileState extends State<UserProfile> {
                             })
                           );
                         },
-                        tooltip: 'Settings',
-                        child: const Icon(
+                        child: Icon(
                           Icons.settings,
-                          size: 35.0,
+                          //35.0
+                          size: MediaQuery.of(context).size.width * 0.08,
                           color: Colors.white,
                         ),
                       ),
@@ -105,7 +106,7 @@ class _UserProfileState extends State<UserProfile> {
                 '@DATTEBAYOOO',
                 style: TextStyle(
                   fontSize: 17.0,
-                  fontFamily: 'FiraCode',
+                  //fontFamily: 'FiraCode',
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,

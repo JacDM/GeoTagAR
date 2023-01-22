@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/globe.dart';
+import 'package:geotagar/screens/discoverPages/discover.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:geotagar/screens/memory_related/create_memory.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
@@ -7,6 +7,8 @@ import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
+import 'package:geotagar/screens/globe.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                 Post(),
                 GlobePage(),
                 Unity(),
-                Container(),
+                DiscoverPage(),
                 UserProfile(),
               ],
             ),

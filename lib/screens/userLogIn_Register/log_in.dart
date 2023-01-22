@@ -9,6 +9,7 @@ import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
 import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
 
+import '../../core/constants/constants.dart';
 import '../../methods/text_Field.dart';
 
 class LogIn extends StatefulWidget {
@@ -60,8 +61,7 @@ class _LogInState extends State<LogIn> {
     return Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/LogIn_bg.png'),
-                fit: BoxFit.cover)),
+                image: AssetImage(Constants.logInBGPath), fit: BoxFit.cover)),
         child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
@@ -75,7 +75,7 @@ class _LogInState extends State<LogIn> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                    logo('assets/images/UpscaledLogoWhite.png'),
+                    logo(Constants.logoPath),
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.125),
                     //modify font weight
