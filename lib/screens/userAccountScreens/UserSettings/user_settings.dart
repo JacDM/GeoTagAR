@@ -55,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('SETTINGS')),
+        title: const Text('SETTINGS'),
       ),
 
 
