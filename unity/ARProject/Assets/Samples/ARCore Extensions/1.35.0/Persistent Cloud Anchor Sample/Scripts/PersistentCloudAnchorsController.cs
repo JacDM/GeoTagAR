@@ -28,6 +28,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
     using UnityEditor;
     using UnityEngine.XR.ARFoundation;
     using UnityEngine.UI;
+    using FlutterUnityIntegration;
+
 
     /// <summary>
     /// Controller for Persistent Cloud Anchors sample.
@@ -55,6 +57,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// The active ARAnchorManager used in the example.
         /// </summary>
         public ARAnchorManager AnchorManager;
+
+        //private FirebaseManager firebaseManager;
+        UnityMessageManager flutterManager;
+
 
         /// <summary>
         /// The active ARPlaneManager used in the example.
@@ -272,6 +278,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             }
 
             PlayerPrefs.SetString(_persistentCloudAnchorsStorageKey, JsonUtility.ToJson(history));
+            //flutterManager.SendMessageToFlutter(data.Id);
+            //flutterManager.SendMessageToFlutter(data.Name);
+            //flutterManager.SendMessageToFlutter(data.SerializedTime);
         }
 
         /// <summary>
@@ -292,11 +301,17 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             SwitchToHomePage();
         }
 
+        void Start()
+        {
+            flutterManager = gameObject.GetComponent<UnityMessageManager>();
+        }
+
         /// <summary>
         /// The Unity Update() method.
         /// </summary>
         public void Update()
         {
+
             // On home page, pressing 'back' button quits the app.
             // Otherwise, returns to home page.
             if (Input.GetKeyUp(KeyCode.Escape))
@@ -380,9 +395,6 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             CamButton.GetComponent<Image>().enabled = true;
             CamButton.GetComponent<Button>().interactable = true;
             SafeArea.gameObject.SetActive(true);
-            
         }
-
-
     }
 }
