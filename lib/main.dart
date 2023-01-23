@@ -50,7 +50,46 @@ class MyApp extends StatelessWidget {
       
       //home: HomePage(),
       //home: UserProfile(),
-      home: UserProfilePt2(),
+      //home: UserProfilePt2(),
+
+
+
+      //-----------------------------------------------------------------------
+      // home: StreamBuilder(
+      //   stream: FirebaseAuth.instance.authStateChanges(),
+      //   builder: (context, snapshot) {
+
+      //     //if a connection is made
+      //     if(snapshot.connectionState == ConnectionState.active) {
+      //       if(snapshot.hasData){
+      //         return const ResponsiveLayout(
+      //           mobileScreenLayout: MobileScreenLayout(),
+      //           webScreenLayout: WebScreenLayout(),
+      //         )
+      //       }
+      //       else if(snapshot.hasError) {
+      //         return Center(
+      //           child: Text('${snapshot.error}'),
+      //         );
+      //       }
+      //     }
+
+      //     //if a connection isn't made
+      //     id(snapshot.connectionState == ConnectionState.waiting){
+      //       return const Center(
+      //         child: CircularProgressIndicator(
+      //           color: primaryColor,
+      //         )
+      //       );
+      //     }
+
+      //     return const LogIn();
+
+      //   }
+      // ),
+
+      //-----------------------------------------------------------------------
+
     );
   }
 }
