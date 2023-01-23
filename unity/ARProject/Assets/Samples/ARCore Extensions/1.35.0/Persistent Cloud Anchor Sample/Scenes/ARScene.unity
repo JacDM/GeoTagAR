@@ -161,7 +161,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: -331.68195, y: -789.17865}
+  m_SizeDelta: {x: -342.75452, y: -777.56085}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &14302702
 MonoBehaviour:
@@ -649,7 +649,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -256.04904}
+  m_AnchoredPosition: {x: 250, y: -254.1977}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &181698044
@@ -1366,7 +1366,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 300, y: -15}
-  m_SizeDelta: {x: 560, y: 66.883965}
+  m_SizeDelta: {x: 560, y: 66.62928}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &344135561
 MonoBehaviour:
@@ -2824,8 +2824,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -125.01486}
-  m_SizeDelta: {x: 500, y: 102.06837}
+  m_AnchoredPosition: {x: 250, y: -123.97711}
+  m_SizeDelta: {x: 500, y: 100.44115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &931534209
 MonoBehaviour:
@@ -3515,6 +3515,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1758320923}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1986178302}
         m_TargetAssemblyTypeName: Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors.PersistentCloudAnchorsController,
           Assembly-CSharp
@@ -4388,8 +4400,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -21.99034}
-  m_SizeDelta: {x: 325.29105, y: 43.98068}
+  m_AnchoredPosition: {x: 250, y: -21.87827}
+  m_SizeDelta: {x: 320.21832, y: 43.75654}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1230221963
 MonoBehaviour:
@@ -5623,7 +5635,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 300, y: 0}
-  m_SizeDelta: {x: 600, y: 96.883965}
+  m_SizeDelta: {x: 600, y: 96.62928}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1552466038
 MonoBehaviour:
@@ -6024,7 +6036,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1758320924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6598,7 +6610,7 @@ MonoBehaviour:
   PrivacyPrompt: {fileID: 511486695}
   ARView: {fileID: 320699767}
   SafeArea: {fileID: 1758320923}
-  CamButton: {fileID: 1106020784}
+  CamButton: {fileID: 1106020782}
   Mode: 0
 --- !u!4 &1986178303
 Transform:

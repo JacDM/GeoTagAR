@@ -90,7 +90,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         public GameObject ARView;
 
         public GameObject SafeArea;
-        public Button CamButton;
+        public GameObject CamButton;
 
         /// <summary>
         /// The current application mode.
@@ -330,7 +330,13 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         }
 
         public void captureImage(){
-            TakeScreenshot();
+            SafeArea.gameObject.SetActive(false);
+            CamButton.GetComponent<Image>().enabled = false;
+            CamButton.GetComponent<Button>().interactable = false;
+
+            StartCoroutine(TakeScreenshot());
+
+            
         }
 
         private string GetAndroidExternalStoragePath()
@@ -355,11 +361,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             }
         }
 
-        private void TakeScreenshot()
+        private IEnumerator TakeScreenshot()
         {
-            //CamButton.GetComponent<Image>().enabled = false;
-            CamButton.interactable = false;
-            SafeArea.gameObject.SetActive(false);
+
+            yield return new WaitForEndOfFrame();     
 
             string timeStamp = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
             Texture2D ss = new Texture2D( Screen.width, Screen.height, TextureFormat.RGB24, false );
@@ -369,10 +374,13 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             File.WriteAllBytes( filePath, ss.EncodeToPNG() );
 
             Destroy(ss);
-            //CamButton.GetComponent<Image>().enabled = true;
-            CamButton.interactable = true;
+            
+            RefreshGallary(filePath);
+
+            CamButton.GetComponent<Image>().enabled = true;
+            CamButton.GetComponent<Button>().interactable = true;
             SafeArea.gameObject.SetActive(true);
-            RefreshGallary(filePath);            
+            
         }
 
 
