@@ -40,6 +40,23 @@ class User {
         // "following" : following,
         // "posts" : posts,
     };
+
+
+    static User fromSnap(DocumentSnapshot snap) {
+        var snapshot = snap.data() as Map <String, dynamic>;
+        return User(
+            username : snapshot['username'],
+            password : snapshot['password'],
+            uid : snapshot['uid'],
+            email : snapshot['email'],
+            photoUrl : snapshot['photoUrl'],
+            bio : snapshot['bio'],
+            gender : snapshot['gender'],
+            age : snapshot['age'],
+        );
+    }
+
+
 }
 
 //Add this in Register.dart -> add user to database
