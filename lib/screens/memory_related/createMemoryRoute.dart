@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/screens/memory_related/create_memory.dart';
 
 class CMRoute extends StatefulWidget {
-  const CMRoute({super.key});
+  const CMRoute({super.key
+      //this . currentUser
+      });
 
   @override
   State<CMRoute> createState() => _CMRouteState();

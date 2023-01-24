@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +9,12 @@ class AddPost extends StatefulWidget {
   const AddPost({
     super.key,
     required this.camCtrl,
+    //this.currentUser
     //required this.image
   });
 
   final CameraController camCtrl;
+  //final currentUser;
   //final XFile image;
 
   @override
@@ -18,7 +22,6 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
-  Uint8List? _file;
   bool isLoading = false;
   final TextEditingController _descCtrler = TextEditingController();
 
@@ -40,44 +43,56 @@ class _AddPostState extends State<AddPost> {
         centerTitle: false,
       ),
       backgroundColor: Colors.white54,
-      body: Container(
-        child: Column(children: [
-          //linear indicator
-          isLoading
-              ? const LinearProgressIndicator()
-              : const Padding(padding: EdgeInsets.all(0)),
-          const Divider(),
+      body: Column(
+        children: [
+        //linear indicator
+        isLoading
+            ? const LinearProgressIndicator()
+            : const Padding(padding: EdgeInsets.all(0)),
+        const Divider(),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              //the pic
-              Container(
-                height: 220,
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: Center(
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              alignment: FractionalOffset.topCenter,
-                              image: FileImage(file))),
-                    ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            //the pic
+            Container(
+              height: 220,
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: Center(
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        /// image: DecorationImage(
+                        ///     fit: BoxFit.fill,
+                        ///     alignment: FractionalOffset.topCenter,
+                        ///     image: FileImage(file))
+                        ),
                   ),
                 ),
-              )
-            ],
-          ),
-          Container(
-            height: 300,
-            width: 100,
-            child: Center(),
-          )
-        ]),
-      ),
+              ),
+            ),
+
+
+            Padding(padding: EdgeInsets.only(top: 10)),
+
+
+            const ListTile(
+              leading: CircleAvatar(
+                backgroundImage: null,
+              ),
+            ),
+
+
+          ],
+        ),
+        Container(
+          height: 300,
+          width: 100,
+          child: Center(),
+        )
+      ]),
     );
     // Center(
     //   child: IconButton(
@@ -107,6 +122,16 @@ class PreviewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+      ),
+      body: Container(),
+      floatingActionButton: IconButton(
+        onPressed: () {},
+        alignment: Alignment.bottomRight,
+        color: Colors.black,
+        icon: Icon(
+          Icons.arrow_forward,
+        ),
+        padding: EdgeInsets.only(bottom: 8, right: 8),
       ),
     );
   }

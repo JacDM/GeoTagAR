@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/discoverPages/discover.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:geotagar/screens/memory_related/create_memory.dart';
 import 'package:geotagar/screens/unityAR.dart';
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 Post(),
                 Container(),
                 CMRoute(),
-                Container(),
+                DiscoverPage(),
                 UserProfile(),
               ],
             ),
