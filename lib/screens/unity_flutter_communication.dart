@@ -14,7 +14,7 @@ class _UnityState extends State<Unity> {
       GlobalKey<ScaffoldState>();
 
   late UnityWidgetController _unityWidgetController;
-  double _sliderValue = 0.0;
+  late String cloudAnchorID;
 
   @override
   void initState() {
@@ -31,54 +31,74 @@ class _UnityState extends State<Unity> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text('Simple Screen'),
-      ),
       body: Card(
-          margin: const EdgeInsets.all(0),
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Stack(
-            children: [
-              UnityWidget(
-                onUnityCreated: _onUnityCreated,
-                onUnityMessage: onUnityMessage,
-                useAndroidViewSurface: false,
-                borderRadius: BorderRadius.all(Radius.circular(70)),
-              ),
-              PointerInterceptor(
-                child: Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Card(
-                    elevation: 10,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Text("Rotation speed:"),
-                        ),
-                        Slider(
-                          onChanged: (value) {
-                            setState(() {
-                              _sliderValue = value;
-                            });
-                            setRotationSpeed(value.toString());
-                          },
-                          value: _sliderValue,
-                          min: 0.0,
-                          max: 1.0,
-                        ),
-                      ],
+        margin: const EdgeInsets.all(0),
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Stack(
+          children: [
+            UnityWidget(
+              onUnityCreated: _onUnityCreated,
+              onUnityMessage: onUnityMessage,
+              useAndroidViewSurface: false,
+              borderRadius: BorderRadius.all(Radius.circular(70)),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        //takePicture();
+                      },
+                      icon: Icon(
+                        Icons.flip_camera_ios,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                      iconSize: 25,
+                      padding: const EdgeInsets.only(bottom: 20, right: 20),
                     ),
-                  ),
+                    IconButton(
+                      onPressed: () {
+                        takePicture();
+                      },
+                      icon: Icon(
+                        Icons.circle_outlined,
+                        color: Colors.white,
+                      ),
+                      iconSize: 35,
+                      padding: const EdgeInsets.only(bottom: 15),
+                      selectedIcon: Icon(
+                        Icons.circle,
+                        color: Colors.white,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          ;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.add_to_photos_rounded,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                      iconSize: 25,
+                      padding: const EdgeInsets.only(bottom: 20, left: 20),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          )),
+            )
+          ],
+        )
+      ),
     );
   }
 
@@ -90,8 +110,18 @@ class _UnityState extends State<Unity> {
     );
   }
 
+  void takePicture() {
+    _unityWidgetController.postMessage(
+        'PersistentCloudAnchorsController', 'captureImage', null);
+  }
+
+  void sendText(){
+   // _unityWidgetController.postMessage(gameObject, methodName, message)
+  }
+
   void onUnityMessage(message) {
     print('Received message from unity: ${message.toString()}');
+    cloudAnchorID = message.toString();
   }
 
   void onUnitySceneLoaded(SceneLoaded scene) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const Color k_tabFontColour = Color(0xFF004D40);   //teal[900]
+
 class PageTab extends StatelessWidget {
   const PageTab({super.key, required this.onPressed, required this.pageTabLabel});
   final VoidCallback onPressed;
@@ -14,18 +16,18 @@ class PageTab extends StatelessWidget {
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(pageTabLabel,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
-              fontFamily: 'FiraCode',
-              color: Colors.teal[900],
+              fontFamily: 'Nunito',
+              color: k_tabFontColour,
             ),
           ),
 
-          Icon(
+          const Icon(
             Icons.arrow_forward_ios,
             size: 17.0,
-            color: Colors.teal[900],
+            color: k_tabFontColour,
           ),
 
         ],

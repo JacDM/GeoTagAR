@@ -55,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('SETTINGS')),
+        title: const Text('SETTINGS'),
       ),
 
 
@@ -82,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     '@DATTEBAYOOO',
                     style: TextStyle(
                       fontSize: 25.0,
-                      fontFamily: 'FiraCode',
+                      //fontFamily: 'FiraCode',
                       color: k_UsernameColour,
                     ),
                   ),
@@ -158,7 +158,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 26.0,
-                          fontFamily: 'FiraCode',
+                          //fontFamily: 'FiraCode',
                           color: k_darkModeFontTextColor,
                         ),
                       ),

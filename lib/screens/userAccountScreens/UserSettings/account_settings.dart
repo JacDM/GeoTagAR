@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
 
+import 'package:geotagar/screens/userAccountScreens/AccSettings/data_usage.dart';
+import 'package:geotagar/screens/userAccountScreens/AccSettings/personal_info.dart';
+import 'package:geotagar/screens/userAccountScreens/AccSettings/sensitive_content.dart';
 
 const spacing =  SizedBox(height: 25.0,);
 
@@ -21,7 +24,7 @@ class _AccountSettingsState extends State<AccountSettings> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('ACCOUNT SETTINGS')),
+        title: const Text('ACCOUNT SETTINGS'),
       ),
 
 
@@ -36,7 +39,12 @@ class _AccountSettingsState extends State<AccountSettings> {
                 //Personal Information
                 PageTab(onPressed: () {
                   setState(() {
-                    null;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const PersonalInfo() ;
+                        })
+                    );
                   });
                 }, pageTabLabel: 'Personal Information'),
                 spacing,
@@ -52,14 +60,25 @@ class _AccountSettingsState extends State<AccountSettings> {
                 //Sensitive Content Control
                 PageTab(onPressed: () {
                   setState(() {
-                    null;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const SCC() ;
+                        })
+                    );
                   });
-                }, pageTabLabel: 'Content Control'),
+                }, pageTabLabel: 'Sensitive Content Control'),
                 spacing,
+
                 //Data Usage
                 PageTab(onPressed: () {
                   setState(() {
-                    null;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const DataUsage() ;
+                        })
+                    );
                   });
                 }, pageTabLabel: 'Data Usage'),
                 spacing,

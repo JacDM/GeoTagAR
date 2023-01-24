@@ -38,7 +38,7 @@ class _ActivityStatus extends State<ActivityStatus> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('ACTIVITY STATUS')),
+        title: const Text('ACTIVITY STATUS'),
       ),
 
 

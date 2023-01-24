@@ -21,9 +21,15 @@
 namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using UnityEngine;
+    using UnityEditor;
     using UnityEngine.XR.ARFoundation;
+    using UnityEngine.UI;
+    using FlutterUnityIntegration;
+
 
     /// <summary>
     /// Controller for Persistent Cloud Anchors sample.
@@ -51,6 +57,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// The active ARAnchorManager used in the example.
         /// </summary>
         public ARAnchorManager AnchorManager;
+
+        //private FirebaseManager firebaseManager;
+        UnityMessageManager flutterManager;
+
 
         /// <summary>
         /// The active ARPlaneManager used in the example.
@@ -84,6 +94,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// and returns to home page.
         /// </summary>
         public GameObject ARView;
+
+        public GameObject SafeArea;
+        public GameObject CamButton;
 
         /// <summary>
         /// The current application mode.
@@ -254,6 +267,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             // Sort the data from latest record to oldest record which affects the option order in
             // multiselection dropdown.
             history.Collection.Add(data);
+            // add data to firebase
             history.Collection.Sort((left, right) => right.CreatedTime.CompareTo(left.CreatedTime));
 
             // Remove the oldest data if the capacity exceeds storage limit.
@@ -264,6 +278,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             }
 
             PlayerPrefs.SetString(_persistentCloudAnchorsStorageKey, JsonUtility.ToJson(history));
+            //flutterManager.SendMessageToFlutter(data.Id);
+            //flutterManager.SendMessageToFlutter(data.Name);
+            //flutterManager.SendMessageToFlutter(data.SerializedTime);
         }
 
         /// <summary>
@@ -284,11 +301,17 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             SwitchToHomePage();
         }
 
+        void Start()
+        {
+            flutterManager = gameObject.GetComponent<UnityMessageManager>();
+        }
+
         /// <summary>
         /// The Unity Update() method.
         /// </summary>
         public void Update()
         {
+
             // On home page, pressing 'back' button quits the app.
             // Otherwise, returns to home page.
             if (Input.GetKeyUp(KeyCode.Escape))
@@ -322,9 +345,56 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         }
 
         public void captureImage(){
-            ScreenCapture.CaptureScreenshot("screenshot.png",4);
+            SafeArea.gameObject.SetActive(false);
+            CamButton.GetComponent<Image>().enabled = false;
+            CamButton.GetComponent<Button>().interactable = false;
+
+            StartCoroutine(TakeScreenshot());
+
+            
         }
 
+        private string GetAndroidExternalStoragePath()
+        {
+            if (Application.platform != RuntimePlatform.Android)
+                return Application.persistentDataPath;
 
+            var jc = new AndroidJavaClass("android.os.Environment");
+            var path = jc.CallStatic<AndroidJavaObject>("getExternalStoragePublicDirectory", 
+                jc.GetStatic<string>("DIRECTORY_DCIM"))
+                .Call<string>("getAbsolutePath");
+            return path;
+        }
+
+        private void RefreshGallary(String path){
+            using (AndroidJavaClass jcUnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            using (AndroidJavaObject joActivity = jcUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+            using (AndroidJavaObject joContext = joActivity.Call<AndroidJavaObject>("getApplicationContext"))
+            using (AndroidJavaClass jcMediaScannerConnection = new AndroidJavaClass("android.media.MediaScannerConnection"))
+            {
+                jcMediaScannerConnection.CallStatic("scanFile", joContext, new string[] { path }, null, null);
+            }
+        }
+
+        private IEnumerator TakeScreenshot()
+        {
+
+            yield return new WaitForEndOfFrame();     
+
+            string timeStamp = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+            Texture2D ss = new Texture2D( Screen.width, Screen.height, TextureFormat.RGB24, false );
+            ss.ReadPixels( new Rect( 0, 0, Screen.width, Screen.height ), 0, 0 );
+            ss.Apply();
+            string filePath = Path.Combine( GetAndroidExternalStoragePath(), "GeoTagAR-" + timeStamp + ".png" );
+            File.WriteAllBytes( filePath, ss.EncodeToPNG() );
+
+            Destroy(ss);
+            
+            RefreshGallary(filePath);
+
+            CamButton.GetComponent<Image>().enabled = true;
+            CamButton.GetComponent<Button>().interactable = true;
+            SafeArea.gameObject.SetActive(true);
+        }
     }
 }

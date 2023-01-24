@@ -27,7 +27,7 @@ class _ResetPassword extends State<ResetPassword> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        //title: const Center(child: Text('RESET PASSWORD'),),
+        title: const Text('RESET PASSWORD'),
       ),
 
 

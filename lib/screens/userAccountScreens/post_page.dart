@@ -23,23 +23,21 @@ class _PostState extends State<Post> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: Center(
-          child: Column(
-            children: const <Widget> [
-              Text(
-                _username,
-                style: TextStyle(
-                  color: Colors.white38,
-                  fontSize: 17.0,
-                ),
-              ),
+        title: Column(
+          children: const <Widget> [
+            // Text(
+            //   k_username,
+            //   style: TextStyle(
+            //     color: Colors.white38,
+            //     fontSize: 17.0,
+            //   ),
+            // ),
 
-              Text('Posts',
-                style: TextStyle(
-                  fontSize: 25.0,
-                ),),
-            ],
-          ),
+            Text('Posts',
+              style: TextStyle(
+                fontSize: 25.0,
+              ),),
+          ],
         ),
       ),
 

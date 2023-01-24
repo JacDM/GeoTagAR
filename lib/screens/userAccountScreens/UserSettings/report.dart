@@ -21,7 +21,7 @@ class _ReportState extends State<Report> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('REPORT')),
+        title: const Text('REPORT'),
       ),
 
 
@@ -37,11 +37,11 @@ class _ReportState extends State<Report> {
                   height: 10.0,
                 ),
 
-                const Text('Briefly explain the Problem you want to Report',
+                const Text('Briefly explain the problem you want to report.',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 25.0,
-                    fontFamily: 'FiraCode',
+                    fontSize: 23.0,
+                    //fontFamily: 'FiraCode',
                     color: k_fontTextColour,
                   ),
                 ),

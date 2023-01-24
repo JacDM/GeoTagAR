@@ -19,7 +19,7 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Center(child: Text('USER PROFILE PAGE')),
+        title: const Text('USER PROFILE PAGE'),
       ),
 
       //backgroundColor: Colors.blueGrey[200],
@@ -106,7 +106,7 @@ class _UserProfileState extends State<UserProfile> {
                 '@DATTEBAYOOO',
                 style: TextStyle(
                   fontSize: 17.0,
-                  fontFamily: 'FiraCode',
+                  //fontFamily: 'FiraCode',
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
