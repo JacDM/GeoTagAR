@@ -85,8 +85,6 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// </summary>
         public Text DebugText;
 
-        public Text myDebugText;
-
         /// <summary>
         /// The button to save the typed name.
         /// </summary>
@@ -320,7 +318,6 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// </summary>
         public void Update()
         {
-            myDebugText.text = Application.companyName;
             // Give ARCore some time to prepare for hosting or resolving.
             if (_timeSinceStart < _startPrepareTime)
             {
@@ -486,7 +483,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
 
             // Creating a Cloud Anchor with lifetime = 1 day.
             // This is configurable up to 365 days when keyless authentication is used.
-            ARCloudAnchor cloudAnchor = Controller.AnchorManager.HostCloudAnchor(_anchor, 365);
+            ARCloudAnchor cloudAnchor = Controller.AnchorManager.HostCloudAnchor(_anchor, 1);
             if (cloudAnchor == null)
             {
                 Debug.LogFormat("Failed to create a Cloud Anchor.");
@@ -756,22 +753,6 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         {
             SaveButton.enabled = active;
             SaveButton.GetComponentInChildren<Text>().color = active ? _activeColor : Color.gray;
-        }
-
-        public void getFilepath(){
-            myDebugText.text =  GetAndroidExternalStoragePath();
-        }
-
-        private string GetAndroidExternalStoragePath()
-        {
-            if (Application.platform != RuntimePlatform.Android)
-                return Application.persistentDataPath;
-
-            var jc = new AndroidJavaClass("android.os.Environment");
-            var path = jc.CallStatic<AndroidJavaObject>("getExternalStoragePublicDirectory", 
-                jc.GetStatic<string>("DIRECTORY_DCIM"))
-                .Call<string>("getAbsolutePath");
-            return path;
         }
     }
 }
