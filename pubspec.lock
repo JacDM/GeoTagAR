@@ -107,12 +107,19 @@ packages:
     source: hosted
     version: "1.16.0"
   cross_file:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cross_file
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.3+2"
+  cross_file_image:
+    dependency: "direct main"
+    description:
+      name: cross_file_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   crypto:
     dependency: transitive
     description:

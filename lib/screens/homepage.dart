@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/discoverPages/discover.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Post(),
                 GlobePage(),
-                Unity(),
+                CMRoute(),
                 DiscoverPage(),
                 UserProfile(),
               ],
@@ -71,6 +72,9 @@ class _HomePageState extends State<HomePage> {
                   onTap: (index) {
                     setState(() {
                       _currentIndex = index;
+                      CupertinoAlertDialog(
+                        content: Text('hello'),
+                      );
                     });
                   },
                   items: const [

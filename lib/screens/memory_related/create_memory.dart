@@ -1,12 +1,14 @@
 import 'dart:html';
 
 import 'package:camera/camera.dart';
+import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/memory_related/post_memory.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cross_file/cross_file.dart';
 
 //import 'package:anim_search_bar/anim_search_bar.dart';
 
@@ -65,11 +67,15 @@ class _CreateMemoryState extends State<CreateMemory> {
     //Navigator.pop(context);
 
     imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
-
+    Image imageUpload = Image(image: XFileImage(imagefile!));
     setState(() {});
     //if (!context.mounted) return;
     Navigator.push(
-        context, MaterialPageRoute(builder: (builder) => PreviewPage()));
+        context,
+        MaterialPageRoute(
+            builder: (builder) => AddPost(
+                  image: imageUpload,
+                )));
   }
 
   Widget getBody() {

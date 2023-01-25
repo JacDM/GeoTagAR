@@ -6,16 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/main.dart';
 
 class AddPost extends StatefulWidget {
-  const AddPost({
-    super.key,
-    required this.camCtrl,
-    //this.currentUser
-    //required this.image
-  });
+  const AddPost(
+      {super.key,
+      //required this.cameraController,
+      //this.currentUser
+      required this.image});
 
-  final CameraController camCtrl;
+  //final CameraController cameraController;
   //final currentUser;
-  //final XFile image;
+  final Image image;
 
   @override
   State<AddPost> createState() => _AddPostState();
@@ -43,8 +42,7 @@ class _AddPostState extends State<AddPost> {
         centerTitle: false,
       ),
       backgroundColor: Colors.white54,
-      body: Column(
-        children: [
+      body: Column(children: [
         //linear indicator
         isLoading
             ? const LinearProgressIndicator()
@@ -63,35 +61,31 @@ class _AddPostState extends State<AddPost> {
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: Container(
-                    decoration: const BoxDecoration(
-                        /// image: DecorationImage(
-                        ///     fit: BoxFit.fill,
-                        ///     alignment: FractionalOffset.topCenter,
-                        ///     image: FileImage(file))
-                        ),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                'https://images.unsplash.com/photo-1490077476659-095159692ab5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2NlbmV8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60'),
+                            fit: BoxFit.fill,
+                            alignment: FractionalOffset.topCenter)),
                   ),
                 ),
               ),
             ),
-
-
-            Padding(padding: EdgeInsets.only(top: 10)),
-
-
-            const ListTile(
-              leading: CircleAvatar(
-                backgroundImage: null,
-              ),
-            ),
-
-
           ],
         ),
+
+        Divider(),
         Container(
           height: 300,
-          width: 100,
+          width: 100, //
           child: Center(),
-        )
+        ),
+
+        const ListTile(
+          leading: CircleAvatar(
+            backgroundImage: null,
+          ),
+        ),
       ]),
     );
     // Center(
@@ -103,36 +97,30 @@ class _AddPostState extends State<AddPost> {
   }
 }
 
-//
-//
-//
-//
-//
-//
 
-class PreviewPage extends StatelessWidget {
-  const PreviewPage({
-    super.key,
-    //required this.path
-  });
-  //final String path;
+// class PreviewPage extends StatelessWidget {
+//   const PreviewPage({
+//     super.key,
+//     //required this.path
+//   });
+//   //final String path;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
-      body: Container(),
-      floatingActionButton: IconButton(
-        onPressed: () {},
-        alignment: Alignment.bottomRight,
-        color: Colors.black,
-        icon: Icon(
-          Icons.arrow_forward,
-        ),
-        padding: EdgeInsets.only(bottom: 8, right: 8),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Colors.black,
+//       ),
+//       body: Container(),
+//       floatingActionButton: IconButton(
+//         onPressed: () {},
+//         alignment: Alignment.bottomRight,
+//         color: Colors.black,
+//         icon: Icon(
+//           Icons.arrow_forward,
+//         ),
+//         padding: EdgeInsets.only(bottom: 8, right: 8),
+//       ),
+//     );
+//   }
+// }

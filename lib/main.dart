@@ -14,10 +14,10 @@ import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -43,53 +43,49 @@ class MyApp extends StatelessWidget {
           //shadowColor: Colors.teal[900],
           toolbarHeight: 60.0,
           elevation: 0,
-
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       ),
-      
+
       //home: HomePage(),
       //home: UserProfile(),
-      //home: UserProfilePt2(),
-
-
+      home: LogIn(),
 
       //-----------------------------------------------------------------------
-      // home: StreamBuilder(
-      //   stream: FirebaseAuth.instance.authStateChanges(),
-      //   builder: (context, snapshot) {
+      /// home: StreamBuilder(
+      ///   stream: FirebaseAuth.instance.authStateChanges(),
+      ///   builder: (context, snapshot) {
 
-      //     //if a connection is made
-      //     if(snapshot.connectionState == ConnectionState.active) {
-      //       if(snapshot.hasData){
-      //         return const ResponsiveLayout(
-      //           mobileScreenLayout: MobileScreenLayout(),
-      //           webScreenLayout: WebScreenLayout(),
-      //         )
-      //       }
-      //       else if(snapshot.hasError) {
-      //         return Center(
-      //           child: Text('${snapshot.error}'),
-      //         );
-      //       }
-      //     }
+      ///     //if a connection is made
+      ///     if(snapshot.connectionState == ConnectionState.active) {
+      ///       if(snapshot.hasData){
+      ///         return const ResponsiveLayout(
+      ///           mobileScreenLayout: MobileScreenLayout(),
+      ///           webScreenLayout: WebScreenLayout(),
+      ///         )
+      ///       }
+      ///       else if(snapshot.hasError) {
+      ///         return Center(
+      ///           child: Text('${snapshot.error}'),
+      ///         );
+      ///       }
+      ///     }
 
-      //     //if a connection isn't made
-      //     id(snapshot.connectionState == ConnectionState.waiting){
-      //       return const Center(
-      //         child: CircularProgressIndicator(
-      //           color: primaryColor,
-      //         )
-      //       );
-      //     }
+      ///     //if a connection isn't made
+      ///     id(snapshot.connectionState == ConnectionState.waiting){
+      ///       return const Center(
+      ///         child: CircularProgressIndicator(
+      ///           color: primaryColor,
+      ///         )
+      ///       );
+      ///     }
 
-      //     return const LogIn();
+      ///     return const LogIn();
 
-      //   }
-      // ),
+      ///   }
+      /// ),
 
       //-----------------------------------------------------------------------
-
     );
   }
 }
