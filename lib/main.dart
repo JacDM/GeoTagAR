@@ -5,7 +5,7 @@ import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
-import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
+import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/unityAR.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
@@ -14,10 +14,10 @@ import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       
       //home: HomePage(),
       //home: UserProfile(),
-      //home: UserProfilePt2(),
+      home: RegisterPage(),
 
 
 
@@ -93,3 +93,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// wrap Material app with MultiProvider(
+//   providers: [
+//     ChangeNotifierProvider(create: (_) => UserProvider(), ),
+//   ],
+// )

@@ -10,12 +10,24 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+
+
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
+
+
   bool pressedMemoriesTab = true;
   bool pressedTagsTab = false;
 
 
   @override
   Widget build(BuildContext context) {
+    //import user file as models
+    //models.User user = Provider.of<UserProvider>(context).getUser;
+
     return Scaffold(
       //appbar
       appBar: AppBar(
@@ -93,7 +105,7 @@ class _UserProfileState extends State<UserProfile> {
 
               //Name
               const Text(
-                'Uzumaki Naruto',
+                'Uzumaki Naruto', 
                 style: TextStyle(
                   fontSize: 30.0,
                   fontFamily: 'Lobster',
@@ -103,7 +115,7 @@ class _UserProfileState extends State<UserProfile> {
 
               //Username
               const Text(
-                '@DATTEBAYOOO',
+                '@DATTEBAYOOO',  //k_username
                 style: TextStyle(
                   fontSize: 17.0,
                   //fontFamily: 'FiraCode',
