@@ -5,7 +5,7 @@ import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
-import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
+import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/unityAR.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
 
       //home: HomePage(),
       //home: UserProfile(),
-      home: LogIn(),
+      home: RegisterPage(),
 
       //-----------------------------------------------------------------------
       /// home: StreamBuilder(
@@ -89,3 +89,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// wrap Material app with MultiProvider(
+//   providers: [
+//     ChangeNotifierProvider(create: (_) => UserProvider(), ),
+//   ],
+// )
