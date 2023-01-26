@@ -2,13 +2,12 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
-
 GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 class ReusableTextField extends StatelessWidget {
   const ReusableTextField(
       {super.key,
-      required this.controller,
+      this.controller,
       this.validator,
       required this.obscure,
       this.readOnly,
@@ -24,7 +23,7 @@ class ReusableTextField extends StatelessWidget {
       this.suffix,
       this.prefix});
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final bool obscure;
   final bool? readOnly;

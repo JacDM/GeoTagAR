@@ -50,6 +50,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         child: Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
+              iconTheme: const IconThemeData(
+                color: Colors.black, //change your color here
+              ),
               backgroundColor: Color.fromARGB(0, 103, 143, 51),
               foregroundColor: Color.fromARGB(255, 68, 68, 68),
               elevation: 0,

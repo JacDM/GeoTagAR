@@ -49,6 +49,7 @@ dependencies:
   # Email validator
   email_validator: ^2.1.17
   file_picker: ^5.2.5
+  age_calculator: ^1.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
