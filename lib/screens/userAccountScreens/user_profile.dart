@@ -325,7 +325,7 @@ class _UserProfileState extends State<UserProfile> {
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://cdn-images.win.gg/resize/w/1000/format/webp/type/progressive/fit/cover/path/wp/uploads/2022/06/naruto-and-sasuke.jpg'),
+                          image: NetworkImage('https://static.wikia.nocookie.net/naruto/images/c/c2/Young_sasuke_and_Naruto.png/revision/latest/scale-to-width-down/1916?cb=20210925220045'),
                           fit: BoxFit.cover,
                         ),
 
