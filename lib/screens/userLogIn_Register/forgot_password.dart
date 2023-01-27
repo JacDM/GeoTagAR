@@ -1,11 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:geotagar/methods/methods.dart';
+import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
-import '../../methods/text_Field.dart';
+import '../../utils/text_Field.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
