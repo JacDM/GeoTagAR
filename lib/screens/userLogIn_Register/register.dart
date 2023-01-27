@@ -6,13 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:geotagar/methods/methods.dart';
+import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:age_calculator/age_calculator.dart';
+import 'package:geotagar/models/users.dart' as model;
+import 'package:geotagar/services/auth.dart';
 
 import '../../core/constants/constants.dart';
-import '../../methods/text_Field.dart';
+import '../../utils/text_Field.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -36,7 +38,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
       TextEditingController();
-  // Ask whether full name (like instagram)
   final TextEditingController _nameController = TextEditingController();
   //final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
@@ -46,13 +47,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _monthController = TextEditingController();
   final TextEditingController _yearController = TextEditingController();
   //final TextEditingController _genderController = TextEditingController();
+
   String _emailError = '';
   // Prefer not to say?
   final _gender = ["Male", "Female", "Other"];
   final _accountType = ["General", "Geocacher", "Historian"];
   String _selectedGender = "";
   String _selectedAccountType = "";
-
   String email = "";
   String username = "";
   String name = "";
@@ -62,6 +63,8 @@ class _RegisterPageState extends State<RegisterPage> {
   // int month;
   // int year = 0;
   // DateTime birthday = DateTime(day, month, year);
+
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -79,41 +82,28 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future register() async {
-    // Authentication
+    setState(() {
+      _isLoading = true;
+    });
+
     if (passwordMatch()) {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: _emailTextController.text.trim(),
-              password: _passwordTextController.text.trim())
+      await AuthMethods()
+          .signUp(
+            email: email,
+            username: username,
+            password: _passwordTextController.text.trim(),
+            name: name,
+            gender: _selectedGender,
+            accountType: _selectedAccountType,
+          )
           .then((value) => Navigator.push(
                   context, MaterialPageRoute(builder: (context) => LogIn()))
               .onError((error, stackTrace) => print("#${error.toString()}")));
     }
-  }
 
-  Future createUser(
-      {required String email,
-      required String username,
-      //String? firstName,
-      required String name,
-      required int age,
-      String? gender,
-      String? accountType}) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc();
-
-    final data = {
-      'email': email,
-      'username': username,
-      'name': name,
-      //'lastName': lastName,
-      'age': age,
-      'gender': gender,
-      'accountType': accountType,
-    };
-
-    await docUser
-        .set(data)
-        .then((value) => print("$username added to FireStore."));
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   void convert() {
@@ -121,6 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
       username = _usernameTextController.text.trim();
       email = _emailTextController.text.trim();
       name = _nameController.text.trim();
+      //password = _passwordTextController.text.trim();
       //lastName = _lastNameController.text.trim();
       age = int.parse(_ageController.text.trim());
       // day = int.parse(_dayController.text.trim());
@@ -395,20 +386,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                       if (formKey.currentState!.validate()) {
                                         print("Validated");
                                         convert();
+                                        emailValidator();
                                         print("Select gender is: " +
                                             _selectedGender);
                                         print("Select account type is: " +
                                             _selectedAccountType);
-                                        createUser(
-                                          username: username,
-                                          email: email,
-                                          name: name,
-                                          //lastName: lastName,
-                                          age: age,
-                                          gender: _selectedGender,
-                                          accountType: _selectedAccountType,
-                                        );
-                                        emailValidator();
+
+                                        //modelData();
+                                        //DatabaseMethods().addUser(user);
+
                                         register();
                                       } else {
                                         print("Not Validated");
@@ -432,6 +418,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                   SizedBox(height: 100),
                                 ])))))));
   }
+
+  // void modelData() {
+  //   model.User user = model.User(
+  //     uid: UserCredential.user!.uid,
+  //     email: email,
+  //     username: username,
+  //     name: name,
+  //     //'lastName': lastName,
+  //     age: age,
+  //     gender: _selectedGender,
+  //     accountType: _selectedAccountType,
+  //   );
+  // }
 
   Row ageCalc() {
     return Row(

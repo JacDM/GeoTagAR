@@ -4,13 +4,14 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/main.dart';
-import 'package:geotagar/methods/methods.dart';
+import 'package:geotagar/services/auth.dart';
+import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
 import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
 
 import '../../core/constants/constants.dart';
-import '../../methods/text_Field.dart';
+import '../../utils/text_Field.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -31,13 +32,22 @@ class _LogInState extends State<LogIn> {
     super.dispose();
   }
 
-  Future logIn() async {
-    await FirebaseAuth.instance
-        .signInWithEmailAndPassword(
+  // Future logIn() async {
+  //   await FirebaseAuth.instance
+  //       .signInWithEmailAndPassword(
+  //           email: _emailTextController.text.trim(),
+  //           password: _passwordTextController.text.trim())
+  //       .then((value) => Navigator.push(
+  //           context, MaterialPageRoute(builder: ((context) => HomePage()))));
+  // }
+
+  void logIn() async {
+    await AuthMethods()
+        .logIn(
             email: _emailTextController.text.trim(),
             password: _passwordTextController.text.trim())
-        .then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: ((context) => HomePage()))));
+        .then(((value) => Navigator.push(
+            context, MaterialPageRoute(builder: ((context) => HomePage())))));
   }
 
   void emailValidator() {
