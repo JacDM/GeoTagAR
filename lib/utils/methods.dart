@@ -68,7 +68,8 @@ Container button(
         style: const TextStyle(
             color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
         textAlign: TextAlign.center,
-      ),
+      ), 
+      
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             return color;
