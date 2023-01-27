@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const Color k_iconTextColour = Colors.black;
+
 class WidgetIconData extends StatelessWidget {
   const WidgetIconData({super.key, required this.icon, required this.iconText,});
   final IconData icon;
@@ -13,6 +15,7 @@ class WidgetIconData extends StatelessWidget {
         Icon(
           icon,
           size: 40.0,
+          color: Colors.black,
         ),
 
         const SizedBox(

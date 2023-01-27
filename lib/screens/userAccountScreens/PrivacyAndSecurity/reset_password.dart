@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/custom_button.dart';
 
+
 TextStyle k_passwordtextstyle = const TextStyle(fontSize: 20.0);
 Widget k_textbox = const TextField(
   textAlign: TextAlign.left,
@@ -53,24 +54,24 @@ class _ResetPassword extends State<ResetPassword> {
                 Text('Confirm New Password', style: k_passwordtextstyle),
                 k_textbox,
                 spacing,
-                
-                
+
+
                 Row(
-                  children:[
-                    Expanded(
-                      child: RaisedGradientButton(
-                        gradient: const LinearGradient(
-                          colors: <Color>[Colors.deepPurple, Colors.purple],
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                        child: const Center(
-                          child: Text(
-                            'UPDATE PASSWORD',
-                            style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
+                  children: [
+                      Expanded(
+                        child: RaisedGradientButton(
+                          gradient: const LinearGradient(
+                            colors: <Color>[Colors.deepPurple, Colors.purple],
                           ),
+                          onPressed: () => Navigator.pop(context),
+                          child: const Center(
+                            child: Text(
+                              'RESET PASSWORD',
+                              style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
+                            ),
                         ),
-                      ),
                     ),
+                      ),
                   ],
                 )
 

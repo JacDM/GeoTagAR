@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../reusableWidgets/custom_button.dart';
 
 const Color k_subHeadingsColor = Color(0xFF004D40);   //teal[900]
-TextStyle k_textstyle = const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold,);
+TextStyle k_textstyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500, color: Colors.grey[600]);
 const Color k_fontTextColour = Colors.black;
 const k_username = '@DATTEBAYOOO';
 const k_name = 'Uzumaki Naruto';
@@ -50,17 +50,16 @@ class _EditProfileState extends State<EditProfile> {
                         'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
                   ),
 
-                  //Edit
                   Positioned(
                     top: 10.0,
                     right: 10.0,
                     child: CircleAvatar(
                       radius: MediaQuery.of(context).size.width * 0.0525,
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.black,
                       child: Icon(
                         Icons.edit ,
-                        size: MediaQuery.of(context).size.width * 0.08,
-                        color: k_subHeadingsColor,
+                        size: MediaQuery.of(context).size.width * 0.065,
+                        color: Colors.white,
                       ),
                     ),
 
@@ -69,26 +68,26 @@ class _EditProfileState extends State<EditProfile> {
                   //Profile Picture
                   Positioned(
                     bottom: -55.0,
-                    right: MediaQuery.of(context).size.width * 0.35,
+                    right: MediaQuery.of(context).size.width * 0.30,
                     child: Stack(
                       clipBehavior: Clip.none,
                       children:  [
-                        CircleAvatar(
-                          radius: MediaQuery.of(context).size.width * 0.14,
+                        const CircleAvatar(
+                          radius: 70.0,
                           backgroundImage: NetworkImage('https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
                         ),
 
                         Positioned(
-                          bottom: -9.0,
-                          left: MediaQuery.of(context).size.width * 0.20,
+                          bottom: -10.0,
+                          left: MediaQuery.of(context).size.width * 0.25,
 
                           child: CircleAvatar(
-                            radius: MediaQuery.of(context).size.width * 0.0425,
-                            backgroundColor: Colors.white,
+                            radius: MediaQuery.of(context).size.width * 0.0525,
+                            backgroundColor: Colors.black,
                             child: Icon(
                               Icons.edit ,
-                              size: MediaQuery.of(context).size.width * 0.07,
-                              color: k_subHeadingsColor,
+                              size: MediaQuery.of(context).size.width * 0.065,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -100,16 +99,27 @@ class _EditProfileState extends State<EditProfile> {
               ),
 
               k_verSpacing,
-              k_verSpacing,
-
 
 
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(35.0),
                 child: Column(
                   children: [
+
+                    //Name
+                    Align(alignment: Alignment.centerLeft, child: Text('Name', style: k_textstyle)),
+                    TextField(
+                      textAlign: TextAlign.left,
+                      controller: TextEditingController(text: k_name),
+                      style: const TextStyle(fontSize: 20.0, height: 0.75),
+                      onSubmitted: null,
+                    ),
+                    k_verSpacing,
+
+
                     //Username
-                    Text('USERNAME', style: k_textstyle),
+                    Align(alignment: Alignment.centerLeft, child: Text('Username', style: k_textstyle,)),
+                    const SizedBox( height: 7.0,),
                     TextField(
                       textAlign: TextAlign.left,
                       controller: TextEditingController(text: k_username),
@@ -119,19 +129,8 @@ class _EditProfileState extends State<EditProfile> {
                     k_verSpacing,
 
 
-                    //Name
-                    Text('NAME', style: k_textstyle),
-                    TextField(
-                      textAlign: TextAlign.left,
-                      controller: TextEditingController(text: k_name),
-                      style: const TextStyle(fontSize: 20.0, height: 0.75),
-                      onSubmitted: null,
-                    ),
-                    k_verSpacing,
-
                     //Bio
-                    //Text Box
-                    Text('BIO', style: k_textstyle),
+                    Align(alignment: Alignment.centerLeft, child: Text('Bio / Description', style: k_textstyle)),
                     const SizedBox(
                       height: 20.0,
                     ),

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 
-Widget k_divider = Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,);
+
+Widget k_divider = Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+  child:   Container(height: 1.0, width: double.infinity, color: Colors.grey[600],),
+);
 Widget k_spacing = const SizedBox(height: 10.0,);
-const k_textStyle = TextStyle(fontSize: 20.0);
-const k_selectedtextStyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
-const k_containerColor = Color(0xFFBDBDBD);  //grey[400]
+const k_textStyle = TextStyle(fontSize: 23.0);
+const k_selectedtextStyle = TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold);
+const k_containerColor = Colors.white38;  // Color(0xFFE0E0E0)
 
 enum Options{
   option1, option2, option3, option4
@@ -55,18 +59,27 @@ class _ActivityStatus extends State<ActivityStatus> {
 
                 const Padding(
                   padding: EdgeInsets.all(10.0),
-                  child: Text('WHO CAN SEE WHEN I AM ONLINE:', style: TextStyle(fontSize: 18.0),),
+                  child: Text(
+                    'WHO CAN SEE WHEN I AM ONLINE:',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      //color: Color(0xFF424242),
+                    ),
+                  ),
                 ),
 
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .30,
-                  child: ReusableContainer(
-                    colour: k_containerColor,  //grey[400]
-                    containerChild: Column(
+                  child: Container(
+                    decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8.0)),
+                    margin: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
+                    //color: k_containerColor,  //grey[400]
+                    child: Column(
                       //mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget> [
-                        
+
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -74,9 +87,10 @@ class _ActivityStatus extends State<ActivityStatus> {
                                 deselectOptions(Options.option1);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text('Online', style: bg_option1),
                                 ],
@@ -94,9 +108,10 @@ class _ActivityStatus extends State<ActivityStatus> {
                                 deselectOptions(Options.option2);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text('Appear Away', style: bg_option2,),
                                 ],
@@ -114,9 +129,10 @@ class _ActivityStatus extends State<ActivityStatus> {
                                 deselectOptions(Options.option3);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text('Appear Offline', style: bg_option3,),
                                 ],

@@ -121,7 +121,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
 
               //Username
               const Text(
-                k_username,
+                '@uchiha_forever',
                 style: TextStyle(
                   fontSize: 17.0,
                   //fontFamily: 'FiraCode',
@@ -264,69 +264,79 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: Colors.blueGrey,
-                            width: pressedMemoriesTab ? 3 : 1,
-                            style: BorderStyle.solid,
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0),),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          pressedMemoriesTab = true;
-                          pressedTagsTab = false;
-                        });
-                      },
-
-
-                      child: Column(
-                        children: [
-                          Icon(Icons.image_outlined, size: 40.0, color: Colors.teal[900],),
-                          Text('Memories and Scrapbooks',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                              color: Colors.teal[900],
-                              fontFamily: 'OpenSans',
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              //color: Colors.grey,
+                              width: pressedMemoriesTab ? 4 : 1,
+                              style: BorderStyle.solid,
                             ),
+                            borderRadius: const BorderRadius.all(Radius.circular(10.0),),
                           ),
-                        ],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            pressedMemoriesTab = true;
+                            pressedTagsTab = false;
+                          });
+                        },
+
+
+                        child: Column(
+                          children: const [
+                            Icon(
+                              Icons.image_outlined,
+                              size: 40.0,
+                              //color: Colors.black,
+                            ),
+                            Text('Posts',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                //color: Colors.teal[900],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        shape:  RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: Colors.blueGrey,
-                            width: pressedTagsTab ? 3 : 1,
-                            style: BorderStyle.solid,
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          pressedMemoriesTab = false;
-                          pressedTagsTab = true;
-                        });
-                      },
-                      child: Column(
-                        children: [
-                          Icon(Icons.people_alt_outlined, size: 35.0, color: Colors.teal[900],),
-                          Text('Tags',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                              color: Colors.teal[900],
-                              fontFamily: 'OpenSans',
+                    const SizedBox(width: 10.0,),
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape:  RoundedRectangleBorder(
+                            side: BorderSide(
+                              //color: Colors.blueGrey,
+                              width: pressedTagsTab ? 4 : 1,
+                              style: BorderStyle.solid,
                             ),
+                            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                           ),
-                        ],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            pressedMemoriesTab = false;
+                            pressedTagsTab = true;
+                          });
+                        },
+                        child: Column(
+                          children: const [
+                            Icon(
+                              Icons.people_alt_outlined,
+                              size: 40.0,
+                              //color: Colors.black,
+                            ),
+                            Text('Tags',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                //color: Colors.teal[900],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -378,7 +388,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://cdn-images.win.gg/resize/w/1000/format/webp/type/progressive/fit/cover/path/wp/uploads/2022/06/naruto-and-sasuke.jpg'),
+                          image: NetworkImage('https://static.wikia.nocookie.net/naruto/images/c/c2/Young_sasuke_and_Naruto.png/revision/latest/scale-to-width-down/1916?cb=20210925220045'),
                           fit: BoxFit.cover,
                         ),
 

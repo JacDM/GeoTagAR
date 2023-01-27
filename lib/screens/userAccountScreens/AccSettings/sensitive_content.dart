@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color k_fontTextColour = Colors.black;
-const Color k_submitButtonBgColour = Colors.teal;
+const Color k_submitButtonBgColour = Color(0xFF263238);
 const Color k_SwitchIconColour =  Color(0xFF263238);  //bluegrey[900]
 
 class SCC extends StatefulWidget {
@@ -23,12 +23,12 @@ class _SCC extends State<SCC> {
   Icon onModeSwitch = const Icon(
     Icons.toggle_on,
     size: 75.0,
-    color: k_SwitchIconColour,
+    //color: k_SwitchIconColour,
   );
   Icon offModeSwitch = const Icon(
     Icons.toggle_off_outlined,
     size: 75.0,
-    color: k_SwitchIconColour,
+    //color: k_SwitchIconColour,
   );
 
 
@@ -78,7 +78,10 @@ class _SCC extends State<SCC> {
                 Text(
                   'Blocks any NSFW content. '
                       'You may see fewer photos, videos and content tht may be upsetting or offensive.',
-                  style: TextStyle(fontSize: 18.0, color: Colors.grey[700]),
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.grey[700]
+                  ),
                 ),
 
 

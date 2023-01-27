@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/icon_data.dart';
 
+
+Color k_containerColor  = Colors.white38; //Color(0xFFBDBDBD)
+
 void bottomSheetPopup(context){
   showModalBottomSheet(context: context, builder: (BuildContext bc){
     return Container(
-      color: Colors.grey[300],
+      //color: Colors.grey[300],
       height: MediaQuery.of(context).size.height * 0.60,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -33,11 +36,11 @@ void bottomSheetPopup(context){
             //Share and Link
             Expanded(
               child: Row(
-                children: const [
+                children: [
                   Expanded(
                     child: ReusableContainer(
-                      colour: Colors.grey,
-                      containerChild: WidgetIconData(
+                      colour: k_containerColor,
+                      containerChild: const WidgetIconData(
                         icon: CupertinoIcons.share,
                         iconText: 'Share',
                       ),
@@ -46,8 +49,8 @@ void bottomSheetPopup(context){
 
                   Expanded(
                     child: ReusableContainer(
-                      colour: Colors.grey,
-                      containerChild: WidgetIconData(
+                      colour: k_containerColor,
+                      containerChild: const WidgetIconData(
                         icon: FontAwesomeIcons.link,
                         iconText: 'Link',
                       ),
@@ -61,35 +64,35 @@ void bottomSheetPopup(context){
             Expanded(
               flex: 2,
               child: ReusableContainer(
-                colour: Colors.grey,
+                colour: const Color(0xFFBDBDBD),
                 containerChild: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget> [
-                    const Expanded(
+                    Expanded(
                       child: ReusableContainer(
-                        colour: Colors.grey,
-                        containerChild: Text('Edit', style: TextStyle(fontSize: 22.0),),
+                        colour: k_containerColor,
+                        containerChild: const Text('Edit', style: TextStyle(fontSize: 22.0, color: Colors.black),),
                       ),
                     ),
 
                     Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                     //Add to scrapbook
-                    const Expanded(
+                    Expanded(
                       child: ReusableContainer(
-                        colour: Colors.grey,
-                        containerChild: Text('Add to scrapbook', style: TextStyle(fontSize: 22.0),),
+                        colour: k_containerColor,
+                        containerChild: Text('Add to scrapbook', style: TextStyle(fontSize: 22.0, color: Colors.black),),
                       ),
                     ),
 
                     Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                     //Archive
-                    const Expanded(
+                    Expanded(
                       child: ReusableContainer(
-                        colour: Colors.grey,
-                        containerChild: Text('Archive', style: TextStyle(fontSize: 22.0),),
+                        colour: k_containerColor,
+                        containerChild: const  Text('Archive', style: TextStyle(fontSize: 22.0, color: Colors.black),),
                       ),
                     ),
 
@@ -98,7 +101,7 @@ void bottomSheetPopup(context){
                     //Delete
                     Expanded(
                       child: ReusableContainer(
-                        colour: Colors.grey,
+                        colour: k_containerColor,
                         containerChild: Text('Delete', style: TextStyle(color: Colors.red[800], fontSize: 22.0),),
                       ),
                     ),

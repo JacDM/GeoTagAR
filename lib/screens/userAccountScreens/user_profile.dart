@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/UserSettings/user_settings.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 
+const k_username = '@DATTEBAYOOO';
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
 
@@ -10,31 +11,18 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-
-
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
-
   bool pressedMemoriesTab = true;
   bool pressedTagsTab = false;
 
 
   @override
   Widget build(BuildContext context) {
-    //import user file as models
-    //models.User user = Provider.of<UserProvider>(context).getUser;
-
     return Scaffold(
       //appbar
       appBar: AppBar(
         title: const Text('USER PROFILE PAGE'),
       ),
 
-      //backgroundColor: Colors.blueGrey[200],
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -44,7 +32,7 @@ class _UserProfileState extends State<UserProfile> {
               //header - profile pic, background pic and settings button
               Stack(
                 clipBehavior: Clip.none,
-
+                //alignment: Alignment.center,
                 children:  [
 
                   //Background Picture
@@ -58,11 +46,11 @@ class _UserProfileState extends State<UserProfile> {
                     top: 10.0,
                     right: 10.0,
                     child: CircleAvatar(
-                      backgroundColor: Colors.black,
+                      //backgroundColor: Colors.black,
                       //22.0
                       radius: MediaQuery.of(context).size.width * 0.0525,
-                      child: GestureDetector(
-                        onTap: (){
+                      child: FloatingActionButton(
+                        onPressed: (){
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context){
@@ -70,11 +58,12 @@ class _UserProfileState extends State<UserProfile> {
                             })
                           );
                         },
+                        tooltip: 'Settings',
                         child: Icon(
                           Icons.settings,
                           //35.0
                           size: MediaQuery.of(context).size.width * 0.08,
-                          color: Colors.white,
+                          //color: Colors.white,
                         ),
                       ),
                     ),
@@ -90,7 +79,7 @@ class _UserProfileState extends State<UserProfile> {
                       backgroundColor: Colors.white38,
                       child: CircleAvatar(
                         radius: MediaQuery.of(context).size.width * 0.14,
-                        backgroundImage: NetworkImage(
+                        backgroundImage: const NetworkImage(
                             'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
                       ),
                     ),
@@ -105,7 +94,7 @@ class _UserProfileState extends State<UserProfile> {
 
               //Name
               const Text(
-                'Uzumaki Naruto', 
+                'Uzumaki Naruto',
                 style: TextStyle(
                   fontSize: 30.0,
                   fontFamily: 'Lobster',
@@ -115,7 +104,7 @@ class _UserProfileState extends State<UserProfile> {
 
               //Username
               const Text(
-                '@DATTEBAYOOO',  //k_username
+                '@DATTEBAYOOO',
                 style: TextStyle(
                   fontSize: 17.0,
                   //fontFamily: 'FiraCode',
@@ -132,6 +121,7 @@ class _UserProfileState extends State<UserProfile> {
                     'Naruto Uzumaki, a young ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village.',
                     style: TextStyle(
                       fontSize: 20.0,
+                      fontFamily: 'Nunito',
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -167,6 +157,7 @@ class _UserProfileState extends State<UserProfile> {
                   ],
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0),
                 child: Row(
@@ -196,8 +187,6 @@ class _UserProfileState extends State<UserProfile> {
               ),
 
 
-              //Edit Profile Button  (not inserted yet)
-
               const SizedBox(
                 width: 100.0,
                 child: Divider(
@@ -213,67 +202,79 @@ class _UserProfileState extends State<UserProfile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: Colors.blueGrey,
-                            width: pressedMemoriesTab ? 3 : 1,
-                            style: BorderStyle.solid,
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0),),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          pressedMemoriesTab = true;
-                          pressedTagsTab = false;
-                        });
-                      },
-
-
-                      child: Column(
-                        children: [
-                          Icon(Icons.image_outlined, size: 40.0, color: Colors.teal[900],),
-                          Text('Memories and Scrapbooks',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                              color: Colors.teal[900],
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              //color: Colors.grey,
+                              width: pressedMemoriesTab ? 4 : 1,
+                              style: BorderStyle.solid,
                             ),
+                            borderRadius: const BorderRadius.all(Radius.circular(10.0),),
                           ),
-                        ],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            pressedMemoriesTab = true;
+                            pressedTagsTab = false;
+                          });
+                        },
+
+
+                        child: Column(
+                          children: const [
+                            Icon(
+                              Icons.image_outlined,
+                              size: 40.0,
+                              //color: Colors.black,
+                            ),
+                            Text('Posts',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                //color: Colors.teal[900],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        shape:  RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: Colors.blueGrey,
-                            width: pressedTagsTab ? 3 : 1,
-                            style: BorderStyle.solid,
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          pressedMemoriesTab = false;
-                          pressedTagsTab = true;
-                        });
-                      },
-                      child: Column(
-                        children: [
-                          Icon(Icons.people_alt_outlined, size: 35.0, color: Colors.teal[900],),
-                          Text('Tags',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                              color: Colors.teal[900],
+                    const SizedBox(width: 10.0,),
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape:  RoundedRectangleBorder(
+                            side: BorderSide(
+                              //color: Colors.blueGrey,
+                              width: pressedTagsTab ? 4 : 1,
+                              style: BorderStyle.solid,
                             ),
+                            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                           ),
-                        ],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            pressedMemoriesTab = false;
+                            pressedTagsTab = true;
+                          });
+                        },
+                        child: Column(
+                          children: const [
+                            Icon(
+                              Icons.people_alt_outlined,
+                              size: 40.0,
+                              //color: Colors.black,
+                            ),
+                            Text('Tags',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                //color: Colors.teal[900],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -304,7 +305,7 @@ class _UserProfileState extends State<UserProfile> {
                         //: Colors.teal[100],
                         decoration:  BoxDecoration(
                           border: Border.all(
-                            color: Colors.black,
+                            //color: Colors.black,
                             width: 3,
                           ),
                           image: const DecorationImage(
@@ -321,7 +322,7 @@ class _UserProfileState extends State<UserProfile> {
                       //color: Colors.teal[200],
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          //color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
@@ -336,7 +337,7 @@ class _UserProfileState extends State<UserProfile> {
                       //color: Colors.teal[300],
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          //color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
@@ -351,7 +352,7 @@ class _UserProfileState extends State<UserProfile> {
                       //color: Colors.teal[400],
                       decoration:  BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          //color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
@@ -366,7 +367,7 @@ class _UserProfileState extends State<UserProfile> {
                       //color: Colors.teal[500],
                       decoration:  BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          //color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
@@ -381,7 +382,7 @@ class _UserProfileState extends State<UserProfile> {
                       //color: Colors.teal[600],
                       decoration:  BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          //color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
@@ -396,7 +397,7 @@ class _UserProfileState extends State<UserProfile> {
                       //color: Colors.teal[600],
                       decoration:  BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          //color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
@@ -422,5 +423,6 @@ class _UserProfileState extends State<UserProfile> {
 
 
 }
+
 
 
