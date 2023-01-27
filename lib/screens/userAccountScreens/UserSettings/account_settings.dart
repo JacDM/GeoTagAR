@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
-
-import 'package:geotagar/screens/userAccountScreens/AccSettings/data_usage.dart';
+import '../reusableWidgets/custom_button.dart';
 import 'package:geotagar/screens/userAccountScreens/AccSettings/personal_info.dart';
 import 'package:geotagar/screens/userAccountScreens/AccSettings/sensitive_content.dart';
 

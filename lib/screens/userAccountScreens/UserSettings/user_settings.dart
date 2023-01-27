@@ -4,6 +4,7 @@ import '../UserSettings/account_settings.dart';
 import '../UserSettings/privacy_and_security.dart';
 import '../UserSettings/report.dart';
 import '../reusableWidgets/page_tabs.dart';
+import '../reusableWidgets/custom_button.dart';
 
 const Color k_SwitchIconColour =  Color(0xFF263238);  //bluegrey[900]
 const Color k_UsernameColour = Colors.black;
