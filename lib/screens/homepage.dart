@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/discoverPages/discover.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
@@ -9,7 +11,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/globe.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -20,6 +21,15 @@ class HomePage extends StatefulWidget {
 // Temporary homepage, will be modified later
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
+
+  String username = "";
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getUserName();
+  // }
+
   int _currentIndex = 0;
 
   List<Widget> body = const [
@@ -31,7 +41,13 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    getUserName();
+    var email = user!.email;
+    var userName = user!.displayName;
+    print(email);
+    print(userName);
     return Container(
+
         // Temporary background image
         decoration: const BoxDecoration(
             image: DecorationImage(
@@ -44,7 +60,7 @@ class _HomePageState extends State<HomePage> {
               index: _currentIndex,
               children: [
                 Post(),
-                GlobePage(),
+                Post(),
                 Unity(),
                 DiscoverPage(),
                 UserProfile(),
@@ -100,5 +116,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ))));
+  }
+
+  void getUserName() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    print(snap.data());
   }
 }
