@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/providers/user_provider.dart';
 import 'package:geotagar/screens/discoverPages/discover.dart';
+import 'package:geotagar/screens/feed.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:geotagar/screens/memory_related/create_memory.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
             body: IndexedStack(
               index: _currentIndex,
               children: [
-                Post(),
+                feedScreen(),
                 Post(),
                 Unity(),
                 DiscoverPage(),
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.location_on),
                       label: 'Location',
-                      backgroundColor: Colors.blueAccent,
+                      backgroundColor: Colors.white,
                     ),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.circle_outlined, size: 50),
