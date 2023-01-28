@@ -59,10 +59,10 @@ class _RegisterPageState extends State<RegisterPage> {
   String name = "";
   //String lastName = "";
   int age = 0;
-  // int day = 0;
-  // int month;
-  // int year = 0;
-  // DateTime birthday = DateTime(day, month, year);
+  int day = 0;
+  int month = 0;
+  int year = 0;
+  DateTime birthday = DateTime(0, 0, 0);
 
   bool _isLoading = false;
 
