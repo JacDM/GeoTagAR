@@ -13,6 +13,9 @@ import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile_pt2.dart';
 import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,56 +32,63 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //removed 'const' keyword from return const MaterialApp
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
 
-      //Theme set for User Account Screens
-      theme: ThemeData(
-        textTheme: const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')),
-        scaffoldBackgroundColor: Colors.blueGrey[100],
-        appBarTheme: AppBarTheme(
-          centerTitle: true,
-          iconTheme: const IconThemeData(size: 35.0, color: Colors.white),
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.blueGrey[900],
-          //shadowColor: Colors.teal[900],
-          toolbarHeight: 60.0,
-          elevation: 0,
+        //Theme set for User Account Screens
+        theme: ThemeData(
+          textTheme:
+              const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')),
+          scaffoldBackgroundColor: Colors.blueGrey[100],
+          appBarTheme: AppBarTheme(
+            centerTitle: true,
+            iconTheme: const IconThemeData(size: 35.0, color: Colors.white),
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.blueGrey[900],
+            //shadowColor: Colors.teal[900],
+            toolbarHeight: 60.0,
+            elevation: 0,
+          ),
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
         ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
-      ),
 
-      //home: HomePage(),
-      //home: UserProfile(),
-      //home: UserProfilePt2(),
+        //home: HomePage(),
+        //home: UserProfile(),
+        //home: UserProfilePt2(),
 
-      //-----------------------------------------------------------------------
-      home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            //if a connection is made
-            if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasData) {
-                return const HomePage();
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('${snapshot.error}'),
-                );
+        //-----------------------------------------------------------------------
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              //if a connection is made
+              if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasData) {
+                  return const HomePage();
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('${snapshot.error}'),
+                  );
+                }
               }
-            }
 
-            //if a connection isn't made
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                  child: CircularProgressIndicator(
-                color: Colors.teal,
-              ));
-            }
+              //if a connection isn't made
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.teal,
+                ));
+              }
 
-            return const LogIn();
-          }),
+              return const LogIn();
+            }),
 
-      //-----------------------------------------------------------------------
+        //-----------------------------------------------------------------------
+      ),
     );
   }
 }

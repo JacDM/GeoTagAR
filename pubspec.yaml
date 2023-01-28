@@ -29,34 +29,28 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  age_calculator: ^1.0.0
   camera: ^0.10.1
+  cloud_firestore: ^4.3.1
   cupertino_icons: ^1.0.2
+  email_validator: ^2.1.17
+  file_picker: ^5.2.5
+  firebase_auth: ^4.2.5
+  firebase_core: ^2.4.1
   firebase_storage: ^11.0.10
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   flutter_unity_widget: ^2022.2.0
   font_awesome_flutter: ^10.3.0
+  provider: ^6.0.5
+  rounded_loading_button: ^2.1.0
   sensors_plus: ^2.0.1
 
-  # Firebase dependencies
-  firebase_core: ^2.4.1
-  firebase_auth: ^4.2.5
-  cloud_firestore: ^4.3.1
-
-  # Email validator
-  email_validator: ^2.1.17
-  file_picker: ^5.2.5
-  age_calculator: ^1.0.0
-  rounded_loading_button: ^2.1.0
-
 dev_dependencies:
+  change_app_package_name: ^1.0.0
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  change_app_package_name: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -93,7 +87,6 @@ flutter:
     - assets/images/forgotPasswordBG.png
     - assets/images/spaceBg.jpg
     - assets/images/earth.png
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
