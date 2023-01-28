@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/UserSettings/user_settings.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
+import 'package:provider/provider.dart';
+import 'package:geotagar/models/users.dart' as model;
+import '../../providers/user_provider.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -10,12 +15,41 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  String username = "";
+
   bool pressedMemoriesTab = true;
   bool pressedTagsTab = false;
 
+  @override
+  void initState() {
+    super.initState();
+    getUsername();
+  }
+
+  void getUsername() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document data: ${documentSnapshot.data()}');
+        setState(() {
+          username =
+              (documentSnapshot.data() as Map<String, dynamic>)['username'];
+        });
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+    //username = await HelperFunctions.getUserNameSharedPreference();
+
+    //print(snap.data);//
+  }
 
   @override
   Widget build(BuildContext context) {
+    model.User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       //appbar
       appBar: AppBar(
@@ -32,14 +66,12 @@ class _UserProfileState extends State<UserProfile> {
               //header - profile pic, background pic and settings button
               Stack(
                 clipBehavior: Clip.none,
-
-                children:  [
-
+                children: [
                   //Background Picture
-                  const Image(
-                    image: NetworkImage(
-                        'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
-                  ),
+                  // const Image(
+                  //   image: NetworkImage(
+                  //       'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
+                  // ),
 
                   //Settings
                   Positioned(
@@ -50,13 +82,11 @@ class _UserProfileState extends State<UserProfile> {
                       //22.0
                       radius: MediaQuery.of(context).size.width * 0.0525,
                       child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context){
-                              return const SettingsPage() ;
-                            })
-                          );
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const SettingsPage();
+                          }));
                         },
                         child: Icon(
                           Icons.settings,
@@ -66,7 +96,6 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                     ),
-
                   ),
 
                   //Profile Picture
@@ -102,9 +131,9 @@ class _UserProfileState extends State<UserProfile> {
               ),
 
               //Username
-              const Text(
-                '@DATTEBAYOOO',
-                style: TextStyle(
+              Text(
+                user.username,
+                style: const TextStyle(
                   fontSize: 17.0,
                   //fontFamily: 'FiraCode',
                   fontWeight: FontWeight.bold,
@@ -133,25 +162,27 @@ class _UserProfileState extends State<UserProfile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const <Widget>[
-                    Text('259',
+                    Text(
+                      '259',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('1000',
+                    Text(
+                      '1000',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('100',
+                    Text(
+                      '100',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -160,29 +191,30 @@ class _UserProfileState extends State<UserProfile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const <Widget>[
-                    Text('Moments',
+                    Text(
+                      'Moments',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('Followers',
+                    Text(
+                      'Followers',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('Following',
+                    Text(
+                      'Following',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                   ],
                 ),
               ),
-
 
               //Edit Profile Button  (not inserted yet)
 
@@ -209,7 +241,9 @@ class _UserProfileState extends State<UserProfile> {
                             width: pressedMemoriesTab ? 3 : 1,
                             style: BorderStyle.solid,
                           ),
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0),),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
                         ),
                       ),
                       onPressed: () {
@@ -218,12 +252,15 @@ class _UserProfileState extends State<UserProfile> {
                           pressedTagsTab = false;
                         });
                       },
-
-
                       child: Column(
                         children: [
-                          Icon(Icons.image_outlined, size: 40.0, color: Colors.teal[900],),
-                          Text('Memories and Scrapbooks',
+                          Icon(
+                            Icons.image_outlined,
+                            size: 40.0,
+                            color: Colors.teal[900],
+                          ),
+                          Text(
+                            'Memories and Scrapbooks',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15.0,
@@ -233,16 +270,16 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                     ),
-
                     TextButton(
                       style: TextButton.styleFrom(
-                        shape:  RoundedRectangleBorder(
+                        shape: RoundedRectangleBorder(
                           side: BorderSide(
                             color: Colors.blueGrey,
                             width: pressedTagsTab ? 3 : 1,
                             style: BorderStyle.solid,
                           ),
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
                         ),
                       ),
                       onPressed: () {
@@ -253,8 +290,13 @@ class _UserProfileState extends State<UserProfile> {
                       },
                       child: Column(
                         children: [
-                          Icon(Icons.people_alt_outlined, size: 35.0, color: Colors.teal[900],),
-                          Text('Tags',
+                          Icon(
+                            Icons.people_alt_outlined,
+                            size: 35.0,
+                            color: Colors.teal[900],
+                          ),
+                          Text(
+                            'Tags',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15.0,
@@ -281,29 +323,26 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context){
-                            return const Post() ;
-                          })
-                      ),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const Post();
+                      })),
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         //: Colors.teal[100],
-                        decoration:  BoxDecoration(
+                        decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.black,
                             width: 3,
                           ),
                           image: const DecorationImage(
-                              image: NetworkImage('https://www.numerama.com/wp-content/uploads/2022/08/image5-min.jpg'),
-                              fit: BoxFit.cover,
+                            image: NetworkImage(
+                                'https://www.numerama.com/wp-content/uploads/2022/08/image5-min.jpg'),
+                            fit: BoxFit.cover,
                           ),
-
                         ),
                       ),
                     ),
-
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[200],
@@ -313,10 +352,10 @@ class _UserProfileState extends State<UserProfile> {
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://cdn-images.win.gg/resize/w/1000/format/webp/type/progressive/fit/cover/path/wp/uploads/2022/06/naruto-and-sasuke.jpg'),
+                          image: NetworkImage(
+                              'https://cdn-images.win.gg/resize/w/1000/format/webp/type/progressive/fit/cover/path/wp/uploads/2022/06/naruto-and-sasuke.jpg'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
@@ -328,87 +367,79 @@ class _UserProfileState extends State<UserProfile> {
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://preview.redd.it/k5l57lnr6e161.jpg?width=640&crop=smart&auto=webp&s=162c6749eff2d7e482f038cc5294ca5ffbee28d5'),
+                          image: NetworkImage(
+                              'https://preview.redd.it/k5l57lnr6e161.jpg?width=640&crop=smart&auto=webp&s=162c6749eff2d7e482f038cc5294ca5ffbee28d5'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[400],
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2020/06/Boruto-Naruto-Jiraiya.jpg?fit=1200%2C720&quality=80&ssl=1'),
+                          image: NetworkImage(
+                              'https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2020/06/Boruto-Naruto-Jiraiya.jpg?fit=1200%2C720&quality=80&ssl=1'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[500],
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://images7.alphacoders.com/705/thumb-1920-705566.png'),
+                          image: NetworkImage(
+                              'https://images7.alphacoders.com/705/thumb-1920-705566.png'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[600],
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://static.wikia.nocookie.net/shipping/images/c/c4/NaruSai_Shippuden810.png/revision/latest/scale-to-width-down/250?cb=20211008142459'),
+                          image: NetworkImage(
+                              'https://static.wikia.nocookie.net/shipping/images/c/c4/NaruSai_Shippuden810.png/revision/latest/scale-to-width-down/250?cb=20211008142459'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[600],
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://qph.cf2.quoracdn.net/main-qimg-261fe1a660066ed161ff018171531c3c-lq'),
+                          image: NetworkImage(
+                              'https://qph.cf2.quoracdn.net/main-qimg-261fe1a660066ed161ff018171531c3c-lq'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                   ],
-
                 ),
               ),
-
             ],
           ),
         ),
       ),
-
-
     );
   }
-
-
 }
-
-
