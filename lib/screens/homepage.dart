@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:geotagar/providers/user_provider.dart';
 import 'package:geotagar/screens/discoverPages/discover.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:geotagar/screens/memory_related/create_memory.dart';
@@ -10,6 +11,8 @@ import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/globe.dart';
+import 'package:provider/provider.dart';
+import 'package:geotagar/models/users.dart' as model;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,11 +27,20 @@ class _HomePageState extends State<HomePage> {
 
   String username = "";
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getUserName();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    addData();
+    //getUserName();
+  }
+
+  addData() async {
+    UserProvider _userProvider = Provider.of(context, listen: false);
+    await _userProvider.refreshUser();
+    // await Firebase.initializeApp();
+    // CollectionReference users = FirebaseFirestore.instance.collection('users');
+    // users.add({'name': 'John Doe', 'age': 42});
+  }
 
   int _currentIndex = 0;
 
@@ -41,11 +53,12 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    model.User user = Provider.of<UserProvider>(context).getUser;
     getUserName();
-    var email = user!.email;
-    var userName = user!.displayName;
-    print(email);
-    print(userName);
+    //var email = user!.email;
+    //var userName = user!.displayName;
+    //print(email);
+    //print(userName);
     return Container(
 
         // Temporary background image

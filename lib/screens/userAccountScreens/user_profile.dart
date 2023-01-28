@@ -68,10 +68,10 @@ class _UserProfileState extends State<UserProfile> {
                 clipBehavior: Clip.none,
                 children: [
                   //Background Picture
-                  // const Image(
-                  //   image: NetworkImage(
-                  //       'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
-                  // ),
+                  const Image(
+                    image: NetworkImage(
+                        'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
+                  ),
 
                   //Settings
                   Positioned(
