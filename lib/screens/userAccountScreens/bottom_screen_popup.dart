@@ -5,7 +5,7 @@ import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_con
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/icon_data.dart';
 
 
-Color k_containerColor  = Colors.white38; //Color(0xFFBDBDBD)
+Color k_containerColor =  Colors.white38  ; //Color(0xFFBDBDBD)
 
 void bottomSheetPopup(context){
   showModalBottomSheet(context: context, builder: (BuildContext bc){
@@ -64,45 +64,48 @@ void bottomSheetPopup(context){
             Expanded(
               flex: 2,
               child: ReusableContainer(
-                colour: const Color(0xFFBDBDBD),
+                colour: k_containerColor,
                 containerChild: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget> [
                     Expanded(
-                      child: ReusableContainer(
-                        colour: k_containerColor,
-                        containerChild: const Text('Edit', style: TextStyle(fontSize: 22.0, color: Colors.black),),
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          //colour: Colors.grey,
+                          child: Text('Edit', style: TextStyle(fontSize: 22.0,),),
+                        ),
                       ),
-                    ),
 
                     Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                     //Add to scrapbook
                     Expanded(
-                      child: ReusableContainer(
-                        colour: k_containerColor,
-                        containerChild: Text('Add to scrapbook', style: TextStyle(fontSize: 22.0, color: Colors.black),),
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          //colour: Colors.grey,
+                          child: Text('Add to scrapbook', style: TextStyle(fontSize: 22.0,),),
+                        ),
                       ),
-                    ),
 
                     Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                     //Archive
                     Expanded(
-                      child: ReusableContainer(
-                        colour: k_containerColor,
-                        containerChild: const  Text('Archive', style: TextStyle(fontSize: 22.0, color: Colors.black),),
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          //colour: Colors.grey,
+                          child: Text('Archive', style: TextStyle(fontSize: 22.0,),),
+                        ),
                       ),
-                    ),
 
                     Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                     //Delete
                     Expanded(
-                      child: ReusableContainer(
-                        colour: k_containerColor,
-                        containerChild: Text('Delete', style: TextStyle(color: Colors.red[800], fontSize: 22.0),),
+                      child: Container(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text('Delete', style: TextStyle(color: Colors.red[800], fontSize: 22.0),),
                       ),
                     ),
 
