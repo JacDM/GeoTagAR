@@ -70,7 +70,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                     child: CircleAvatar(
                       backgroundColor: Colors.black,
                       //22.0
-                      radius: MediaQuery.of(context).size.width * 0.0525,
+                      radius: MediaQuery.of(context).size.width * 0.055,
                       child: FloatingActionButton(
                         onPressed: (){
                           bottomScreenUserProfile(context);
@@ -79,7 +79,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                         child: Icon(
                           Icons.more_horiz,
                           //35.0
-                          size: MediaQuery.of(context).size.width * 0.08,
+                          size: MediaQuery.of(context).size.width * 0.07,
                           color: Colors.white,
                         ),
                       ),
@@ -284,21 +284,24 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                         },
 
 
-                        child: Column(
-                          children: const [
-                            Icon(
-                              Icons.image_outlined,
-                              size: 40.0,
-                              //color: Colors.black,
-                            ),
-                            Text('Posts',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                //color: Colors.teal[900],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            children: const [
+                              Icon(
+                                Icons.image_outlined,
+                                size: 40.0,
+                                //color: Colors.black,
                               ),
-                            ),
-                          ],
+                              Text('Posts',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  //color: Colors.teal[900],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -321,21 +324,24 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                             pressedTagsTab = true;
                           });
                         },
-                        child: Column(
-                          children: const [
-                            Icon(
-                              Icons.people_alt_outlined,
-                              size: 40.0,
-                              //color: Colors.black,
-                            ),
-                            Text('Tags',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                //color: Colors.teal[900],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            children: const [
+                              Icon(
+                                Icons.image_outlined,
+                                size: 40.0,
+                                //color: Colors.black,
                               ),
-                            ),
-                          ],
+                              Text('Tags',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  //color: Colors.teal[900],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
