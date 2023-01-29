@@ -46,7 +46,7 @@ class _UserProfileState extends State<UserProfile> {
                     top: 10.0,
                     right: 10.0,
                     child: CircleAvatar(
-                      //backgroundColor: Colors.black,
+                      backgroundColor: Colors.black,
                       //22.0
                       radius: MediaQuery.of(context).size.width * 0.0525,
                       child: FloatingActionButton(
@@ -59,11 +59,11 @@ class _UserProfileState extends State<UserProfile> {
                           );
                         },
                         tooltip: 'Settings',
-                        child: Icon(
-                          Icons.settings,
-                          //35.0
-                          size: MediaQuery.of(context).size.width * 0.08,
-                          //color: Colors.white,
+                          child: Icon(
+                            Icons.settings,
+                            //35.0
+                            size: MediaQuery.of(context).size.width * 0.06,
+                            color: Colors.white,
                         ),
                       ),
                     ),
@@ -222,21 +222,24 @@ class _UserProfileState extends State<UserProfile> {
                         },
 
 
-                        child: Column(
-                          children: const [
-                            Icon(
-                              Icons.image_outlined,
-                              size: 40.0,
-                              //color: Colors.black,
-                            ),
-                            Text('Posts',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                //color: Colors.teal[900],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            children: const [
+                              Icon(
+                                Icons.image_outlined,
+                                size: 40.0,
+                                //color: Colors.black,
                               ),
-                            ),
-                          ],
+                              Text('Posts',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  //color: Colors.teal[900],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -259,21 +262,24 @@ class _UserProfileState extends State<UserProfile> {
                             pressedTagsTab = true;
                           });
                         },
-                        child: Column(
-                          children: const [
-                            Icon(
-                              Icons.people_alt_outlined,
-                              size: 40.0,
-                              //color: Colors.black,
-                            ),
-                            Text('Tags',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                //color: Colors.teal[900],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            children: const [
+                              Icon(
+                                Icons.image_outlined,
+                                size: 40.0,
+                                //color: Colors.black,
                               ),
-                            ),
-                          ],
+                              Text('Tags',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  //color: Colors.teal[900],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

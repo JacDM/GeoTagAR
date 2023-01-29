@@ -54,11 +54,11 @@ class _EditProfileState extends State<EditProfile> {
                     top: 10.0,
                     right: 10.0,
                     child: CircleAvatar(
-                      radius: MediaQuery.of(context).size.width * 0.0525,
+                      radius: MediaQuery.of(context).size.width * 0.05,
                       backgroundColor: Colors.black,
                       child: Icon(
                         Icons.edit ,
-                        size: MediaQuery.of(context).size.width * 0.065,
+                        size: MediaQuery.of(context).size.width * 0.06,
                         color: Colors.white,
                       ),
                     ),
@@ -67,26 +67,26 @@ class _EditProfileState extends State<EditProfile> {
 
                   //Profile Picture
                   Positioned(
-                    bottom: -55.0,
-                    right: MediaQuery.of(context).size.width * 0.30,
+                    bottom: -50.0,
+                    right: MediaQuery.of(context).size.width * 0.36,
                     child: Stack(
                       clipBehavior: Clip.none,
                       children:  [
-                        const CircleAvatar(
-                          radius: 70.0,
+                        CircleAvatar(
+                          radius: MediaQuery.of(context).size.width * 0.14,
                           backgroundImage: NetworkImage('https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
                         ),
 
                         Positioned(
                           bottom: -10.0,
-                          left: MediaQuery.of(context).size.width * 0.25,
+                          left: MediaQuery.of(context).size.width * 0.22,
 
                           child: CircleAvatar(
-                            radius: MediaQuery.of(context).size.width * 0.0525,
+                            radius: MediaQuery.of(context).size.width * 0.05,
                             backgroundColor: Colors.black,
                             child: Icon(
                               Icons.edit ,
-                              size: MediaQuery.of(context).size.width * 0.065,
+                              size: MediaQuery.of(context).size.width * 0.06,
                               color: Colors.white,
                             ),
                           ),
