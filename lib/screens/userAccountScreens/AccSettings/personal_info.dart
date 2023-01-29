@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
+import 'package:geotagar/screens/userAccountScreens/AccSettings/edit_personal_info.dart';
 
 const Color k_fontTextColour = Colors.black;
 const Color k_bgColor = Colors.white38;  //Color(0xFFEEEEEE)
@@ -35,13 +36,39 @@ class _PersonalInfo extends State<PersonalInfo> {
 
               children:  <Widget>[
 
+                Align(
+                  alignment: Alignment.topRight,
+                  child: CircleAvatar(
+                    //backgroundColor: Colors.black,
+                    //22.0
+                    radius: MediaQuery.of(context).size.width * 0.0525,
+                    child: FloatingActionButton(
+                      onPressed: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context){
+                              return const EditPersonalInfo() ;
+                            })
+                        );
+                      },
+                      tooltip: 'Edit',
+                      child: Icon(
+                        Icons.edit,
+                        //35.0
+                        size: MediaQuery.of(context).size.width * 0.07,
+                        //color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+
                 //Profile Picture
-                const CircleAvatar(
-                  radius: 75.0,
+                CircleAvatar(
+                  radius: MediaQuery.of(context).size.width * 0.18,
                   backgroundColor: Colors.white38,
                   child: CircleAvatar(
-                    radius: 70.0,
-                    backgroundImage: NetworkImage(
+                    radius: MediaQuery.of(context).size.width * 0.17,
+                    backgroundImage: const NetworkImage(
                         'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
                   ),
                 ),
