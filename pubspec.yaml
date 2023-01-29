@@ -43,9 +43,11 @@ dependencies:
     sdk: flutter
   flutter_unity_widget: ^2022.2.0
   font_awesome_flutter: ^10.3.0
+  image: ^4.0.12
   image_picker: ^0.8.6
-  path_provider: ^2.0.11
+  path_provider: ^2.0.12
   sensors_plus: ^2.0.1
+  uuid: ^3.0.7
 
 dev_dependencies:
   change_app_package_name: ^1.0.0

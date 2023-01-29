@@ -1,11 +1,12 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/memory_related/create_memory.dart';
 
 class CMRoute extends StatefulWidget {
-  const CMRoute({super.key
-      //this . currentUser
-      });
+  const CMRoute({super.key, required this.currentUser});
+
+  final User currentUser;
 
   @override
   State<CMRoute> createState() => _CMRouteState();

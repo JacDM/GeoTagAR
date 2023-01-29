@@ -67,14 +67,14 @@ class _CreateMemoryState extends State<CreateMemory> {
     //Navigator.pop(context);
 
     imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    Image imageUpload = Image(image: XFileImage(imagefile!));
+    //Image imageUpload = Image(image: XFileImage(imagefile!));
     setState(() {});
     //if (!context.mounted) return;
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (builder) => AddPost(
-                  image: imageUpload,
+                  image: imagefile!,
                 )));
   }
 

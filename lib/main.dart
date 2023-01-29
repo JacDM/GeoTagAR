@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
 
       //home: HomePage(),
       //home: UserProfile(),
-      home: RegisterPage(),
+      home: LogIn(),
 
       //-----------------------------------------------------------------------
       /// home: StreamBuilder(

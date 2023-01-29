@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/discoverPages/discover.dart';
@@ -21,6 +23,8 @@ class HomePage extends StatefulWidget {
 // Temporary homepage, will be modified later
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
+  final usersRef = FirebaseFirestore.instance.collection('users').snapshots();
+
   int _currentIndex = 0;
 
   List<Widget> body = const [
@@ -46,13 +50,12 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Post(),
                 GlobePage(),
-                CMRoute(),
+                CMRoute(currentUser: user!),
                 DiscoverPage(),
                 UserProfile(),
               ],
             ),
             // Center(
-
             //     //child: body[_currentIndex],
             //     child: ElevatedButton(
             //         child: Text("Sign out"),
@@ -72,9 +75,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: (index) {
                     setState(() {
                       _currentIndex = index;
-                      CupertinoAlertDialog(
-                        content: Text('hello'),
-                      );
+                      if (index == 3) print('user = $usersRef');
                     });
                   },
                   items: const [
