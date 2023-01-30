@@ -1,21 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:geotagar/models/users.dart' as model;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geotagar/models/users.dart';
 import 'package:flutter/material.dart';
+
+import '../core/constants/constants.dart';
+import '../core/constants/firebase_constants.dart';
+//import 'package:geotagar/utils/methods.dart';
+
+final userProvider = StateProvider<UserModel?>((ref) => null);
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  //final _user = FirebaseFirestore.instance.collection('users');
+  CollectionReference get _users =>
+      _firestore.collection(FirebaseConstants.usersCollection);
 
   //
-  Future<model.User> getUserDetails() async {
-    User currentUser = _auth.currentUser!;
-    DocumentSnapshot snap = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser.uid)
-        .get();
-    return model.User.fromSnap(snap);
-  }
+  // Future<model.UserModel> getUserDetails() async {
+  //   User currentUser = _auth.currentUser!;
+  //   Map snap = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(currentUser.uid)
+  //       .get();
+  //   return model.UserModel.fromMap(snap);
+  // }
 
   // Sign-up stuff
   Future signUp(
@@ -31,22 +41,32 @@ class AuthMethods {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      print(userCredential.user!.uid);
-
+      print(userCredential.user?.uid);
+      await sendEmailVerification();
       // Add to database
       //_firestore.collection('users').doc(userCredential.user!.uid);
 
-      model.User user = model.User(
-        email: email,
-        username: username,
-        uid: userCredential.user!.uid,
-        name: name,
-        gender: gender!,
-        accountType: accountType,
-      );
+      UserModel userModel;
 
-      final docUser =
-          _firestore.collection('users').doc(userCredential.user!.uid);
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        userModel = UserModel(
+          email: email,
+          username: username,
+          uid: userCredential.user!.uid,
+          profilePicture: Constants.avatarDefault,
+          banner: Constants.bannerDefault,
+          awards: [],
+          name: name,
+          gender: gender!,
+          accountType: accountType,
+        );
+        final docUser = _users.doc(userCredential.user!.uid);
+        await docUser
+            .set(userModel.toMap())
+            .then((value) => print("$username added to FireStore."));
+      } else {
+        userModel = await getUserStream(userCredential.user!.uid).first;
+      }
 
       // final data = {
       //   'email': email,
@@ -58,10 +78,6 @@ class AuthMethods {
       //   'gender': gender,
       //   'accountType': accountType,
       // };
-
-      await docUser
-          .set(user.toJson())
-          .then((value) => print("$username added to FireStore."));
 
       res = "Signed up successfully";
 
@@ -81,6 +97,19 @@ class AuthMethods {
       //print(err);
     }
     return res;
+  }
+
+  Stream<UserModel> getUserStream(String uid) {
+    return _users.doc(uid).snapshots().map(
+        (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
+  }
+
+  Future<void> sendEmailVerification() async {
+    User? user = _auth.currentUser;
+    user!.sendEmailVerification();
+    //showSnackBar(context, "Verification Mail")
+    // ScaffoldMessenger.of(context!).showSnackBar(
+    //     const SnackBar(content: Text("A Verification Email has been sent")));
   }
 
   Future logIn({
