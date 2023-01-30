@@ -49,7 +49,7 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    model.User user = Provider.of<UserProvider>(context).getUser;
+    //model.UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       //appbar
       appBar: AppBar(
@@ -131,9 +131,9 @@ class _UserProfileState extends State<UserProfile> {
               ),
 
               //Username
-              Text(
-                user.username,
-                style: const TextStyle(
+              const Text(
+                'Test',
+                style: TextStyle(
                   fontSize: 17.0,
                   //fontFamily: 'FiraCode',
                   fontWeight: FontWeight.bold,
