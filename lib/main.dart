@@ -32,10 +32,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //removed 'const' keyword from return const MaterialApp
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-      ],
+    return Material(
+      // providers: [
+      //   ChangeNotifierProvider(create: (_) => UserProvider()),
+      // ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
 
@@ -57,35 +57,35 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
         ),
 
-        //home: HomePage(),
+        home: LogIn(),
         //home: UserProfile(),
         //home: UserProfilePt2(),
 
         //-----------------------------------------------------------------------
-        home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              //if a connection is made
-              if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasData) {
-                  return const HomePage();
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('${snapshot.error}'),
-                  );
-                }
-              }
+        // home: StreamBuilder(
+        //     stream: FirebaseAuth.instance.authStateChanges(),
+        //     builder: (context, snapshot) {
+        //       //if a connection is made
+        //       if (snapshot.connectionState == ConnectionState.active) {
+        //         if (snapshot.hasData) {
+        //           return const HomePage();
+        //         } else if (snapshot.hasError) {
+        //           return Center(
+        //             child: Text('${snapshot.error}'),
+        //           );
+        //         }
+        //       }
 
-              //if a connection isn't made
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.teal,
-                ));
-              }
+        //       //if a connection isn't made
+        //       if (snapshot.connectionState == ConnectionState.waiting) {
+        //         return const Center(
+        //             child: CircularProgressIndicator(
+        //           color: Colors.teal,
+        //         ));
+        //       }
 
-              return const LogIn();
-            }),
+        //       return const LogIn();
+        //     }),
 
         //-----------------------------------------------------------------------
       ),
