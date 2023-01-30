@@ -31,13 +31,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    addData();
+    //addData();
     //getUserName();
   }
 
   addData() async {
-    UserProvider _userProvider = Provider.of(context, listen: false);
-    await _userProvider.refreshUser();
+    //UserProvider _userProvider = Provider.of(context, listen: false);
+    //await _userProvider.refreshUser();
     // await Firebase.initializeApp();
     // CollectionReference users = FirebaseFirestore.instance.collection('users');
     // users.add({'name': 'John Doe', 'age': 42});
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
-    model.User user = Provider.of<UserProvider>(context).getUser;
+    //model.UserModel user = Provider.of<UserProvider>(context).getUser;
     getUserName();
     //var email = user!.email;
     //var userName = user!.displayName;
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 feedScreen(),
                 Post(),
-                Unity(),
+                Post(),
                 DiscoverPage(),
                 UserProfile(),
               ],
