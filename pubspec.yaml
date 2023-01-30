@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.6 <3.0.0'
+  sdk: ">=2.18.6 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -40,11 +40,13 @@ dependencies:
   firebase_storage: ^11.0.10
   flutter:
     sdk: flutter
+  flutter_riverpod: ^2.1.3
   flutter_unity_widget: ^2022.2.0
   font_awesome_flutter: ^10.3.0
   provider: ^6.0.5
   rounded_loading_button: ^2.1.0
   sensors_plus: ^2.0.1
+  shared_preferences: ^2.0.17
 
 dev_dependencies:
   change_app_package_name: ^1.0.0
@@ -56,7 +58,6 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
