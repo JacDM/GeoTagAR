@@ -32,19 +32,21 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       //Theme set for User Account Screens
-      theme: ThemeData(
-        textTheme: const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')),
-        scaffoldBackgroundColor: Colors.blueGrey[100],
+      //LIGHT THEME
+      theme: ThemeData.light().copyWith(
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: Colors.black, primary: Colors.black),
         appBarTheme: AppBarTheme(
+          toolbarTextStyle:
+              const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito'))
+                  .bodyText2,
+          titleTextStyle:
+              const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito'))
+                  .headline6,
           centerTitle: true,
-          iconTheme: const IconThemeData(size: 35.0, color: Colors.white),
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.blueGrey[900],
-          //shadowColor: Colors.teal[900],
-          toolbarHeight: 60.0,
-          elevation: 0,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
         ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       ),
 
       //home: HomePage(),
