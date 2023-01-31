@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
-
-import 'package:geotagar/screens/userAccountScreens/AccSettings/data_usage.dart';
+import '../reusableWidgets/custom_button.dart';
 import 'package:geotagar/screens/userAccountScreens/AccSettings/personal_info.dart';
 import 'package:geotagar/screens/userAccountScreens/AccSettings/sensitive_content.dart';
 
 const spacing =  SizedBox(height: 25.0,);
+const Color k_deleteFontTextColor = Color(0xFFC62828) ;    //red[800]
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
@@ -28,82 +28,69 @@ class _AccountSettingsState extends State<AccountSettings> {
       ),
 
 
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
 
-              children: <Widget>[
+            children: <Widget>[
 
-                //Personal Information
-                PageTab(onPressed: () {
-                  setState(() {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context){
-                          return const PersonalInfo() ;
-                        })
-                    );
-                  });
-                }, pageTabLabel: 'Personal Information'),
-                spacing,
+              //Personal Information
+              PageTab(onPressed: () {
+                setState(() {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context){
+                        return const PersonalInfo() ;
+                      })
+                  );
+                });
+              }, pageTabLabel: 'Personal Information'),
+              spacing,
 
-                //Language
-                PageTab(onPressed: () {
-                  setState(() {
-                    null;
-                  });
-                }, pageTabLabel: 'Language'),
-                spacing,
+              //Language
+              PageTab(onPressed: () {
+                setState(() {
+                  null;
+                });
+              }, pageTabLabel: 'Language'),
+              spacing,
 
-                //Sensitive Content Control
-                PageTab(onPressed: () {
-                  setState(() {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context){
-                          return const SCC() ;
-                        })
-                    );
-                  });
-                }, pageTabLabel: 'Sensitive Content Control'),
-                spacing,
+              //Sensitive Content Control
+              PageTab(onPressed: () {
+                setState(() {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context){
+                        return const SCC() ;
+                      })
+                  );
+                });
+              }, pageTabLabel: 'Sensitive Content Control'),
 
-                //Data Usage
-                PageTab(onPressed: () {
-                  setState(() {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context){
-                          return const DataUsage() ;
-                        })
-                    );
-                  });
-                }, pageTabLabel: 'Data Usage'),
-                spacing,
+              SizedBox(height: 50.0,),
 
-                //Delete Account
-                TextButton(
-                  onPressed: null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Delete Account',
-                        style: TextStyle(
-                          //fontWeight: FontWeight.bold,
-                          fontSize: 25.0,
-                          //fontFamily: 'FiraCode',
-                          color: Colors.red[800],
-                        ),
+
+              //Delete Account
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: RaisedGradientButton(
+                    gradient: const LinearGradient(
+                      colors: <Color>[Color(0xFFC62828),Color(0xFFC62828)],
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    child: const Center(
+                      child: Text(
+                        'DELETE ACCOUNT',
+                        style: TextStyle(color: Colors.white, fontSize: 23.0, fontWeight: FontWeight.w500),
                       ),
-
-                    ],
+                    ),
                   ),
                 ),
+              ),
 
-              ],
-            ),
+            ],
           ),
         ),
       ),

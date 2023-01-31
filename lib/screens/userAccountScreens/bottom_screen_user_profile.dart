@@ -9,7 +9,7 @@ void bottomScreenUserProfile(context){
     return DefaultTextStyle(
       style: const TextStyle(fontFamily: 'OpenSans', color: Colors.black),
       child: Container(
-        color: Colors.grey[300],
+        //color: Colors.grey[300],
         height: MediaQuery.of(context).size.height * 0.40,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -37,7 +37,7 @@ void bottomScreenUserProfile(context){
               Expanded(
                 flex: 2,
                 child: ReusableContainer(
-                  colour: Colors.grey,
+                  colour: const Color(0xFFBDBDBD),
                   containerChild: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,9 +45,10 @@ void bottomScreenUserProfile(context){
 
                       //Block
                       Expanded(
-                        child: ReusableContainer(
-                          colour: Colors.grey,
-                          containerChild: Text('Block', style: TextStyle(fontSize: 22.0, color: Colors.red[800],),),
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          //colour: Colors.grey,
+                          child: Text('Block', style: TextStyle(fontSize: 22.0, color: Colors.red[800]),),
                         ),
                       ),
 
@@ -55,29 +56,32 @@ void bottomScreenUserProfile(context){
 
                       //Report
                       Expanded(
-                        child: ReusableContainer(
-                          colour: Colors.grey,
-                          containerChild: Text('Report', style: TextStyle(fontSize: 22.0, color: Colors.red[800],),),
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          //colour: Colors.grey,
+                          child: Text('Report', style: TextStyle(fontSize: 22.0, color: Colors.red[800]),),
                         ),
                       ),
 
                       Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                       //Share
-                      const Expanded(
-                        child: ReusableContainer(
-                          colour: Colors.grey,
-                          containerChild: Text('Share this profile', style: TextStyle(fontSize: 22.0,),),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          //colour: Colors.grey,
+                          child: Text('Share this profile', style: TextStyle(fontSize: 22.0),),
                         ),
                       ),
 
                       Divider(color: Colors.grey[900], height: 0.5, thickness: 0.5, endIndent: 20.0, indent: 20.0,),
 
                       //Link
-                      const Expanded(
-                        child: ReusableContainer(
-                          colour: Colors.grey,
-                          containerChild: Text('Copy profile URL', style: TextStyle(fontSize: 22.0),),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(10.0),
+                          //colour: Colors.grey,
+                          child: Text('Copy profile URL', style: TextStyle(fontSize: 22.0),),
                         ),
                       ),
 

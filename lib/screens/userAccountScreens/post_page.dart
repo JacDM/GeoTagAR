@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geotagar/screens/userAccountScreens/bottom_screen_popup.dart';
 
-const _username = '@DATTEBAYOOO';
-const _location = 'Hidden Leaf Village';
-const _caption = 'Reminiscing the old times #Team7';
+const k_username = '@DATTEBAYOOO';
+const k_location = 'Hidden Leaf Village';
+const k_caption = 'Reminiscing the old times #Team7';
 
 class Post extends StatefulWidget {
   const Post({super.key});
@@ -74,8 +74,13 @@ class _PostState extends State<Post> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: const <Widget> [
-                                Text(_username, style: TextStyle(color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.bold),),
-                                Text(_location, style: TextStyle(color: Colors.black, fontSize: 17.0,), ),
+                                Text(k_username, style: TextStyle(
+                                    //color: Colors.black,
+                                    fontSize: 19.0,
+                                    fontWeight: FontWeight.bold),),
+                                Text(k_location, style: TextStyle(
+                                  //color: Colors.black,
+                                  fontSize: 17.0,), ),
                               ],
                             ),
                           ),
@@ -88,7 +93,11 @@ class _PostState extends State<Post> {
                                 bottomSheetPopup(context);
                               },
 
-                              child: const Icon(Icons.more_horiz, size: 37.0, color: Colors.black,)
+                              child: const Icon(
+                                Icons.more_horiz,
+                                size: 37.0,
+                                //color: Colors.black,
+                              )
                           ),
                         ],
                       ),
@@ -116,11 +125,17 @@ class _PostState extends State<Post> {
                   child: Row(
                     children: const <Widget> [
 
-                      Icon(FontAwesomeIcons.heart, size: 33.0, color: Colors.black,),
+                      Icon(FontAwesomeIcons.heart, size: 33.0,
+                        //color: Colors.black,
+                      ),
                       SizedBox(width: 20.0,),
-                      Icon(FontAwesomeIcons.comment, size: 33.0, color: Colors.black,),
+                      Icon(FontAwesomeIcons.comment, size: 33.0,
+                        //color: Colors.black,
+                      ),
                       SizedBox(width: 20.0,),
-                      Icon(Icons.send, size: 33.0, color: Colors.black,),
+                      Icon(Icons.send, size: 33.0,
+                        //color: Colors.black,
+                      ),
                       SizedBox(width: 20.0,),
                       //Icon(FontAwesomeIcons.locationArrow, size: 35.0, color: Colors.black,),
 
@@ -135,10 +150,10 @@ class _PostState extends State<Post> {
                     alignment: Alignment.bottomLeft,
                     child: RichText(
                       text: const TextSpan(
-                        style: TextStyle(color: Colors.black), //apply style to all
+                        //style: TextStyle(color: Colors.black), //apply style to all
                         children: [
-                          TextSpan(text: _username, style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          TextSpan(text: '  $_caption', style: TextStyle(fontSize: 15.0, ),),
+                          TextSpan(text: k_username, style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                          TextSpan(text: '  $k_caption', style: TextStyle(fontSize: 15.0, ),),
                         ],
                       ),
                     ),
