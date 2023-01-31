@@ -56,6 +56,8 @@ class _AddPostState extends State<AddPost> {
     });
   }
 
+  uploadImage() {}
+
   handleSubmit() async {
     setState(() {
       isUploading = true;
@@ -177,7 +179,7 @@ class _AddPostState extends State<AddPost> {
                     width: MediaQuery.of(context).size.width * 0.25,
                     child: Tooltip(
                       waitDuration: Duration(seconds: 2),
-                      showDuration: Duration(milliseconds: 1500),
+                      showDuration: Duration(seconds: 1),
                       message: 'Long press to clear location',
                       child: ElevatedButton.icon(
                         onPressed: () {
@@ -190,6 +192,11 @@ class _AddPostState extends State<AddPost> {
                           setState(() {
                             _locationCtrler.clear();
                           });
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text('Location cleared.'),
+                            duration: Duration(seconds: 4),
+                          ));
                         },
                         label: Text(
                           'Use current location',
