@@ -12,6 +12,7 @@ import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile_pt2.dart';
 import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
+import 'package:geotagar/screens/map.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,9 +50,23 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      //home: HomePage(),
+//DARK THEME
+
+      // theme: ThemeData.dark().copyWith(
+      //   colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black, primary: Colors.white),
+      //   appBarTheme: AppBarTheme(
+      //     toolbarTextStyle: const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')).bodyText2,
+      //     //titleTextStyle: const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')).headline6,
+      //     centerTitle: true,
+      //     backgroundColor: Colors.black,
+      //     foregroundColor: Colors.white,
+      //
+      //   ),
+      // ),
+      
+      home: HomePage(),
       //home: UserProfile(),
-      home: LogIn(),
+      //home: Map(),
 
       //-----------------------------------------------------------------------
       /// home: StreamBuilder(

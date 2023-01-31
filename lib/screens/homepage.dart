@@ -14,6 +14,8 @@ import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/globe.dart';
+import 'package:geotagar/screens/map.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,8 +54,10 @@ class _HomePageState extends State<HomePage> {
               index: _currentIndex,
               children: [
                 Post(),
-                GlobePage(),
+                //GlobePage(),
                 CMRoute(currentUser: user!),
+                //Map(),
+                Unity(),
                 DiscoverPage(),
                 UserProfile(),
               ],

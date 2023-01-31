@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/icon_data.dart';
 
+Color k_containerColor =  Colors.white38  ; //Color(0xFFBDBDBD)
+
 void bottomScreenUserProfile(context){
   showModalBottomSheet(context: context, builder: (BuildContext bc){
     return DefaultTextStyle(
@@ -37,7 +39,7 @@ void bottomScreenUserProfile(context){
               Expanded(
                 flex: 2,
                 child: ReusableContainer(
-                  colour: const Color(0xFFBDBDBD),
+                  colour: k_containerColor,
                   containerChild: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,7 +50,7 @@ void bottomScreenUserProfile(context){
                         child: Container(
                           padding: EdgeInsets.all(10.0),
                           //colour: Colors.grey,
-                          child: Text('Block', style: TextStyle(fontSize: 22.0, color: Colors.red[800]),),
+                          child: Text('Block', style: TextStyle(fontSize: 22.0, color: Colors.red[900]),),
                         ),
                       ),
 
@@ -59,7 +61,7 @@ void bottomScreenUserProfile(context){
                         child: Container(
                           padding: EdgeInsets.all(10.0),
                           //colour: Colors.grey,
-                          child: Text('Report', style: TextStyle(fontSize: 22.0, color: Colors.red[800]),),
+                          child: Text('Report', style: TextStyle(fontSize: 22.0, color: Colors.red[900],),),
                         ),
                       ),
 

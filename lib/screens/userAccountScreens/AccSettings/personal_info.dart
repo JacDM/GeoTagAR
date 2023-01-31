@@ -39,9 +39,9 @@ class _PersonalInfo extends State<PersonalInfo> {
                 Align(
                   alignment: Alignment.topRight,
                   child: CircleAvatar(
-                    //backgroundColor: Colors.black,
+                    backgroundColor: Colors.black,
                     //22.0
-                    radius: MediaQuery.of(context).size.width * 0.0525,
+                    radius: MediaQuery.of(context).size.width * 0.05,
                     child: FloatingActionButton(
                       onPressed: (){
                         Navigator.push(
@@ -55,8 +55,8 @@ class _PersonalInfo extends State<PersonalInfo> {
                       child: Icon(
                         Icons.edit,
                         //35.0
-                        size: MediaQuery.of(context).size.width * 0.07,
-                        //color: Colors.white,
+                        size: MediaQuery.of(context).size.width * 0.06,
+                        color: Colors.white,
                       ),
                     ),
                   ),
