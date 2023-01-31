@@ -1,7 +1,13 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/discoverPages/discover.dart';
 import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:geotagar/screens/memory_related/create_memory.dart';
+import 'package:geotagar/screens/unityAR.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/post_page.dart';
@@ -9,7 +15,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/map.dart';
-
 
 
 class HomePage extends StatefulWidget {
@@ -22,6 +27,9 @@ class HomePage extends StatefulWidget {
 // Temporary homepage, will be modified later
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
+  final usersRef = FirebaseFirestore.instance.collection('users').snapshots();
+  final storageRef = FirebaseStorage.instance.ref();
+
   int _currentIndex = 0;
 
   List<Widget> body = const [
@@ -46,14 +54,15 @@ class _HomePageState extends State<HomePage> {
               index: _currentIndex,
               children: [
                 Post(),
-                Map(),
+                //GlobePage(),
+                CMRoute(currentUser: user!),
+                //Map(),
                 Unity(),
                 DiscoverPage(),
                 UserProfile(),
               ],
             ),
             // Center(
-
             //     //child: body[_currentIndex],
             //     child: ElevatedButton(
             //         child: Text("Sign out"),
@@ -73,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: (index) {
                     setState(() {
                       _currentIndex = index;
+                      if (index == 3) print('user = $usersRef');
                     });
                   },
                   items: const [

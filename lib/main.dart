@@ -35,18 +35,22 @@ class MyApp extends StatelessWidget {
       //Theme set for User Account Screens
       //LIGHT THEME
       theme: ThemeData.light().copyWith(
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black, primary: Colors.black),
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: Colors.black, primary: Colors.black),
         appBarTheme: AppBarTheme(
-          toolbarTextStyle: const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')).bodyText2,
-          titleTextStyle: const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')).headline6,
+          toolbarTextStyle:
+              const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito'))
+                  .bodyText2,
+          titleTextStyle:
+              const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito'))
+                  .headline6,
           centerTitle: true,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
-
         ),
       ),
 
-      //DARK THEME
+//DARK THEME
 
       // theme: ThemeData.dark().copyWith(
       //   colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black, primary: Colors.white),
@@ -64,44 +68,41 @@ class MyApp extends StatelessWidget {
       //home: UserProfile(),
       //home: Map(),
 
+      //-----------------------------------------------------------------------
+      /// home: StreamBuilder(
+      ///   stream: FirebaseAuth.instance.authStateChanges(),
+      ///   builder: (context, snapshot) {
 
+      ///     //if a connection is made
+      ///     if(snapshot.connectionState == ConnectionState.active) {
+      ///       if(snapshot.hasData){
+      ///         return const ResponsiveLayout(
+      ///           mobileScreenLayout: MobileScreenLayout(),
+      ///           webScreenLayout: WebScreenLayout(),
+      ///         )
+      ///       }
+      ///       else if(snapshot.hasError) {
+      ///         return Center(
+      ///           child: Text('${snapshot.error}'),
+      ///         );
+      ///       }
+      ///     }
+
+      ///     //if a connection isn't made
+      ///     id(snapshot.connectionState == ConnectionState.waiting){
+      ///       return const Center(
+      ///         child: CircularProgressIndicator(
+      ///           color: primaryColor,
+      ///         )
+      ///       );
+      ///     }
+
+      ///     return const LogIn();
+
+      ///   }
+      /// ),
 
       //-----------------------------------------------------------------------
-      // home: StreamBuilder(
-      //   stream: FirebaseAuth.instance.authStateChanges(),
-      //   builder: (context, snapshot) {
-
-      //     //if a connection is made
-      //     if(snapshot.connectionState == ConnectionState.active) {
-      //       if(snapshot.hasData){
-      //         return const ResponsiveLayout(
-      //           mobileScreenLayout: MobileScreenLayout(),
-      //           webScreenLayout: WebScreenLayout(),
-      //         )
-      //       }
-      //       else if(snapshot.hasError) {
-      //         return Center(
-      //           child: Text('${snapshot.error}'),
-      //         );
-      //       }
-      //     }
-
-      //     //if a connection isn't made
-      //     id(snapshot.connectionState == ConnectionState.waiting){
-      //       return const Center(
-      //         child: CircularProgressIndicator(
-      //           color: primaryColor,
-      //         )
-      //       );
-      //     }
-
-      //     return const LogIn();
-
-      //   }
-      // ),
-
-      //-----------------------------------------------------------------------
-
     );
   }
 }
