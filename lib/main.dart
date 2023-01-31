@@ -12,6 +12,7 @@ import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile_pt2.dart';
 import 'package:geotagar/screens/globe.dart';
 import 'package:geotagar/screens/unity_flutter_communication.dart';
+import 'package:geotagar/screens/map.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,9 +60,9 @@ class MyApp extends StatelessWidget {
       //   ),
       // ),
       
-      //home: HomePage(),
+      home: HomePage(),
       //home: UserProfile(),
-      home: RegisterPage(),
+      //home: Map(),
 
 
 
