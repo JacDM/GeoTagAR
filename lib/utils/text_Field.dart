@@ -21,7 +21,11 @@ class ReusableTextField extends StatelessWidget {
       //required this.errorText,
       required this.hintText,
       this.suffix,
-      this.prefix});
+      this.prefix,
+      this.textColor,
+      this.onFieldSubmitted});
+
+  final Color? textColor;
 
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
@@ -31,6 +35,7 @@ class ReusableTextField extends StatelessWidget {
   final VoidCallback? onEditingCompleted;
   final TextInputType? keyboardType;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onFieldSubmitted;
   //final bool isMulti;
   //final bool? autofocus;
   //final bool? enabled;
@@ -46,6 +51,7 @@ class ReusableTextField extends StatelessWidget {
       child: TextFormField(
           onChanged: onChanged,
           onEditingComplete: onEditingCompleted,
+          onFieldSubmitted: onFieldSubmitted,
           //autofocus: autofocus,
           //minLines: isMulti ? 4 : 1,
           //maxLines: isMulti ? null : 1,
@@ -58,7 +64,9 @@ class ReusableTextField extends StatelessWidget {
           //keyboardType: keyboardType,
           controller: controller,
           style: TextStyle(
-              color: const Color.fromARGB(255, 58, 58, 58).withOpacity(0.9)),
+            color: textColor ??
+                const Color.fromARGB(255, 58, 58, 58).withOpacity(0.9),
+          ),
           decoration: InputDecoration(
             isDense: true,
             //errorText: errorText,

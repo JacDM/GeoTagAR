@@ -24,13 +24,13 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  _genderState() {
-    _selectedGender = _gender[0];
-  }
+  // _genderState() {
+  //   _selectedGender = _gender[0];
+  // }
 
-  _accountTypeState() {
-    _selectedAccountType = _accountType[0];
-  }
+  // _accountTypeState() {
+  //   _selectedAccountType = _accountType[0];
+  // }
 
   // Variables
   final TextEditingController _emailTextController = TextEditingController();
@@ -40,12 +40,12 @@ class _RegisterPageState extends State<RegisterPage> {
       TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   //final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
+  // final TextEditingController _genderController = TextEditingController();
   // MODIFY WITH DATE OF BIRTH
   final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _dayController = TextEditingController();
-  final TextEditingController _monthController = TextEditingController();
-  final TextEditingController _yearController = TextEditingController();
+  // final TextEditingController _dayController = TextEditingController();
+  // final TextEditingController _monthController = TextEditingController();
+  // final TextEditingController _yearController = TextEditingController();
   //final TextEditingController _genderController = TextEditingController();
 
   String _emailError = '';
@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     if (passwordMatch()) {
-      await AuthMethods()
+      await AuthServices()
           .signUp(
             email: email,
             username: username,
@@ -95,6 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
             name: name,
             gender: _selectedGender,
             accountType: _selectedAccountType,
+            // file: Constants.avatarDefault,
           )
           .then((value) => Navigator.push(
                   context, MaterialPageRoute(builder: (context) => LogIn()))
@@ -186,7 +187,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.0001),
-                                  logo(Constants.logoPath),
+                                  logo(Constants.logoPathWhite),
                                   SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height *
