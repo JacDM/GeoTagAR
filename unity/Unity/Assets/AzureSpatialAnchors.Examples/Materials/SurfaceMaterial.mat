@@ -109,10 +109,11 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.9150943, g: 0.4359647, b: 0.4359647, a: 0.3529412}
+    - _Color: {r: 0.0029411765, g: 0.061764706, b: 0.052941177, a: 0.3529412}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _PulseColor: {r: 0.14499995, g: 0.44699997, b: 0.922, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _WireframeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_BuildTextureStacks: []

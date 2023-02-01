@@ -55,7 +55,7 @@ class _UnityState extends State<Unity> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        //takePicture();
+                        takePicture();
                       },
                       icon: Icon(
                         Icons.flip_camera_ios,
@@ -112,7 +112,8 @@ class _UnityState extends State<Unity> {
 
   void takePicture() {
     _unityWidgetController.postMessage(
-        'PersistentCloudAnchorsController', 'captureImage', null);
+        'Manager', 'captureImage', null
+      );
   }
 
   void sendText(){

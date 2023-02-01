@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -55,8 +55,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Post(),
                 //GlobePage(),
-                CMRoute(currentUser: user!),
-                //Map(),
+                Map(),
                 Unity(),
                 DiscoverPage(),
                 UserProfile(),
