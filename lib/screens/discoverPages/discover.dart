@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/utils/methods.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -46,6 +47,7 @@ class _Discover_PageState extends State<DiscoverPage>
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -110,7 +112,66 @@ class _Discover_PageState extends State<DiscoverPage>
                   );
                 },
               )
-            : const Text("Communities"));
+            : Container(
+                //Text("Discover"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 8),
+                  child: FutureBuilder(
+                      future: FirebaseFirestore.instance
+                          .collection('groups')
+                          .orderBy('name')
+                          .get(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        // SizedBox(height: 200);
+                        // const Text("Communities");
+                        // const SizedBox(height: 20);
+                        return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (ctx, index) => Container(
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: width > 600 ? width * 0.3 : 0,
+                                    vertical: width > 600 ? 15 : 0,
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ListTile(
+                                      // leading: CircleAvatar(
+                                      //   backgroundImage: NetworkImage(
+                                      //     snapshot.data!.docs[index]['profilePic'],
+                                      //   ),
+                                      //   radius: 16,
+                                      // ),
+                                      title: Text(
+                                        snapshot.data!.docs[index]['name'],
+                                      ),
+                                      subtitle: Text(
+                                        snapshot.data!.docs[index]
+                                            ['description'],
+                                      ),
+                                      trailing: Text(
+                                        snapshot
+                                            .data!.docs[index]['members'].length
+                                            .toString(),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                            // child: Scaffold(
+                            //   snapshot.data!.docs[index].data(),
+                            // ),
+                            );
+                      }),
+                ),
+              ));
+    //: const Text("Communities"));
   }
 }
 

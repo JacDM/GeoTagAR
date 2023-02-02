@@ -114,7 +114,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                       hintStyle: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
-                        fontSize: 14,
+                        fontSize: 10,
                       ),
                     ),
                   ),
