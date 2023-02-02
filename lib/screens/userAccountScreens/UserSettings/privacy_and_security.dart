@@ -3,6 +3,7 @@ import '../reusableWidgets/page_tabs.dart';
 import '../PrivacyAndSecurity/acc_visibility.dart';
 import '../PrivacyAndSecurity/reset_password.dart';
 import '../PrivacyAndSecurity/activity_status.dart';
+
 const spacing =  SizedBox(height: 25.0,);
 
 class PrivacyAndSecurity extends StatefulWidget {
@@ -61,12 +62,12 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
                 spacing,
 
                 //Login Activity
-                PageTab(onPressed: () {
-                  setState(() {
-                    null;
-                  });
-                }, pageTabLabel: 'Login Activity'),
-                spacing,
+                // PageTab(onPressed: () {
+                //   setState(() {
+                //     null;
+                //   });
+                // }, pageTabLabel: 'Login Activity'),
+                // spacing,
 
                 //Blocked Accounts
                 PageTab(onPressed: () {

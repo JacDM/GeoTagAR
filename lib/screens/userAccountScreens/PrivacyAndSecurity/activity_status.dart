@@ -16,6 +16,7 @@ const k_selectedtextStyle =
     TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
 const k_containerColor = Color(0xFFBDBDBD); //grey[400]
 
+
 enum Options { option1, option2, option3, option4 }
 
 class ActivityStatus extends StatefulWidget {
@@ -77,9 +78,10 @@ class _ActivityStatus extends State<ActivityStatus> {
                                 deselectOptions(Options.option1);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text('Online', style: bg_option1),
                                 ],
@@ -95,9 +97,10 @@ class _ActivityStatus extends State<ActivityStatus> {
                                 deselectOptions(Options.option2);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text(
                                     'Appear Away',
@@ -116,9 +119,10 @@ class _ActivityStatus extends State<ActivityStatus> {
                                 deselectOptions(Options.option3);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text(
                                     'Appear Offline',

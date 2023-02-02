@@ -37,6 +37,7 @@ class UserModel {
   static UserModel fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
+
     return UserModel(
         username: snapshot["username"],
         uid: snapshot["uid"],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/custom_button.dart';
 
+
 TextStyle k_passwordtextstyle = const TextStyle(fontSize: 20.0);
 Widget k_textbox = const TextField(
   textAlign: TextAlign.left,
@@ -67,9 +68,15 @@ class _ResetPassword extends State<ResetPassword> {
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w500),
                           ),
+                          onPressed: () => Navigator.pop(context),
+                          child: const Center(
+                            child: Text(
+                              'RESET PASSWORD',
+                              style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
+                            ),
                         ),
-                      ),
                     ),
+                      ),
                   ],
                 )
               ],
