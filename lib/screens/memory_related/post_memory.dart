@@ -283,3 +283,31 @@ class _AddPostState extends State<AddPost> {
     );
   }
 }
+
+
+// class PreviewPage extends StatelessWidget {
+//   const PreviewPage({
+//     super.key,
+//     //required this.path
+//   });
+//   //final String path;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Colors.black,
+//       ),
+//       body: Container(),
+//       floatingActionButton: IconButton(
+//         onPressed: () {},
+//         alignment: Alignment.bottomRight,
+//         color: Colors.black,
+//         icon: Icon(
+//           Icons.arrow_forward,
+//         ),
+//         padding: EdgeInsets.only(bottom: 8, right: 8),
+//       ),
+//     );
+//   }
+// }

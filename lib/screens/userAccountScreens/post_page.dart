@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geotagar/screens/userAccountScreens/bottom_screen_popup.dart';
 
-const _username = '@DATTEBAYOOO';
-const _location = 'Hidden Leaf Village';
-const _caption = 'Reminiscing the old times #Team7';
+const k_username = '@DATTEBAYOOO';
+const k_location = 'Hidden Leaf Village';
+const k_caption = 'Reminiscing the old times #Team7';
 
 class Post extends StatefulWidget {
   const Post({super.key});
@@ -178,6 +178,7 @@ class _PostState extends State<Post> {
                               fontSize: 15.0,
                             ),
                           ),
+
                         ],
                       ),
                     ),

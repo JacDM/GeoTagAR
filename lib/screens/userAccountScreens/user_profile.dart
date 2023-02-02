@@ -17,6 +17,7 @@ import '../../utils/follow_button.dart';
 import '../../utils/methods.dart';
 import '../userLogIn_Register/log_in.dart';
 
+const k_username = '@DATTEBAYOOO';
 class UserProfile extends StatefulWidget {
   final String uid;
   const UserProfile({super.key, required this.uid});
@@ -74,6 +75,7 @@ class _UserProfileState extends State<UserProfile> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     //final UserModel user = Provider.of<UserProvider>(context).getUser;
@@ -123,6 +125,7 @@ class _UserProfileState extends State<UserProfile> {
                             size: MediaQuery.of(context).size.width * 0.08,
                             color: Colors.white,
                           ),
+
                         ),
                       ),
                     ),
@@ -139,6 +142,7 @@ class _UserProfileState extends State<UserProfile> {
                           backgroundImage:
                               const NetworkImage(Constants.avatarDefault),
                         ),
+
                       ),
                     ),
                   ],
@@ -156,6 +160,7 @@ class _UserProfileState extends State<UserProfile> {
                     fontSize: 30.0,
                     fontFamily: 'arial',
                     fontWeight: FontWeight.w900,
+
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -179,6 +184,7 @@ class _UserProfileState extends State<UserProfile> {
                       'Bio Goes here',
                       style: TextStyle(
                         fontSize: 20.0,
+
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -206,6 +212,7 @@ class _UserProfileState extends State<UserProfile> {
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
+
                         ),
                       ),
                       Text(
@@ -243,11 +250,13 @@ class _UserProfileState extends State<UserProfile> {
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
+
                         ),
                       ),
                     ],
                   ),
                 ),
+
 
                 //Edit Profile Button  (not inserted yet)
                 Row(
@@ -467,3 +476,4 @@ class _UserProfileState extends State<UserProfile> {
     }
   }
 }
+

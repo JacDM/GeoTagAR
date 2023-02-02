@@ -36,7 +36,7 @@ class _ReportState extends State<Report> {
                     fontWeight: FontWeight.bold,
                     fontSize: 23.0,
                     //fontFamily: 'FiraCode',
-                    color: k_fontTextColour,
+                    //color: k_fontTextColour,
                   ),
                 ),
                 const SizedBox(
