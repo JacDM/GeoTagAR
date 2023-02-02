@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 
-
-Widget k_divider = Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-  child:   Container(height: 1.0, width: double.infinity, color: Colors.grey[600],),
+Widget k_divider = Divider(
+  color: Colors.grey[900],
+  height: 0.5,
+  thickness: 0.5,
+  endIndent: 20.0,
+  indent: 20.0,
 );
-Widget k_spacing = const SizedBox(height: 10.0,);
-const k_textStyle = TextStyle(fontSize: 23.0);
-const k_selectedtextStyle = TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold);
-const k_containerColor = Colors.white38;  // Color(0xFFE0E0E0)
+Widget k_spacing = const SizedBox(
+  height: 10.0,
+);
+const k_textStyle = TextStyle(fontSize: 20.0);
+const k_selectedtextStyle =
+    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
+const k_containerColor = Color(0xFFBDBDBD); //grey[400]
 
-enum Options{
-  option1, option2, option3, option4
-}
+
+enum Options { option1, option2, option3, option4 }
 
 class ActivityStatus extends StatefulWidget {
   const ActivityStatus({super.key});
@@ -28,8 +32,7 @@ class _ActivityStatus extends State<ActivityStatus> {
   TextStyle bg_option3 = k_textStyle;
   TextStyle bg_option4 = k_textStyle;
 
-
-  void deselectOptions (Options op) {
+  void deselectOptions(Options op) {
     bg_option1 = op == Options.option1 ? k_selectedtextStyle : k_textStyle;
     bg_option2 = op == Options.option2 ? k_selectedtextStyle : k_textStyle;
     bg_option3 = op == Options.option3 ? k_selectedtextStyle : k_textStyle;
@@ -38,13 +41,11 @@ class _ActivityStatus extends State<ActivityStatus> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //appbar
       appBar: AppBar(
         title: const Text('ACTIVITY STATUS'),
       ),
-
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -54,32 +55,22 @@ class _ActivityStatus extends State<ActivityStatus> {
               //mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
                 k_spacing,
-
                 const Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     'WHO CAN SEE WHEN I AM ONLINE:',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      //color: Color(0xFF424242),
-                    ),
+                    style: TextStyle(fontSize: 18.0),
                   ),
                 ),
-
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .30,
-                  child: Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8.0)),
-                    margin: const EdgeInsets.all(10.0),
-                    padding: const EdgeInsets.all(10.0),
-                    //color: k_containerColor,  //grey[400]
-                    child: Column(
+                  child: ReusableContainer(
+                    colour: k_containerColor, //grey[400]
+                    containerChild: Column(
                       //mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget> [
-
+                      children: <Widget>[
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -98,9 +89,7 @@ class _ActivityStatus extends State<ActivityStatus> {
                             ),
                           ),
                         ),
-
                         k_divider,
-
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -113,15 +102,16 @@ class _ActivityStatus extends State<ActivityStatus> {
                               //colour: k_containerColor,
                               child: Row(
                                 children: [
-                                  Text('Appear Away', style: bg_option2,),
+                                  Text(
+                                    'Appear Away',
+                                    style: bg_option2,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-
                         k_divider,
-
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -134,29 +124,24 @@ class _ActivityStatus extends State<ActivityStatus> {
                               //colour: k_containerColor,
                               child: Row(
                                 children: [
-                                  Text('Appear Offline', style: bg_option3,),
+                                  Text(
+                                    'Appear Offline',
+                                    style: bg_option3,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-
-
                       ],
                     ),
                   ),
                 ),
-
-
               ],
             ),
           ),
         ),
       ),
-
-
     );
   }
-
-
 }

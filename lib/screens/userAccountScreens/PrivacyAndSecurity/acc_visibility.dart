@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 
-Widget k_divider = Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-  child:   Container(height: 1.0, width: double.infinity, color: Colors.grey[600],),
+Widget k_divider = Divider(
+  color: Colors.grey[900],
+  height: 0.5,
+  thickness: 0.5,
+  endIndent: 20.0,
+  indent: 20.0,
 );
-const k_textStyle = TextStyle(fontSize: 23.0);
-const k_selectedtextStyle = TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold);
-const k_containerColor = Colors.white38;  //Color(0xFFE0E0E0)
+const k_textStyle = TextStyle(fontSize: 20.0);
+const k_selectedtextStyle =
+    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
+const k_containerColor = Color(0xFFBDBDBD); //grey[400]
 
-enum Options{
-  option1, option2, option3, option4
-}
+
+enum Options { option1, option2, option3, option4 }
 
 class AccVisibility extends StatefulWidget {
   const AccVisibility({super.key});
@@ -26,8 +29,7 @@ class _AccVisibility extends State<AccVisibility> {
   TextStyle bg_option3 = k_textStyle;
   TextStyle bg_option4 = k_textStyle;
 
-
-  void deselectOptions (Options op) {
+  void deselectOptions(Options op) {
     bg_option1 = op == Options.option1 ? k_selectedtextStyle : k_textStyle;
     bg_option2 = op == Options.option2 ? k_selectedtextStyle : k_textStyle;
     bg_option3 = op == Options.option3 ? k_selectedtextStyle : k_textStyle;
@@ -36,13 +38,11 @@ class _AccVisibility extends State<AccVisibility> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //appbar
       appBar: AppBar(
         title: const Text('ACCOUNT VISIBILITY'),
       ),
-
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -52,32 +52,25 @@ class _AccVisibility extends State<AccVisibility> {
               //mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
-                const SizedBox(height: 10.0,),
-
+                const SizedBox(
+                  height: 10.0,
+                ),
                 const Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     'WHO CAN SEE WHEN I AM ONLINE:',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        //color: Color(0xFF424242),
-                    ),
+                    style: TextStyle(fontSize: 18.0),
+
                   ),
                 ),
-
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .37,
-                  child: Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8.0)),
-                    margin: const EdgeInsets.all(10.0),
-                    padding: const EdgeInsets.all(10.0),
-                    //colour: k_containerColor,  //grey[400]
-                    child: Column(
+                  child: ReusableContainer(
+                    colour: k_containerColor, //grey[400]
+                    containerChild: Column(
                       //mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget> [
-
+                      children: <Widget>[
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -96,9 +89,7 @@ class _AccVisibility extends State<AccVisibility> {
                             ),
                           ),
                         ),
-
                         k_divider,
-
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -111,15 +102,16 @@ class _AccVisibility extends State<AccVisibility> {
                               //colour: k_containerColor,
                               child: Row(
                                 children: [
-                                  Text('Only My Contacts', style: bg_option2,),
+                                  Text(
+                                    'Only My Contacts',
+                                    style: bg_option2,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-
                         k_divider,
-
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -132,15 +124,16 @@ class _AccVisibility extends State<AccVisibility> {
                               //colour: k_containerColor,
                               child: Row(
                                 children: [
-                                  Text('Only My Contacts except...', style: bg_option3,),
+                                  Text(
+                                    'Only My Contacts except...',
+                                    style: bg_option3,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-
                         k_divider,
-
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -153,28 +146,24 @@ class _AccVisibility extends State<AccVisibility> {
                               //colour: k_containerColor,
                               child: Row(
                                 children: [
-                                  Text('Nobody', style: bg_option4,),
+                                  Text(
+                                    'Nobody',
+                                    style: bg_option4,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
                 ),
-
-
               ],
             ),
           ),
         ),
       ),
-
-
     );
   }
-
-
 }

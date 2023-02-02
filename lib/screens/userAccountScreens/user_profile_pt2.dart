@@ -4,7 +4,8 @@ import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 
 const k_username = '@uchiha_forever';
 const k_bgImage = 'https://wallpapers.com/images/featured/9u4dx0obug15i974.jpg';
-const k_profilePic = 'https://i.pinimg.com/736x/74/e7/84/74e7847db64c38d02ff0511d5b831d9e.jpg';
+const k_profilePic =
+    'https://i.pinimg.com/736x/74/e7/84/74e7847db64c38d02ff0511d5b831d9e.jpg';
 
 //THIS IS THE PAGE WHEN WE VIEW SOMEONE ELSE'S PROFILE
 
@@ -19,7 +20,6 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
   bool pressedMemoriesTab = true;
   bool pressedTagsTab = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,6 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
       appBar: AppBar(
         title: const Text('USER PROFILE PAGE PT2'),
       ),
-
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -38,29 +37,23 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
               Stack(
                 clipBehavior: Clip.none,
                 //alignment: Alignment.center,
-                children:  [
-
+                children: [
                   //Background Picture
-                    Container(
-                      height: MediaQuery.of(context).size.width * 0.53,
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.white12,
-                            width: 3.0,
-                          ),
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.53,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.white12,
+                          width: 3.0,
                         ),
-                        image:  DecorationImage(
-                          image: NetworkImage(
-                              k_bgImage),
-                          fit: BoxFit.cover,
-                        ),
-
                       ),
-
-
-
+                      image: DecorationImage(
+                        image: NetworkImage(k_bgImage),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
 
                   //3 dots icon
@@ -72,7 +65,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                       //22.0
                       radius: MediaQuery.of(context).size.width * 0.055,
                       child: FloatingActionButton(
-                        onPressed: (){
+                        onPressed: () {
                           bottomScreenUserProfile(context);
                         },
                         tooltip: 'More Options',
@@ -84,7 +77,6 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                         ),
                       ),
                     ),
-
                   ),
 
                   //Profile Picture
@@ -96,8 +88,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                       backgroundColor: Colors.white38,
                       child: CircleAvatar(
                         radius: MediaQuery.of(context).size.width * 0.14,
-                        backgroundImage: const NetworkImage(
-                            k_profilePic),
+                        backgroundImage: const NetworkImage(k_profilePic),
                       ),
                     ),
                   ),
@@ -145,32 +136,33 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                 ),
               ),
 
-
               //Moments, Followers, Following (Row)
               Padding(
                 padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const <Widget>[
-                    Text('150',
+                    Text(
+                      '150',
                       style: TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('10K',
+                    Text(
+                      '10K',
                       style: TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('20',
+                    Text(
+                      '20',
                       style: TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -180,32 +172,33 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const <Widget>[
-                    Text('Moments',
+                    Text(
+                      'Moments',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontFamily: 'OpenSans',
                         //fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('Followers',
+                    Text(
+                      'Followers',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontFamily: 'OpenSans',
                         //fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('Following',
+                    Text(
+                      'Following',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontFamily: 'OpenSans',
                         //fontWeight: FontWeight.bold,
                       ),
                     ),
-
                   ],
                 ),
               ),
-
 
               //Follow, Message
               Padding(
@@ -221,26 +214,47 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                         decoration: BoxDecoration(
                           color: Colors.blue[600],
                           //border: Border.all(),
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0),),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
                         ),
-                        padding: const EdgeInsets.all(10.0,),
-                        child: const Text('Follow', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0, fontFamily: 'OpenSans', color: Colors.white),),
+                        padding: const EdgeInsets.all(
+                          10.0,
+                        ),
+                        child: const Text(
+                          'Follow',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                              fontFamily: 'OpenSans',
+                              color: Colors.white),
+                        ),
                       ),
                     ),
-
-                    const SizedBox(width: 20.0,),
-
+                    const SizedBox(
+                      width: 20.0,
+                    ),
                     Expanded(
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: Colors.grey[400],
                           //border: Border.all(),
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0),),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
                         ),
-                        padding: const EdgeInsets.all(10.0,),
-                        child: const Text('Message', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0, fontFamily: 'OpenSans', color: Colors.black),),
-
+                        padding: const EdgeInsets.all(
+                          10.0,
+                        ),
+                        child: const Text(
+                          'Message',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                              fontFamily: 'OpenSans',
+                              color: Colors.black),
+                        ),
                       ),
                     ),
                   ],
@@ -264,56 +278,78 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              //color: Colors.grey,
-                              width: pressedMemoriesTab ? 4 : 1,
-                              style: BorderStyle.solid,
-                            ),
-                            borderRadius: const BorderRadius.all(Radius.circular(10.0),),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.blueGrey,
+                            width: pressedMemoriesTab ? 3 : 1,
+                            style: BorderStyle.solid,
                           ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            pressedMemoriesTab = true;
-                            pressedTagsTab = false;
-                          });
-                        },
-
-
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Column(
-                            children: const [
-                              Icon(
-                                Icons.image_outlined,
-                                size: 40.0,
-                                //color: Colors.black,
-                              ),
-                              Text('Posts',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                  //color: Colors.teal[900],
-                                ),
-                              ),
-                            ],
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(5.0),
                           ),
                         ),
                       ),
+                      onPressed: () {
+                        setState(() {
+                          pressedMemoriesTab = true;
+                          pressedTagsTab = false;
+                        });
+                      },
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.image_outlined,
+                            size: 40.0,
+                            color: Colors.teal[900],
+                          ),
+                          Text(
+                            'Memories and Scrapbooks',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              color: Colors.teal[900],
+                              fontFamily: 'OpenSans',
+
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(10.0),),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(width: 10.0,),
-                    Expanded(
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape:  RoundedRectangleBorder(
-                            side: BorderSide(
-                              //color: Colors.blueGrey,
-                              width: pressedTagsTab ? 4 : 1,
-                              style: BorderStyle.solid,
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.blueGrey,
+                            width: pressedTagsTab ? 3 : 1,
+                            style: BorderStyle.solid,
+                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          pressedMemoriesTab = false;
+                          pressedTagsTab = true;
+                        });
+                      },
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.people_alt_outlined,
+                            size: 35.0,
+                            color: Colors.teal[900],
+                          ),
+                          Text(
+                            'Tags',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              color: Colors.teal[900],
+                              fontFamily: 'OpenSans',
                             ),
                             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                           ),
@@ -362,29 +398,26 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                   ),
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context){
-                            return const Post() ;
-                          })
-                      ),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const Post();
+                      })),
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         //: Colors.teal[100],
-                        decoration:  BoxDecoration(
+                        decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.black,
                             width: 3,
                           ),
                           image: const DecorationImage(
-                            image: NetworkImage('https://www.numerama.com/wp-content/uploads/2022/08/image5-min.jpg'),
+                            image: NetworkImage(
+                                'https://www.numerama.com/wp-content/uploads/2022/08/image5-min.jpg'),
                             fit: BoxFit.cover,
                           ),
-
                         ),
                       ),
                     ),
-
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[200],
@@ -394,10 +427,10 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://static.wikia.nocookie.net/naruto/images/c/c2/Young_sasuke_and_Naruto.png/revision/latest/scale-to-width-down/1916?cb=20210925220045'),
+                          image: NetworkImage(
+                              'https://cdn-images.win.gg/resize/w/1000/format/webp/type/progressive/fit/cover/path/wp/uploads/2022/06/naruto-and-sasuke.jpg'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
@@ -409,85 +442,79 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://preview.redd.it/k5l57lnr6e161.jpg?width=640&crop=smart&auto=webp&s=162c6749eff2d7e482f038cc5294ca5ffbee28d5'),
+                          image: NetworkImage(
+                              'https://preview.redd.it/k5l57lnr6e161.jpg?width=640&crop=smart&auto=webp&s=162c6749eff2d7e482f038cc5294ca5ffbee28d5'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[400],
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2020/06/Boruto-Naruto-Jiraiya.jpg?fit=1200%2C720&quality=80&ssl=1'),
+                          image: NetworkImage(
+                              'https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2020/06/Boruto-Naruto-Jiraiya.jpg?fit=1200%2C720&quality=80&ssl=1'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[500],
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://images7.alphacoders.com/705/thumb-1920-705566.png'),
+                          image: NetworkImage(
+                              'https://images7.alphacoders.com/705/thumb-1920-705566.png'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[600],
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://static.wikia.nocookie.net/shipping/images/c/c4/NaruSai_Shippuden810.png/revision/latest/scale-to-width-down/250?cb=20211008142459'),
+                          image: NetworkImage(
+                              'https://static.wikia.nocookie.net/shipping/images/c/c4/NaruSai_Shippuden810.png/revision/latest/scale-to-width-down/250?cb=20211008142459'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       //color: Colors.teal[600],
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
                           width: 3,
                         ),
                         image: const DecorationImage(
-                          image: NetworkImage('https://qph.cf2.quoracdn.net/main-qimg-261fe1a660066ed161ff018171531c3c-lq'),
+                          image: NetworkImage(
+                              'https://qph.cf2.quoracdn.net/main-qimg-261fe1a660066ed161ff018171531c3c-lq'),
                           fit: BoxFit.cover,
                         ),
-
                       ),
                     ),
                   ],
-
                 ),
               ),
-
             ],
           ),
         ),
       ),
-
-
     );
   }
-
-
 }

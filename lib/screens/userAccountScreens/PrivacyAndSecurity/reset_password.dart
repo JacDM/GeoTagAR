@@ -10,8 +10,9 @@ Widget k_textbox = const TextField(
   //cursorWidth: 3.0,
   //cursorHeight: 35.0,
 );
-Widget spacing = const SizedBox(height: 50.0,);
-
+Widget spacing = const SizedBox(
+  height: 50.0,
+);
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -21,16 +22,13 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPassword extends State<ResetPassword> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //appbar
       appBar: AppBar(
         title: const Text('RESET PASSWORD'),
       ),
-
 
       body: SingleChildScrollView(
         child: SafeArea(
@@ -40,28 +38,35 @@ class _ResetPassword extends State<ResetPassword> {
               //mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text('RESET PASSWORD', style: TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold),),
+                const Text(
+                  'RESET PASSWORD',
+                  style: TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold),
+                ),
                 spacing,
-
                 Text('Current Password', style: k_passwordtextstyle),
                 k_textbox,
                 spacing,
-
                 Text('New Password', style: k_passwordtextstyle),
                 k_textbox,
                 spacing,
-
                 Text('Confirm New Password', style: k_passwordtextstyle),
                 k_textbox,
                 spacing,
-
-
                 Row(
                   children: [
-                      Expanded(
-                        child: RaisedGradientButton(
-                          gradient: const LinearGradient(
-                            colors: <Color>[Colors.deepPurple, Colors.purple],
+                    Expanded(
+                      child: RaisedGradientButton(
+                        gradient: const LinearGradient(
+                          colors: <Color>[Colors.deepPurple, Colors.purple],
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        child: const Center(
+                          child: Text(
+                            'UPDATE PASSWORD',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w500),
                           ),
                           onPressed: () => Navigator.pop(context),
                           child: const Center(
@@ -74,18 +79,11 @@ class _ResetPassword extends State<ResetPassword> {
                       ),
                   ],
                 )
-
-
               ],
             ),
           ),
         ),
       ),
-
-
     );
   }
-
-
-
 }

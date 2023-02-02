@@ -12,32 +12,26 @@ class Report extends StatefulWidget {
 }
 
 class _ReportState extends State<Report> {
-
-
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       //appbar
       appBar: AppBar(
         title: const Text('REPORT'),
       ),
 
-
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
-
-              children:  <Widget>[
-
+              children: <Widget>[
                 const SizedBox(
                   height: 10.0,
                 ),
 
-                const Text('Briefly explain the problem you want to report.',
+                const Text(
+                  'Briefly explain the problem you want to report.',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 23.0,
@@ -55,9 +49,7 @@ class _ReportState extends State<Report> {
                   textAlign: TextAlign.left,
                   maxLength: 500,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(
-
-                    ),
+                    border: OutlineInputBorder(),
                     labelText: 'Type here...',
                   ),
                 ),
@@ -65,7 +57,6 @@ class _ReportState extends State<Report> {
                 const SizedBox(
                   height: 20.0,
                 ),
-
 
                 RaisedGradientButton(
                   gradient: const LinearGradient(
@@ -75,20 +66,18 @@ class _ReportState extends State<Report> {
                   child: const Center(
                     child: Text(
                       'SUBMIT',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
         ),
       ),
-
-
     );
   }
-
-
 }

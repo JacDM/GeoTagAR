@@ -1,11 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:geotagar/methods/methods.dart';
+import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 
-import '../../methods/text_Field.dart';
+import '../../utils/text_Field.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -50,6 +50,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         child: Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
+              iconTheme: const IconThemeData(
+                color: Colors.black, //change your color here
+              ),
               backgroundColor: Color.fromARGB(0, 103, 143, 51),
               foregroundColor: Color.fromARGB(255, 68, 68, 68),
               elevation: 0,

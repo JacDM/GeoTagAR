@@ -1,10 +1,17 @@
+// ignore_for_file: avoid_unnecessary_containers
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
+import 'package:geotagar/utils/methods.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../utils/text_Field.dart';
 import '../userLogIn_Register/log_in.dart';
 
 class DiscoverPage extends StatefulWidget {
@@ -14,64 +21,184 @@ class DiscoverPage extends StatefulWidget {
   State<DiscoverPage> createState() => _Discover_PageState();
 }
 
-class _Discover_PageState extends State<DiscoverPage> {
+class _Discover_PageState extends State<DiscoverPage>
+    with SingleTickerProviderStateMixin {
   PlatformFile? _file;
+  final TextEditingController _searchTextController = TextEditingController();
+  bool showUsers = false;
+  //late AnimationController _con;
+
+  @override
+  void initState() {
+    super.initState();
+    //_textEditingController = TextEditingController();
+    // _con = AnimationController(
+    //   vsync: this,
+    //   duration: Duration(milliseconds: 375),
+    // );
+  }
+
+  @override
+  void dispose() {
+    _searchTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        //child: body[_currentIndex],
-
-        child: Column(children: [
-          ElevatedButton(
-              child: Text("Sign out"),
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  print("User has signed out");
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const LogIn()));
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Form(
+            child: ReusableTextField(
+              obscure: false,
+              hintText: 'Search',
+              controller: _searchTextController,
+              textColor: Colors.white,
+              // decoration:
+              //     const InputDecoration(labelText: 'Search for a user...'),
+              onFieldSubmitted: (String _) {
+                setState(() {
+                  showUsers = true;
                 });
-              }),
-          SizedBox(height: 20),
-          if (_file != null)
-            Expanded(
-                child: Container(
-              child: Text(_file!.name),
-            )),
-          SizedBox(height: 20),
-          ElevatedButton(
-              child: Text("Select file"),
-              onPressed: () async {
-                final result = await FilePicker.platform.pickFiles();
-                if (result != null) {
-                  setState(() {
-                    _file = result.files.first;
-                  });
-                }
-              }),
-          SizedBox(height: 10),
-          ElevatedButton(
-              child: Text("Upload file"),
-              onPressed: () async {
-                final path = 'testImage/my-image.jpg';
-                final result = await FilePicker.platform
-                    .pickFiles(type: FileType.any, allowMultiple: false);
-
-                if (result != null && result.files.isNotEmpty) {
-                  final fileBytes = result.files.first.bytes;
-                  final fileName = result.files.first.name;
-
-                  // upload file
-                  await FirebaseStorage.instance
-                      .ref('uploads/$fileName')
-                      .putData(fileBytes!);
-                }
-              }),
-        ]),
-      ),
-    ));
+                print(_);
+              },
+            ),
+          ),
+        ),
+        body: showUsers
+            ? FutureBuilder(
+                future: FirebaseFirestore.instance
+                    .collection('users')
+                    .where(
+                      'username',
+                      isGreaterThanOrEqualTo: _searchTextController.text,
+                    )
+                    .get(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: (snapshot.data! as dynamic).docs.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => UserProfile(
+                              uid: (snapshot.data! as dynamic).docs[index]
+                                  ['uid'],
+                            ),
+                          ),
+                        ),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              (snapshot.data! as dynamic).docs[index]
+                                  ['profilePic'],
+                            ),
+                            radius: 16,
+                          ),
+                          title: Text(
+                            (snapshot.data! as dynamic).docs[index]['username'],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              )
+            : const Text("Communities"));
   }
 }
+
+// return Scaffold(
+    //   appBar: AppBar(
+    //     centerTitle: false,
+    //     toolbarHeight: 90,
+    //     //used to remove the back button from appBar
+    //     automaticallyImplyLeading: false,
+    //     backgroundColor: Colors.black,
+    //     title: const Text(
+    //       "Discover",
+    //       style: TextStyle(
+    //         color: Colors.white,
+    //         fontSize: 30,
+    //         fontWeight: FontWeight.w900,
+    //         //fontFamily: 'arial',
+    //       ),
+    //     ),
+    //   ),
+    //   backgroundColor: Colors.black,
+    //   body: Container(
+    //       color: Colors.black,
+    //       //child: body[_currentIndex],
+    //       child: Padding(
+    //           padding: EdgeInsets.fromLTRB(
+    //               20, MediaQuery.of(context).size.height * 0.005, 20, 0),
+    //           child: Column(children: [
+    //             // const Text("Discover",
+    //             //     style: TextStyle(
+    //             //       color: Colors.black,
+    //             //       fontSize: 25,
+    //             //       fontWeight: FontWeight.bold,
+    //             //     )),
+    //             //const SizedBox(height: 20),
+    //             ReusableTextField(
+    //               obscure: false,
+    //               controller: _searchTextController,
+    //               hintText: "Search",
+    //               textColor: Colors.white,
+    //               onFieldSubmitted: (String _) {
+    //                 setState(() {
+    //                   showUsers = true;
+    //                 });
+    //               },
+    //             ),
+    //             body: showUsers
+    //                 ? FutureBuilder(
+    //                     future: FirebaseFirestore.instance
+    //                         .collection('users')
+    //                         .where('username',
+    //                             isGreaterThanOrEqualTo:
+    //                                 _searchTextController.text.trim())
+    //                         .get(),
+    //                     builder: (context, snapshot) {
+    //                       if (!snapshot.hasData) {
+    //                         return const Center(
+    //                             child: CircularProgressIndicator());
+    //                       }
+    //                       return ListView.builder(
+    //                         shrinkWrap: true,
+    //                         // physics: const BouncingScrollPhysics(),
+    //                         itemCount: (snapshot.data! as dynamic).docs.length,
+    //                         itemBuilder: (context, index) {
+    //                           //DocumentSnapshot user = snapshot.data!.docs[index];
+    //                           return InkWell(
+    //                             onTap: () {
+    //                               Navigator.push(
+    //                                   context,
+    //                                   MaterialPageRoute(
+    //                                       builder: (context) => UserProfile(
+    //                                             uid: (snapshot.data! as dynamic)
+    //                                                 .docs[index]['uid'],
+    //                                           )));
+    //                             },
+    //                             child: ListTile(
+    //                               leading: CircleAvatar(
+    //                                 backgroundImage: NetworkImage(
+    //                                     (snapshot.data! as dynamic).docs[index]
+    //                                         ['profilePic']),
+    //                               ),
+    //                               title: Text((snapshot.data! as dynamic)
+    //                                   .docs[index]['username']),
+    //                             ),
+    //                           );
+    //                         },
+    //                       );
+    //                     })
+    //                 : const Text("Communities"),
+    //           ]))),
+        //);

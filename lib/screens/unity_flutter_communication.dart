@@ -32,73 +32,72 @@ class _UnityState extends State<Unity> {
     return Scaffold(
       key: _scaffoldKey,
       body: Card(
-        margin: const EdgeInsets.all(0),
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Stack(
-          children: [
-            UnityWidget(
-              onUnityCreated: _onUnityCreated,
-              onUnityMessage: onUnityMessage,
-              useAndroidViewSurface: false,
-              borderRadius: BorderRadius.all(Radius.circular(70)),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        takePicture();
-                      },
-                      icon: Icon(
-                        Icons.flip_camera_ios,
-                        color: Colors.white.withOpacity(0.5),
-                      ),
-                      iconSize: 25,
-                      padding: const EdgeInsets.only(bottom: 20, right: 20),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        takePicture();
-                      },
-                      icon: Icon(
-                        Icons.circle_outlined,
-                        color: Colors.white,
-                      ),
-                      iconSize: 35,
-                      padding: const EdgeInsets.only(bottom: 15),
-                      selectedIcon: Icon(
-                        Icons.circle,
-                        color: Colors.white,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          ;
-                        });
-                      },
-                      icon: Icon(
-                        Icons.add_to_photos_rounded,
-                        color: Colors.white.withOpacity(0.5),
-                      ),
-                      iconSize: 25,
-                      padding: const EdgeInsets.only(bottom: 20, left: 20),
-                    ),
-                  ],
-                ),
+          margin: const EdgeInsets.all(0),
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Stack(
+            children: [
+              UnityWidget(
+                onUnityCreated: _onUnityCreated,
+                onUnityMessage: onUnityMessage,
+                useAndroidViewSurface: false,
+                borderRadius: BorderRadius.all(Radius.circular(70)),
               ),
-            )
-          ],
-        )
-      ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          //takePicture();
+                        },
+                        icon: Icon(
+                          Icons.flip_camera_ios,
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        iconSize: 25,
+                        padding: const EdgeInsets.only(bottom: 20, right: 20),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          takePicture();
+                        },
+                        icon: Icon(
+                          Icons.circle_outlined,
+                          color: Colors.white,
+                        ),
+                        iconSize: 35,
+                        padding: const EdgeInsets.only(bottom: 15),
+                        selectedIcon: Icon(
+                          Icons.circle,
+                          color: Colors.white,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            ;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.add_to_photos_rounded,
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        iconSize: 25,
+                        padding: const EdgeInsets.only(bottom: 20, left: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 
@@ -116,8 +115,8 @@ class _UnityState extends State<Unity> {
       );
   }
 
-  void sendText(){
-   // _unityWidgetController.postMessage(gameObject, methodName, message)
+  void sendText() {
+    // _unityWidgetController.postMessage(gameObject, methodName, message)
   }
 
   void onUnityMessage(message) {

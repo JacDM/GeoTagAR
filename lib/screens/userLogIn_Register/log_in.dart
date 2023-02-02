@@ -3,14 +3,18 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geotagar/layout/layout_select.dart';
+import 'package:geotagar/layout/mobile_layout.dart';
+import 'package:geotagar/layout/web_layout.dart';
 import 'package:geotagar/main.dart';
-import 'package:geotagar/methods/methods.dart';
+import 'package:geotagar/services/auth.dart';
+import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
 import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
 
 import '../../core/constants/constants.dart';
-import '../../methods/text_Field.dart';
+import '../../utils/text_Field.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -31,28 +35,46 @@ class _LogInState extends State<LogIn> {
     super.dispose();
   }
 
-  Future logIn() async {
-    await FirebaseAuth.instance
-        .signInWithEmailAndPassword(
+  // Future logIn() async {
+  //   await FirebaseAuth.instance
+  //       .signInWithEmailAndPassword(
+  //           email: _emailTextController.text.trim(),
+  //           password: _passwordTextController.text.trim())
+  //       .then((value) => Navigator.push(
+  //           context, MaterialPageRoute(builder: ((context) => HomePage()))));
+  // }
+
+  void logIn() async {
+    await AuthServices()
+        .logIn(
             email: _emailTextController.text.trim(),
             password: _passwordTextController.text.trim())
-        .then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: ((context) => HomePage()))));
+        .then((value) => Navigator.pushReplacementNamed(context, '/home'));
+    // .then(((value) => Navigator.pushNamed(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: ((context) => LayoutSelect(
+    //               mobileLayout: MobileScreenLayout(),
+    //               webLayout: WebScreenLayout(),
+    //             ))))));
   }
 
-  void emailValidator() {
+  bool emailValidator() {
     if (EmailValidator.validate(_emailTextController.text.trim())) {
       print("Valid email");
+      return true;
     } else if (_emailTextController.text.trim().isEmpty) {
       setState(() {
         _emailError = "Email can not be empty";
       });
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Email address cannot be empty.")));
+      return false;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Please enter a valid email address.")));
       print("Invalid email");
+      return false;
     }
   }
 
@@ -75,7 +97,7 @@ class _LogInState extends State<LogIn> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                    logo(Constants.logoPath),
+                    logo(Constants.logoPathWhite),
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.125),
                     //modify font weight
@@ -91,8 +113,9 @@ class _LogInState extends State<LogIn> {
                     SizedBox(height: 15),
                     // Modify this button further
                     button(context, "Log In", () {
-                      emailValidator();
-                      logIn();
+                      if (emailValidator()) {
+                        logIn();
+                      }
                     }, Color.fromARGB(255, 164, 228, 255)),
                     SizedBox(height: 2),
                     // Further modify this to be a function (maybe)

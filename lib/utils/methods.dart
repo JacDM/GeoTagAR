@@ -52,6 +52,15 @@ TextField reusableTextField1(
   );
 }
 
+// for displaying snackbars
+showSnackBar(BuildContext context, String text) {
+  return ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(text),
+    ),
+  );
+}
+
 Container button(
     BuildContext context, String title, Function onTap, Color color) {
   return Container(
