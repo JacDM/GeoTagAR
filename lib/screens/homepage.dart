@@ -1,4 +1,22 @@
+
+//import 'dart:html';
 // import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:geotagar/screens/discoverPages/discover.dart';
+import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
+import 'package:geotagar/screens/memory_related/create_memory.dart';
+import 'package:geotagar/screens/unityAR.dart';
+import 'package:geotagar/screens/unity_flutter_communication.dart';
+import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
+import 'package:geotagar/screens/userAccountScreens/post_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
+import 'package:geotagar/screens/globe.dart';
+import 'package:geotagar/screens/map.dart';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_core/firebase_core.dart';

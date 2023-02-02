@@ -13,6 +13,7 @@ const k_selectedtextStyle =
     TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
 const k_containerColor = Color(0xFFBDBDBD); //grey[400]
 
+
 enum Options { option1, option2, option3, option4 }
 
 class AccVisibility extends StatefulWidget {
@@ -59,6 +60,7 @@ class _AccVisibility extends State<AccVisibility> {
                   child: Text(
                     'WHO CAN SEE WHEN I AM ONLINE:',
                     style: TextStyle(fontSize: 18.0),
+
                   ),
                 ),
                 SizedBox(
@@ -76,9 +78,10 @@ class _AccVisibility extends State<AccVisibility> {
                                 deselectOptions(Options.option1);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text('Everyone', style: bg_option1),
                                 ],
@@ -94,9 +97,10 @@ class _AccVisibility extends State<AccVisibility> {
                                 deselectOptions(Options.option2);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text(
                                     'Only My Contacts',
@@ -115,9 +119,10 @@ class _AccVisibility extends State<AccVisibility> {
                                 deselectOptions(Options.option3);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text(
                                     'Only My Contacts except...',
@@ -136,9 +141,10 @@ class _AccVisibility extends State<AccVisibility> {
                                 deselectOptions(Options.option4);
                               });
                             },
-                            child: ReusableContainer(
-                              colour: k_containerColor,
-                              containerChild: Row(
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //colour: k_containerColor,
+                              child: Row(
                                 children: [
                                   Text(
                                     'Nobody',
