@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
-import 'package:geotagar/screens/userAccountScreens/AccSettings/edit_personal_info.dart';
 
 const Color k_fontTextColour = Colors.black;
 const Color k_bgColor = Color(0xFFECEFF1);
@@ -33,12 +32,12 @@ class _PersonalInfo extends State<PersonalInfo> {
             child: Column(
               children: <Widget>[
                 //Profile Picture
-                CircleAvatar(
-                  radius: MediaQuery.of(context).size.width * 0.18,
+                const CircleAvatar(
+                  radius: 75.0,
                   backgroundColor: Colors.white38,
                   child: CircleAvatar(
-                    radius: MediaQuery.of(context).size.width * 0.17,
-                    backgroundImage: const NetworkImage(
+                    radius: 70.0,
+                    backgroundImage: NetworkImage(
                         'https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
                   ),
                 ),
@@ -57,11 +56,6 @@ class _PersonalInfo extends State<PersonalInfo> {
                         style: k_subHeadingTextStyle,
                       )),
                 ),
-
-                const SizedBox(
-                  height: 10.0,
-                ),
-
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .25,
                   child: Expanded(
@@ -129,7 +123,7 @@ class _PersonalInfo extends State<PersonalInfo> {
                 ),
 
                 const SizedBox(
-                  height: 30.0,
+                  height: 40.0,
                 ),
 
                 //Contact Info -> Subheading
@@ -142,11 +136,6 @@ class _PersonalInfo extends State<PersonalInfo> {
                         style: k_subHeadingTextStyle,
                       )),
                 ),
-
-                const SizedBox(
-                  height: 10.0,
-                ),
-
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .20,
                   child: Expanded(
@@ -177,7 +166,6 @@ class _PersonalInfo extends State<PersonalInfo> {
                               ),
                             ),
                           ),
-                        ),
 
                           //Values
                           Expanded(

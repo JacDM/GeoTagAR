@@ -63,7 +63,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                     child: CircleAvatar(
                       backgroundColor: Colors.black,
                       //22.0
-                      radius: MediaQuery.of(context).size.width * 0.055,
+                      radius: MediaQuery.of(context).size.width * 0.0525,
                       child: FloatingActionButton(
                         onPressed: () {
                           bottomScreenUserProfile(context);
@@ -72,7 +72,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                         child: Icon(
                           Icons.more_horiz,
                           //35.0
-                          size: MediaQuery.of(context).size.width * 0.07,
+                          size: MediaQuery.of(context).size.width * 0.08,
                           color: Colors.white,
                         ),
                       ),
@@ -112,7 +112,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
 
               //Username
               const Text(
-                '@uchiha_forever',
+                k_username,
                 style: TextStyle(
                   fontSize: 17.0,
                   //fontFamily: 'FiraCode',
@@ -311,9 +311,7 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                               fontSize: 15.0,
                               color: Colors.teal[900],
                               fontFamily: 'OpenSans',
-
                             ),
-                            borderRadius: const BorderRadius.all(Radius.circular(10.0),),
                           ),
                         ],
                       ),
@@ -351,34 +349,8 @@ class _UserProfilePt2State extends State<UserProfilePt2> {
                               color: Colors.teal[900],
                               fontFamily: 'OpenSans',
                             ),
-                            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                           ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            pressedMemoriesTab = false;
-                            pressedTagsTab = true;
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Column(
-                            children: const [
-                              Icon(
-                                Icons.image_outlined,
-                                size: 40.0,
-                                //color: Colors.black,
-                              ),
-                              Text('Tags',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                  //color: Colors.teal[900],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
                     ),
                   ],

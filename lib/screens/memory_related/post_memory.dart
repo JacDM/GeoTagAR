@@ -4,9 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/core/constants/constants.dart';
 import 'package:geotagar/main.dart';
+import 'package:geotagar/models/users.dart';
+import 'package:geotagar/providers/user_provider.dart';
 import 'package:image/image.dart' as Im;
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:geotagar/services/firestore.dart';
+
+import '../../providers/user_provider.dart';
+import '../../utils/methods.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost(
@@ -14,11 +21,9 @@ class AddPost extends StatefulWidget {
       //required this.cameraController,
       //this.currentUser
       required this.image});
-
   //final CameraController cameraController;
   //final currentUser;
   final XFile image;
-
   @override
   State<AddPost> createState() => _AddPostState();
 }
@@ -29,7 +34,6 @@ class _AddPostState extends State<AddPost> {
   final TextEditingController _locationCtrler = TextEditingController();
   String postId = Uuid().v4();
   Uint8List? file;
-
   @override
   void dispose() {
     _descCtrler.dispose();
@@ -39,33 +43,55 @@ class _AddPostState extends State<AddPost> {
 
   compressImage(
       //XFile img
-
       ) async {
     //this will convert XFile image to Uint8list
     //final tempDir = await getTemporaryDirectory();
     //final path = tempDir.path;
-
     Uint8List compressedImg = await widget.image.readAsBytes();
-
     // Im.Image imageFile = Im.decodeImage(file.readAsBytesSync());
     // final compressedImageFile = File('$path/img_$postId.jpg');
     // final compressedImg = await img.read
-
     setState(() {
       file = compressedImg;
     });
   }
 
-  uploadImage() {}
+  clearImage() {
+    setState(() {
+      file = null;
+    });
+  }
 
-  handleSubmit() async {
+  uploadImage(String uid, String username, String profImage) async {
+    try {
+      String res = await FireStoreMethods()
+          .uploadPost(_descCtrler.text, file!, uid, username, profImage);
+      if (res == 'success') {
+        setState(() {
+          isUploading = false;
+        });
+        showSnackBar(context, 'Posted!');
+        clearImage();
+      } else {
+        showSnackBar(context, res);
+      }
+    } catch (err) {
+      setState(() {
+        isUploading = false;
+      });
+      showSnackBar(
+        context,
+        err.toString(),
+      );
+    }
+  }
+
+  handleSubmit(String uid, String username, String profImage) async {
     setState(() {
       isUploading = true;
     });
-
     await compressImage();
-    //await uploadImage();
-
+    await uploadImage(uid, username, profImage);
     // setState(() {
     //   isUploading = false;
     // });
@@ -73,6 +99,7 @@ class _AddPostState extends State<AddPost> {
 
   @override
   Widget build(BuildContext context) {
+    final UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,
@@ -99,7 +126,6 @@ class _AddPostState extends State<AddPost> {
               ? const LinearProgressIndicator()
               : const Padding(padding: EdgeInsets.all(0)),
           const Padding(padding: EdgeInsets.all(4)),
-
           //post
           Container(
             child: Row(
@@ -134,11 +160,9 @@ class _AddPostState extends State<AddPost> {
               ],
             ),
           ),
-
           SizedBox(
             height: 20,
           ),
-
           Container(
             alignment: Alignment.center,
             height: MediaQuery.of(context).size.height * 0.1,
@@ -210,11 +234,9 @@ class _AddPostState extends State<AddPost> {
               ],
             ),
           ), //for the location
-
           SizedBox(
             height: 0,
           ),
-
           Container(
             height: MediaQuery.of(context).size.height * 0.125,
             width: MediaQuery.of(context).size.width * 0.9, //
@@ -265,7 +287,11 @@ class _AddPostState extends State<AddPost> {
           child: ElevatedButton(
             onPressed: isUploading
                 ? null
-                : () => handleSubmit(), //() => handleSubmit(),
+                : () => handleSubmit(
+                      user.uid,
+                      user.username,
+                      user.profilePic,
+                    ), //() => handleSubmit(),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.deepOrange.shade900,
               disabledBackgroundColor: Colors.grey[600],
@@ -283,31 +309,3 @@ class _AddPostState extends State<AddPost> {
     );
   }
 }
-
-
-// class PreviewPage extends StatelessWidget {
-//   const PreviewPage({
-//     super.key,
-//     //required this.path
-//   });
-//   //final String path;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.black,
-//       ),
-//       body: Container(),
-//       floatingActionButton: IconButton(
-//         onPressed: () {},
-//         alignment: Alignment.bottomRight,
-//         color: Colors.black,
-//         icon: Icon(
-//           Icons.arrow_forward,
-//         ),
-//         padding: EdgeInsets.only(bottom: 8, right: 8),
-//       ),
-//     );
-//   }
-// }

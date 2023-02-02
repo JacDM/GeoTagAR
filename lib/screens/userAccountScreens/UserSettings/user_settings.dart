@@ -14,7 +14,6 @@ import '../UserSettings/account_settings.dart';
 import '../UserSettings/privacy_and_security.dart';
 import '../UserSettings/report.dart';
 import '../reusableWidgets/page_tabs.dart';
-import '../reusableWidgets/custom_button.dart';
 
 const Color k_SwitchIconColour = Color(0xFF263238); //bluegrey[900]
 const Color k_UsernameColour = Colors.black;
@@ -68,10 +67,10 @@ class _SettingsPageState extends State<SettingsPage> {
     size: 75.0,
     color: k_SwitchIconColour,
   );
-  Icon offModeSwitch = const Icon(
+  Icon lightModeSwitch = const Icon(
     Icons.toggle_off_outlined,
-    size: 70.0,
-    //color: k_SwitchIconColour,
+    size: 75.0,
+    color: k_SwitchIconColour,
   );
 
   //determine dark/light mode based on
