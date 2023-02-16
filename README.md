@@ -5,7 +5,7 @@ Flutter `3.3.10`
 
 Tools • Dart `2.18.6`• DevTools `2.15.0`
 
-unity Version: `2023.1.0a.16`.
+unity Version: `2022.2.7f1`.
 
 flutter_unity_widget: `^2022.2.0` // [Flutter-Unity Widget](https://github.com/juicycleff/flutter-unity-view-widget/tree/master)
 
