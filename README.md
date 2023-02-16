@@ -5,7 +5,7 @@ Flutter `3.3.10`
 
 Tools • Dart `2.18.6`• DevTools `2.15.0`
 
-unity Version: `2020.3.12f1`.
+unity Version: `2023.1.0a.16`.
 
 flutter_unity_widget: `^2022.2.0` // [Flutter-Unity Widget](https://github.com/juicycleff/flutter-unity-view-widget/tree/master)
 
@@ -48,8 +48,15 @@ after which you will be prompted to install modlues, download the following:-
 8. Now on the title bar select the flutter section and click export <chosen platform> debug
 > e.g. `Export Android Debug`
 9. The unityLibrary folder will get deleted and remade in `<chosen platform>/unityLibrary`
-10. NOTE: the build process can take anywhere from 5-15 minuites with the cpu pinned at 100% after an export from unity, ive never run into a crash however it is possible saving your work is advised if not using auto save, subsequent runs will be MUCH faster .
-11. Type `flutter run` in the console to initiiate the build
+10. In `android/unityLibrary/build.gradle` comment out the following lines to speed up the build process significantly.
+```
+    //commandLineArgs.add("--enable-debugger")
+    //commandLineArgs.add("--profiler-report")
+    //commandLineArgs.add("--profiler-output-file=" + workingDir + "/build/il2cpp_"+ abi + "_" + configuration + "/il2cpp_conv.traceevents")
+    //commandLineArgs.add("--print-command-line")
+```
+11. NOTE: the build process can take anywhere from 5-15 minuites with the cpu pinned at 100% after an export from unity, ive never run into a crash however it is possible saving your work is advised if not using auto save, subsequent runs will be MUCH faster .
+12. Type `flutter run` in the console to initiiate the build
 
 
 <details>
