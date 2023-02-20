@@ -23,7 +23,6 @@ class _UnityAR extends State<UnityAR>{
       body: SafeArea(
         bottom: false,
         child: Container(
-            color: Color.fromARGB(255, 0, 255, 0),
             child: UnityWidget(
               onUnityCreated: onUnityCreated,
             ),

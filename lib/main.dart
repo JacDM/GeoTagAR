@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
             //'/userProfilePt2': (BuildContext context) => UserProfilePt2(),
             //'/createMemoryRoute': (BuildContext context) => CreateMemoryRoute(),
             '/discover': (BuildContext context) => const DiscoverPage(),
-            //'/unity': (BuildContext context) =>  Unity(),
+            '/unity': (BuildContext context) =>  UnityAR(),
             //'/postPage': (BuildContext context) => PostPage(),
           }
           //home: UserProfile(),

@@ -61,7 +61,6 @@ class _UnityState extends State<Unity> {
             UnityWidget(
               onUnityCreated: _onUnityCreated,
               onUnityMessage: onUnityMessage,
-              useAndroidViewSurface: false,
               borderRadius: BorderRadius.all(Radius.circular(70)),
             ),
             Align(
