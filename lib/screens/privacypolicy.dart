@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const Color k_fontTextColour = Colors.black;
 const Color k_submitButtonBgColour = Color(0xFF263238);
-const Color k_SwitchIconColour =  Color(0xFF263238);  //bluegrey[900]
+const Color k_SwitchIconColour = Color(0xFF263238); //bluegrey[900]
 
 class PP extends StatefulWidget {
   const PP({super.key});
@@ -13,8 +13,6 @@ class PP extends StatefulWidget {
 class _PP extends State<PP> {
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       //appbar
       appBar: AppBar(
@@ -86,8 +84,6 @@ class _PP extends State<PP> {
           ),
         ),
       ),
-
-
     );
   }
 

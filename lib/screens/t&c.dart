@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const Color k_fontTextColour = Colors.black;
 const Color k_submitButtonBgColour = Color(0xFF263238);
-const Color k_SwitchIconColour =  Color(0xFF263238);  //bluegrey[900]
+const Color k_SwitchIconColour = Color(0xFF263238); //bluegrey[900]
 
 class TNC extends StatefulWidget {  //new class for terms and conditions
   const TNC({super.key});
@@ -13,8 +13,6 @@ class TNC extends StatefulWidget {  //new class for terms and conditions
 class _TNC extends State<TNC> {
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       //appbar
       appBar: AppBar(
@@ -77,8 +75,6 @@ class _TNC extends State<TNC> {
           ),
         ),
       ),
-
-
     );
   }
 }
