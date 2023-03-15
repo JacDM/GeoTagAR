@@ -91,6 +91,7 @@ class ReusableTextField extends StatelessWidget {
             //enabledBorder: textFieldfocused(),
             border: (OutlineInputBorder(
               borderRadius: BorderRadius.circular(7.0),
+              // Maybe add highlighted text field cover
               borderSide: const BorderSide(width: 0, style: BorderStyle.none),
             )),
             //focusedBorder: textFieldfocused(),

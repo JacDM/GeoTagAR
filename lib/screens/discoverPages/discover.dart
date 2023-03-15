@@ -2,17 +2,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:geotagar/screens/discoverPages/group_page.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
-import 'package:geotagar/utils/methods.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../utils/text_Field.dart';
-import '../userLogIn_Register/log_in.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({super.key});
@@ -23,7 +16,6 @@ class DiscoverPage extends StatefulWidget {
 
 class _Discover_PageState extends State<DiscoverPage>
     with SingleTickerProviderStateMixin {
-  PlatformFile? _file;
   final TextEditingController _searchTextController = TextEditingController();
   bool showUsers = false;
   //late AnimationController _con;
@@ -110,7 +102,43 @@ class _Discover_PageState extends State<DiscoverPage>
                   );
                 },
               )
-            : const Text("Communities"));
+            : FutureBuilder(
+                // Test group created in firebase
+                future: FirebaseFirestore.instance.collection('groups').get(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: (snapshot.data! as dynamic).docs.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => GroupPage(
+                                // uid: (snapshot.data! as dynamic).docs[index]
+                                //     ['id'],
+                                ),
+                          ),
+                        ),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              (snapshot.data! as dynamic).docs[index]['avatar'],
+                            ),
+                            radius: 16,
+                          ),
+                          title: Text(
+                            (snapshot.data! as dynamic).docs[index]['name'],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ));
   }
 }
 
