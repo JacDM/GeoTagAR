@@ -2,20 +2,25 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geotagar/screens/discoverPages/group_page.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../../utils/text_Field.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({super.key});
 
   @override
-  State<DiscoverPage> createState() => _Discover_PageState();
+  State<DiscoverPage> createState() => _DiscoverPageState();
 }
 
-class _Discover_PageState extends State<DiscoverPage>
-    with SingleTickerProviderStateMixin {
+class _DiscoverPageState extends State<DiscoverPage> {
+  final CollectionReference _firebaseFirestore =
+      FirebaseFirestore.instance.collection('users');
   final TextEditingController _searchTextController = TextEditingController();
   bool showUsers = false;
   //late AnimationController _con;
@@ -38,9 +43,32 @@ class _Discover_PageState extends State<DiscoverPage>
 
   @override
   Widget build(BuildContext context) {
+    // return Container(
+    //   child: Container(
+    //       padding: Vx.m24,
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           "Discover"
+    //               .text
+    //               .xl3
+    //               .bold
+    //               .color(const Color.fromARGB(255, 54, 54, 54))
+    //               .make(),
+    //           CupertinoSearchTextField(
+    //             controller: _searchTextController,
+    //             onChanged: (value) {
+    //               setState(() {
+    //                 showUsers = true;
+    //               });
+    //             },
+    //           ).py12(),
+    //         ],
+    //       )),
+
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           title: Form(
             child: ReusableTextField(
               obscure: false,
@@ -50,58 +78,72 @@ class _Discover_PageState extends State<DiscoverPage>
               // decoration:
               //     const InputDecoration(labelText: 'Search for a user...'),
               onFieldSubmitted: (String _) {
-                setState(() {
-                  showUsers = true;
-                });
+                if (_searchTextController.text.isNotEmpty) {
+                  setState(() {
+                    showUsers = true;
+                  });
+                }
+
                 print(_);
               },
             ),
           ),
         ),
         body: showUsers
-            ? FutureBuilder(
-                future: FirebaseFirestore.instance
-                    .collection('users')
-                    .where(
-                      'username',
-                      isGreaterThanOrEqualTo: _searchTextController.text,
-                    )
-                    .get(),
-                builder: (context, snapshot) {
+            ? StreamBuilder<QuerySnapshot>(
+                stream: _firebaseFirestore.snapshots().asBroadcastStream(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
+                  } else {
+                    print(snapshot.data);
+
+                    return ListView(
+                      children: [
+                        ...snapshot.data!.docs
+                            .where((QueryDocumentSnapshot<Object?> element) =>
+                                element['username']
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(_searchTextController.text
+                                        .trim()
+                                        .toLowerCase()))
+                            .map((QueryDocumentSnapshot<Object?> data) {
+                          final String username = data.get('username');
+                          final String profilePic = data['profilePic'];
+                          final String name = data['name'];
+
+                          return ListTile(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => UserProfile(
+                                  uid: data['uid'],
+                                ),
+                              ),
+                            ),
+                            title: Text(username),
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(profilePic),
+                            ),
+                            subtitle: Text(name),
+                          );
+                        })
+                      ],
+                    );
+
+                    // return ListView(
+                    //   children: snapshot.data!.docs.wheremap((DocumentSnapshot document) {
+                    //     return ListTile(
+                    //       title: Text(document.data()!['username']),
+                    //       subtitle: Text(document.data()!['email']),
+                    //     );
+                    //   }).toList(),
+                    // );
                   }
-                  return ListView.builder(
-                    itemCount: (snapshot.data! as dynamic).docs.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => UserProfile(
-                              uid: (snapshot.data! as dynamic).docs[index]
-                                  ['uid'],
-                            ),
-                          ),
-                        ),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              (snapshot.data! as dynamic).docs[index]
-                                  ['profilePic'],
-                            ),
-                            radius: 16,
-                          ),
-                          title: Text(
-                            (snapshot.data! as dynamic).docs[index]['username'],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              )
+                })
             : FutureBuilder(
                 // Test group created in firebase
                 future: FirebaseFirestore.instance.collection('groups').get(),
@@ -140,93 +182,57 @@ class _Discover_PageState extends State<DiscoverPage>
                 },
               ));
   }
-}
 
-// return Scaffold(
-    //   appBar: AppBar(
-    //     centerTitle: false,
-    //     toolbarHeight: 90,
-    //     //used to remove the back button from appBar
-    //     automaticallyImplyLeading: false,
-    //     backgroundColor: Colors.black,
-    //     title: const Text(
-    //       "Discover",
-    //       style: TextStyle(
-    //         color: Colors.white,
-    //         fontSize: 30,
-    //         fontWeight: FontWeight.w900,
-    //         //fontFamily: 'arial',
-    //       ),
-    //     ),
-    //   ),
-    //   backgroundColor: Colors.black,
-    //   body: Container(
-    //       color: Colors.black,
-    //       //child: body[_currentIndex],
-    //       child: Padding(
-    //           padding: EdgeInsets.fromLTRB(
-    //               20, MediaQuery.of(context).size.height * 0.005, 20, 0),
-    //           child: Column(children: [
-    //             // const Text("Discover",
-    //             //     style: TextStyle(
-    //             //       color: Colors.black,
-    //             //       fontSize: 25,
-    //             //       fontWeight: FontWeight.bold,
-    //             //     )),
-    //             //const SizedBox(height: 20),
-    //             ReusableTextField(
-    //               obscure: false,
-    //               controller: _searchTextController,
-    //               hintText: "Search",
-    //               textColor: Colors.white,
-    //               onFieldSubmitted: (String _) {
-    //                 setState(() {
-    //                   showUsers = true;
-    //                 });
-    //               },
-    //             ),
-    //             body: showUsers
-    //                 ? FutureBuilder(
-    //                     future: FirebaseFirestore.instance
-    //                         .collection('users')
-    //                         .where('username',
-    //                             isGreaterThanOrEqualTo:
-    //                                 _searchTextController.text.trim())
-    //                         .get(),
-    //                     builder: (context, snapshot) {
-    //                       if (!snapshot.hasData) {
-    //                         return const Center(
-    //                             child: CircularProgressIndicator());
-    //                       }
-    //                       return ListView.builder(
-    //                         shrinkWrap: true,
-    //                         // physics: const BouncingScrollPhysics(),
-    //                         itemCount: (snapshot.data! as dynamic).docs.length,
-    //                         itemBuilder: (context, index) {
-    //                           //DocumentSnapshot user = snapshot.data!.docs[index];
-    //                           return InkWell(
-    //                             onTap: () {
-    //                               Navigator.push(
-    //                                   context,
-    //                                   MaterialPageRoute(
-    //                                       builder: (context) => UserProfile(
-    //                                             uid: (snapshot.data! as dynamic)
-    //                                                 .docs[index]['uid'],
-    //                                           )));
-    //                             },
-    //                             child: ListTile(
-    //                               leading: CircleAvatar(
-    //                                 backgroundImage: NetworkImage(
-    //                                     (snapshot.data! as dynamic).docs[index]
-    //                                         ['profilePic']),
-    //                               ),
-    //                               title: Text((snapshot.data! as dynamic)
-    //                                   .docs[index]['username']),
-    //                             ),
-    //                           );
-    //                         },
-    //                       );
-    //                     })
-    //                 : const Text("Communities"),
-    //           ]))),
-        //);
+//   Widget buildResults(BuildContext context) {
+//     return StreamBuilder<QuerySnapshot>(
+//         stream: _firebaseFirestore.snapshots().asBroadcastStream(),
+//         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//           if (!snapshot.hasData) {
+//             return const Center(
+//               child: CircularProgressIndicator(),
+//             );
+//           } else {
+//             print(snapshot.data);
+
+//             return ListView(
+//               children: [
+//                 ...snapshot.data!.docs
+//                     .where((QueryDocumentSnapshot<Object?> element) =>
+//                         element['username'].toString().toLowerCase().contains(
+//                             _searchTextController.text.trim().toLowerCase()))
+//                     .map((QueryDocumentSnapshot<Object?> data) {
+//                   final String username = data.get('username');
+//                   final String profilePic = data['profilePic'];
+//                   final String name = data['name'];
+
+//                   return ListTile(
+//                     // onTap: () => Navigator.of(context).push(
+//                     //   MaterialPageRoute(
+//                     //     builder: (context) => UserProfile(
+//                     //       uid: data['uid'],
+//                     //     ),
+//                     //   ),
+//                     // ),
+//                     title: Text(username),
+//                     leading: CircleAvatar(
+//                       backgroundImage: NetworkImage(profilePic),
+//                     ),
+//                     subtitle: Text(name),
+//                   );
+//                 })
+//               ],
+//             );
+
+//             // return ListView(
+//             //   children: snapshot.data!.docs.wheremap((DocumentSnapshot document) {
+//             //     return ListTile(
+//             //       title: Text(document.data()!['username']),
+//             //       subtitle: Text(document.data()!['email']),
+//             //     );
+//             //   }).toList(),
+//             // );
+//           }
+//         });
+//   }
+// }
+}
