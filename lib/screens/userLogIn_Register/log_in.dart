@@ -12,6 +12,7 @@ import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
 import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
+import 'package:geotagar/utils/rectangle_rounded_button.dart';
 
 import '../../core/constants/constants.dart';
 import '../../utils/text_Field.dart';
@@ -112,11 +113,14 @@ class _LogInState extends State<LogIn> {
                         controller: _passwordTextController),
                     SizedBox(height: 15),
                     // Modify this button further
-                    button(context, "Log In", () {
-                      if (emailValidator()) {
-                        logIn();
-                      }
-                    }, Color.fromARGB(255, 164, 228, 255)),
+                    RectangleButton(
+                        title: "Log In",
+                        onTap: () {
+                          if (emailValidator()) {
+                            logIn();
+                          }
+                        },
+                        buttonColor: Color.fromARGB(255, 164, 228, 255)),
                     SizedBox(height: 2),
                     // Further modify this to be a function (maybe)
                     GestureDetector(

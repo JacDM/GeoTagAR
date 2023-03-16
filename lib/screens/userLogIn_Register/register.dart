@@ -12,6 +12,7 @@ import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:age_calculator/age_calculator.dart';
 import 'package:geotagar/models/users.dart' as model;
 import 'package:geotagar/services/auth.dart';
+import 'package:geotagar/utils/rectangle_rounded_button.dart';
 
 import '../../core/constants/constants.dart';
 import '../../utils/text_Field.dart';
@@ -379,7 +380,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
 
                                   SizedBox(height: 20),
-                                  button(context, "Sign Up", () {
+                                  RectangleButton(title: "Sign Up", onTap: () {
                                     // Requires validation
                                     // final name =
                                     //   _usernameTextController.text.trim();
@@ -401,7 +402,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         print("Not Validated");
                                       }
                                     });
-                                  }, Color.fromARGB(255, 214, 238, 120)),
+                                  }, buttonColor: Color.fromARGB(255, 214, 238, 120)),
                                   // SizedBox(height: 20),
                                   // SizedBox(
                                   //   height: 200,
