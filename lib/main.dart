@@ -17,11 +17,9 @@ import 'package:geotagar/screens/userAccountScreens/post_page.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/userLogIn_Register/register.dart';
 import 'package:geotagar/screens/homepage.dart';
-import 'package:geotagar/screens/unityAR.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile_pt2.dart';
 import 'package:geotagar/screens/globe.dart';
-import 'package:geotagar/screens/unity_flutter_communication.dart';
 import 'package:geotagar/screens/map.dart';
 
 void main() async {
@@ -74,7 +72,6 @@ class MyApp extends StatelessWidget {
             //'/userProfilePt2': (BuildContext context) => UserProfilePt2(),
             //'/createMemoryRoute': (BuildContext context) => CreateMemoryRoute(),
             '/discover': (BuildContext context) => const DiscoverPage(),
-            '/unity': (BuildContext context) =>  UnityAR(),
             //'/postPage': (BuildContext context) => PostPage(),
           }
           //home: UserProfile(),

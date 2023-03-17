@@ -162,12 +162,8 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: -6122771651556369562, guid: e2f869774b12e400996eb546603602e3, type: 2}
-  - {fileID: 9200245095706962156, guid: f15a1d76c331ea44c85e97ff47159511, type: 2}
   - {fileID: 11400000, guid: 234672f342f14ce4e87dbbfdbd5b8149, type: 2}
-  - {fileID: 11400000, guid: 302e9f36808117f4184b07b05ca5bb47, type: 2}
-  - {fileID: 4800000, guid: c9f956787b1d945e7b36e0516201fc76, type: 3}
-  - {fileID: 4800000, guid: 0945859e5a1034c2cb6dce53cb4fb899, type: 3}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -187,7 +183,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.unity.arfoundation.samples
+    Android: com.MintSolutions.GeoTagARUnity
     Standalone: com.unity.arfoundation.samples
     iPhone: com.unity.arfoundation.samples
   buildNumber:
@@ -196,15 +192,15 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 26
+  AndroidMinSdkVersion: 24
   AndroidTargetSdkVersion: 0
-  AndroidPreferredInstallLocation: 1
+  AndroidPreferredInstallLocation: 0
   aotOptions: 
   stripEngineCode: 1
   iPhoneStrippingLevel: 0
   iPhoneScriptCallOptimization: 0
-  ForceInternetPermission: 1
-  ForceSDCardPermission: 1
+  ForceInternetPermission: 0
+  ForceSDCardPermission: 0
   CreateWallpaper: 0
   APKExpansionFiles: 0
   keepLoadedShadersAlive: 0
@@ -284,8 +280,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: {inproject}: '
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: '{inproject}: user.keystore'
+  AndroidKeyaliasName: ms
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
@@ -293,7 +289,7 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,18 +11,18 @@ public class Screenshot : MonoBehaviour
 {
     public GameObject SafeArea;
     public GameObject CamButton;
-    public UnityMessageManager flutterManager;
+    public TextMeshProUGUI text;
 
     // Start is called before the first frame update
     void Start()
     {
-        flutterManager = gameObject.GetComponent<UnityMessageManager>();
+        text.text = "";
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        UnityMessageManager.Instance.SendMessageToFlutter(text.text);
     }
 
     public void captureImage()
@@ -76,4 +77,10 @@ public class Screenshot : MonoBehaviour
             jcMediaScannerConnection.CallStatic("scanFile", joContext, new string[] { path }, null, null);
         }
     }
+
+    public void ChangeText(String flutterText)
+    {
+        text.text = flutterText;
+    }
+
 }
