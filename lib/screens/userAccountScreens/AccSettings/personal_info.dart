@@ -68,7 +68,6 @@ class _PersonalInfo extends State<PersonalInfo> {
                           //Name, Birthday, Gender
                           Expanded(
                             child: Container(
-                              padding: EdgeInsets.only(left: 20.0),
                               margin: const EdgeInsets.all(10.0),
                               color: Colors.white,
                               child: Column(
@@ -152,7 +151,6 @@ class _PersonalInfo extends State<PersonalInfo> {
                           //Email, Phone
                           Expanded(
                             child: Container(
-                              padding: EdgeInsets.only(left: 20.0),
                               margin: const EdgeInsets.all(10.0),
                               color: Colors.white,
                               child: Column(
