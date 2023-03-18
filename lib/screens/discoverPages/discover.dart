@@ -53,8 +53,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: Text(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: const Text(
                 'Discover',
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
@@ -171,8 +171,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
                               child: Stack(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.symmetric(vertical: 8),
-                                    padding: EdgeInsets.symmetric(
+                                    margin: const EdgeInsets.symmetric(vertical: 8),
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 12, vertical: 16),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
@@ -182,7 +182,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                     // Try fixing the length of the rectangle box and the circle icon which is exceeding its limits
                                     // Additionally, add the description
                                     child: Container(
-                                      width: double.infinity,
                                       child: Row(
                                         children: [
                                           ClipRRect(
@@ -196,7 +195,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                               fit: BoxFit.cover,
                                             ),
                                           ),
-                                          SizedBox(width: 12),
+                                          const SizedBox(width: 12),
                                           Expanded(
                                             child: Column(
                                               crossAxisAlignment:
@@ -205,17 +204,17 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                                 Text(
                                                   (snapshot.data! as dynamic)
                                                       .docs[index]['name'],
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 16),
                                                 ),
-                                                SizedBox(height: 4),
+                                                const SizedBox(height: 4),
                                                 Text(
                                                   (snapshot.data! as dynamic)
                                                           .docs[index]
                                                       ['description'],
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.normal,
                                                       fontSize: 12),
@@ -228,7 +227,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                     ),
                                   ),
                                   Positioned(
-                                    bottom: -10,
+                                    top: 28,
                                     right: 20,
                                     child: InkWell(
                                       onTap: () {
@@ -242,7 +241,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                         });
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.all(8),
+                                        padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: isSelected
