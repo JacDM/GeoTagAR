@@ -173,7 +173,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                   Container(
                                     margin: EdgeInsets.symmetric(vertical: 8),
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 8),
+                                        horizontal: 12, vertical: 16),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
                                       color: Colors.grey.shade200,
