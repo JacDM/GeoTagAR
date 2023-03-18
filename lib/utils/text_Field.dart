@@ -15,10 +15,6 @@ class ReusableTextField extends StatelessWidget {
       this.onEditingCompleted,
       this.keyboardType,
       this.onChanged,
-      //required this.isMulti,
-      //this.autofocus,
-      //this.enabled,
-      //required this.errorText,
       required this.hintText,
       this.suffix,
       this.prefix,
@@ -36,10 +32,6 @@ class ReusableTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onFieldSubmitted;
-  //final bool isMulti;
-  //final bool? autofocus;
-  //final bool? enabled;
-  //final String errorText;
   final String hintText;
   final Widget? suffix;
   final Widget? prefix;
@@ -52,16 +44,10 @@ class ReusableTextField extends StatelessWidget {
           onChanged: onChanged,
           onEditingComplete: onEditingCompleted,
           onFieldSubmitted: onFieldSubmitted,
-          //autofocus: autofocus,
-          //minLines: isMulti ? 4 : 1,
-          //maxLines: isMulti ? null : 1,
           onTap: onTap,
-          //enabled: enabled,
-          //readOnly: readOnly,
           obscureText: obscure,
           enableSuggestions: !obscure,
           autocorrect: !obscure,
-          //keyboardType: keyboardType,
           controller: controller,
           style: TextStyle(
             color: textColor ??
@@ -69,15 +55,16 @@ class ReusableTextField extends StatelessWidget {
           ),
           decoration: InputDecoration(
             isDense: true,
-            //errorText: errorText,
             prefixIcon: prefix,
-            suffixIcon: suffix,
+            suffixIcon: controller?.text.isNotEmpty == true
+                ? IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      controller?.clear();
+                    },
+                  )
+                : suffix,
             floatingLabelBehavior: FloatingLabelBehavior.never,
-            //labelStyle:
-            // Make this strong
-            // TextStyle(
-            //     color: Color.fromARGB(255, 126, 126, 126).withOpacity(0.9),
-            //     fontWeight: FontWeight.bold),
             hintText: hintText,
             hintStyle: TextStyle(
                 color:
@@ -88,14 +75,10 @@ class ReusableTextField extends StatelessWidget {
                 const Color.fromARGB(255, 122, 122, 122).withOpacity(0.3),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-            //enabledBorder: textFieldfocused(),
-            border: (OutlineInputBorder(
+            border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(7.0),
               borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-            )),
-            //focusedBorder: textFieldfocused(),
-            //errorBorder: errorrTextFieldBorder(),
-            //focusedErrorBorder: errorrTextFieldBorder(),
+            ),
           ),
           keyboardType: obscure
               ? TextInputType.visiblePassword

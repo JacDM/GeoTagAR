@@ -22,7 +22,7 @@ NOTE: the build process can take anywhere from 5-15 minuites with the cpu pinned
 
 1.Type `flutter run` in the console to initiiate the build
 
-## Full Instalation
+## Full Installation
 
 if you want to launch the project and build for a specific platrorm:
 1. install then open unity hub, navigate to the installs tab and click install 

@@ -47,6 +47,7 @@ dependencies:
   flutter_svg: ^1.1.6
   flutter_unity_widget: ^2022.2.0
   font_awesome_flutter: ^10.3.0
+  geocoding: ^2.1.0
   geolocator: ^9.0.2
   google_maps_flutter: ^2.2.3
   image: ^3.0.2
@@ -58,13 +59,14 @@ dependencies:
   sensors_plus: ^2.0.1
   shared_preferences: ^2.0.17
   uuid: ^3.0.5
+  velocity_x: ^3.6.0
 
 dev_dependencies:
   change_app_package_name: ^1.0.0
+  flutter_launcher_icons: "^0.11.0"
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.11.0"
 
 flutter_icons:
   android: "launcher_icon"

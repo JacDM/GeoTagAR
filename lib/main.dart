@@ -62,7 +62,33 @@ class MyApp extends StatelessWidget {
             colorScheme:
                 ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
           ),
-          home: const LogIn(),
+
+          // Added persistent state
+          home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasData) {
+                  return const LayoutSelect(
+                    mobileLayout: MobileScreenLayout(),
+                    webLayout: WebScreenLayout(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('${snapshot.error}'),
+                  );
+                }
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return const LogIn();
+            },
+          ),
+
+          //added routes to connect screens of the applications
           routes: <String, WidgetBuilder>{
             '/home': (BuildContext context) => const LayoutSelect(
                 mobileLayout: MobileScreenLayout(),
@@ -74,47 +100,9 @@ class MyApp extends StatelessWidget {
             //'/userProfilePt2': (BuildContext context) => UserProfilePt2(),
             //'/createMemoryRoute': (BuildContext context) => CreateMemoryRoute(),
             '/discover': (BuildContext context) => const DiscoverPage(),
-            '/unity': (BuildContext context) =>  UnityAR(),
+            '/unity': (BuildContext context) => UnityAR(),
             //'/postPage': (BuildContext context) => PostPage(),
-          }
-          //home: UserProfile(),
-          //home: UserProfilePt2(),
-
-          //-----------------------------------------------------------------------
-          // home: StreamBuilder(
-          //     stream: FirebaseAuth.instance.authStateChanges(),
-          //     builder: (context, snapshot) {
-          //       //if a connection is made
-          //       if (snapshot.connectionState == ConnectionState.active) {
-          //         if (snapshot.hasData) {
-          //           return const HomePage();
-          //         } else if (snapshot.hasError) {
-          //           return Center(
-          //             child: Text('${snapshot.error}'),
-          //           );
-          //         }
-          //       }
-
-          //       //if a connection isn't made
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return const Center(
-          //             child: CircularProgressIndicator(
-          //           color: Colors.teal,
-          //         ));
-          //       }
-
-          //       return const LogIn();
-          //     }),
-
-          //-----------------------------------------------------------------------
-          ),
+          }),
     );
   }
 }
-
-
-// wrap Material app with MultiProvider(
-//   providers: [
-//     ChangeNotifierProvider(create: (_) => UserProvider(), ),
-//   ],
-// )
