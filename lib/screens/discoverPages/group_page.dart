@@ -77,7 +77,7 @@ class _GroupPageState extends State<GroupPage> {
         appBar: AppBar(
           title: const Text('Group Page'),
         ),
-        // Shows number of members
+        // Shows number of members of the latest group i.e., needs to be updated
         body: Center(child: Text(members.toString())),
       );
     }
