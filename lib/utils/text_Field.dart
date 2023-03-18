@@ -57,11 +57,16 @@ class ReusableTextField extends StatelessWidget {
             isDense: true,
             prefixIcon: prefix,
             suffixIcon: controller?.text.isNotEmpty == true
-                ? IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      controller?.clear();
-                    },
+                ? SizedBox(
+                    width: 12,
+                    height: 12,
+                    child: IconButton(
+                      iconSize: 12, // set the icon size
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        controller?.clear();
+                      },
+                    ),
                   )
                 : suffix,
             floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -74,7 +79,7 @@ class ReusableTextField extends StatelessWidget {
             fillColor:
                 const Color.fromARGB(255, 122, 122, 122).withOpacity(0.3),
             contentPadding:
-                const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(7.0),
               borderSide: const BorderSide(width: 0, style: BorderStyle.none),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 
 const Color k_fontTextColour = Colors.black;
-const Color k_bgColor = Color(0xFFECEFF1);
+const Color k_bgColor = Colors.white;
 const k_subHeadingTextStyle =
     TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold);
 const TextStyle k_textStyle = TextStyle(
@@ -48,7 +48,7 @@ class _PersonalInfo extends State<PersonalInfo> {
 
                 //Basic Info -> subheading
                 const Padding(
-                  padding: EdgeInsets.only(left: 10.0),
+                  padding: EdgeInsets.only(left: 20.0),
                   child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -59,19 +59,20 @@ class _PersonalInfo extends State<PersonalInfo> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .25,
                   child: Expanded(
-                    child: ReusableContainer(
-                      colour: k_bgColor,
-                      containerChild: Row(
+                    child: Container(
+                      color: k_bgColor,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           //Name, Birthday, Gender
                           Expanded(
-                            child: ReusableContainer(
-                              colour: k_bgColor,
-                              containerChild: Column(
+                            child: Container(
+                              margin: const EdgeInsets.all(10.0),
+                              color: Colors.white,
+                              child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: const [
                                   Text(
@@ -93,11 +94,12 @@ class _PersonalInfo extends State<PersonalInfo> {
 
                           Expanded(
                             flex: 2,
-                            child: ReusableContainer(
-                              colour: k_bgColor,
-                              containerChild: Column(
+                            child: Container(
+                              margin: const EdgeInsets.all(10.0),
+                              color: Colors.white,
+                              child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: const [
                                   Text(
@@ -128,7 +130,7 @@ class _PersonalInfo extends State<PersonalInfo> {
 
                 //Contact Info -> Subheading
                 const Padding(
-                  padding: EdgeInsets.only(left: 10.0),
+                  padding: EdgeInsets.only(left: 20.0),
                   child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -139,21 +141,23 @@ class _PersonalInfo extends State<PersonalInfo> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .20,
                   child: Expanded(
-                    child: ReusableContainer(
-                      colour: k_bgColor,
-                      containerChild: Row(
+                    child: Container(
+                      margin: const EdgeInsets.all(10.0),
+                      color: k_bgColor,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           //Email, Phone
                           Expanded(
-                            child: ReusableContainer(
-                              colour: k_bgColor,
-                              containerChild: Column(
+                            child: Container(
+                              margin: const EdgeInsets.all(10.0),
+                              color: Colors.white,
+                              child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: const [
                                   Text(
                                     'Email:',
                                     style: k_textStyle,
@@ -170,11 +174,11 @@ class _PersonalInfo extends State<PersonalInfo> {
                           //Values
                           Expanded(
                             flex: 2,
-                            child: ReusableContainer(
-                              colour: k_bgColor,
-                              containerChild: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                            child: Container(
+                              margin: const EdgeInsets.all(10.0),
+                              color: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: const [
                                   Text(
