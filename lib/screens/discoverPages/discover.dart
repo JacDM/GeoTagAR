@@ -59,11 +59,13 @@ class _DiscoverPageState extends State<DiscoverPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Discover',
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
+
+                /////// MODIFY THIS TO PREVENT RESIZE (CROSS)
                 ReusableTextField(
                   controller: _searchTextController,
                   hintText: 'Search',
@@ -89,7 +91,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
           Expanded(
             child: showUsers
                 ? StreamBuilder<QuerySnapshot>(
-                    stream: _firebaseFirestore.snapshots().asBroadcastStream(),
+                    stream: _firebaseFirestore.snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) {
@@ -97,18 +99,28 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else {
-                        return ListView(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          children: [
-                            ...snapshot.data!.docs
-                                .where(
-                                    (QueryDocumentSnapshot<Object?> element) =>
-                                        element['username']
-                                            .toString()
-                                            .toLowerCase()
-                                            .contains(_searchTextController.text
-                                                .trim()
-                                                .toLowerCase()))
+                        final filteredUsers = snapshot.data!.docs
+                            .where((QueryDocumentSnapshot<Object?> element) {
+                          final data = element.data() as Map<String, dynamic>;
+                          if (!data.containsKey('username') ||
+                              !data.containsKey('profilePic') ||
+                              !data.containsKey('name') ||
+                              !data.containsKey('uid')) {
+                            return false;
+                          }
+                          return data['username']
+                              .toString()
+                              .toLowerCase()
+                              .contains(_searchTextController.text
+                                  .trim()
+                                  .toLowerCase());
+                        }).toList();
+                        if (filteredUsers.isEmpty) {
+                          return const Center(child: Text('No users found.'));
+                        } else {
+                          return ListView(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            children: filteredUsers
                                 .map((QueryDocumentSnapshot<Object?> data) {
                               final String username = data.get('username');
                               final String profilePic = data['profilePic'];
@@ -128,9 +140,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                 ),
                                 subtitle: Text(name),
                               );
-                            })
-                          ],
-                        );
+                            }).toList(),
+                          );
+                        }
                       }
                     })
                 : FutureBuilder(
