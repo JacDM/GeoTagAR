@@ -20,16 +20,6 @@ class AuthServices {
   CollectionReference get _users =>
       _firestore.collection(FirebaseConstants.usersCollection);
 
-  //
-  // Future<model.UserModel> getUserDetails() async {
-  //   User currentUser = _auth.currentUser!;
-  //   Map snap = await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(currentUser.uid)
-  //       .get();
-  //   return model.UserModel.fromMap(snap);
-  // }
-
   // get user details
   Future<UserModel> getUserDetails() async {
     User currentUser = _auth.currentUser!;
@@ -58,13 +48,9 @@ class AuthServices {
             .createUserWithEmailAndPassword(email: email, password: password);
 
         print(userCredential.user?.uid);
-        //await sendEmailVerification();
-        // Add to database
-        //_firestore.collection('users').doc(userCredential.user!.uid);
 
         UserModel userModel;
 
-        // if (userCredential.additionalUserInfo!.isNewUser) {
         userModel = UserModel(
           email: email,
           username: username,
@@ -81,22 +67,6 @@ class AuthServices {
         await docUser
             .set(userModel.toJson())
             .then((value) => print("$username added to FireStore."));
-        // } else {
-        //   userModel = await getUserStream(userCredential.user!.uid).first;
-        // }
-        // User? firebaseUser = userCredential.user;
-        // }
-
-        // final data = {
-        //   'email': email,
-        //   'username': username,
-        //   'uid': userCredential.user!.uid,
-        //   'name': name,
-        //   //'lastName': lastName,
-        //   //'age': age,
-        //   'gender': gender,
-        //   'accountType': accountType,
-        // };
 
         errorCheck = "Signed up successfully";
 
@@ -118,11 +88,6 @@ class AuthServices {
     return errorCheck;
   }
 
-  // Stream<UserModel> getUserStream(String uid) {
-  //   return _users.doc(uid).snapshots().map(
-  //       (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
-  // }
-
   Future<void> sendEmailVerification() async {
     User? user = _auth.currentUser;
     user!.sendEmailVerification();
@@ -131,7 +96,7 @@ class AuthServices {
     //     const SnackBar(content: Text("A Verification Email has been sent")));
   }
 
-  Future logIn({
+  Future<User?> logIn({
     required String email,
     required String password,
   }) async {
@@ -145,18 +110,27 @@ class AuthServices {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+        throw FirebaseAuthException(code: 'wrong-password', message: e.message);
       }
+      return null;
     }
   }
 
-  // Future<void> signOut() async {
+  // Future logIn({
+  //   required String email,
+  //   required String password,
+  // }) async {
   //   try {
-  //     //notifyListeners();
-  //     //Phoenix.rebirth(context);
-  //     return await _auth.signOut();
-  //   } catch (err) {
-  //     print(err.toString());
-  //     //return err.toString();
+  //     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+  //         email: email, password: password);
+  //     User? firebaseUser = userCredential.user;
+  //     return firebaseUser;
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'user-not-found') {
+  //       print('No user found for that email.');
+  //     } else if (e.code == 'wrong-password') {
+  //       print('Wrong password provided for that user.');
+  //     }
   //   }
   // }
 
@@ -165,6 +139,4 @@ class AuthServices {
         .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LogIn()),
             (route) => false));
   }
-
-  // getUserDetails() {}
 }

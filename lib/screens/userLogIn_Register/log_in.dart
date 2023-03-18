@@ -37,27 +37,30 @@ class _LogInState extends State<LogIn> {
   }
 
   // Future logIn() async {
-  //   await FirebaseAuth.instance
-  //       .signInWithEmailAndPassword(
+  //   await AuthServices()
+  //       .logIn(
   //           email: _emailTextController.text.trim(),
   //           password: _passwordTextController.text.trim())
-  //       .then((value) => Navigator.push(
-  //           context, MaterialPageRoute(builder: ((context) => HomePage()))));
+  //       .then((value) => Navigator.pushReplacementNamed(context, '/home'));
   // }
 
-  void logIn() async {
-    await AuthServices()
-        .logIn(
-            email: _emailTextController.text.trim(),
-            password: _passwordTextController.text.trim())
-        .then((value) => Navigator.pushReplacementNamed(context, '/home'));
-    // .then(((value) => Navigator.pushNamed(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: ((context) => LayoutSelect(
-    //               mobileLayout: MobileScreenLayout(),
-    //               webLayout: WebScreenLayout(),
-    //             ))))));
+  Future logIn() async {
+    try {
+      await AuthServices()
+          .logIn(
+              email: _emailTextController.text.trim(),
+              password: _passwordTextController.text.trim())
+          .then((value) {
+        if (value != null) {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Incorrect password entered.")));
+      }
+    }
   }
 
   bool emailValidator() {
