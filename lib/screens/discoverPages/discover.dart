@@ -1,18 +1,14 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geotagar/screens/discoverPages/group_page.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:velocity_x/velocity_x.dart';
+
 import '../../utils/text_field.dart';
 
 class DiscoverPage extends StatefulWidget {
-  const DiscoverPage({super.key});
+  const DiscoverPage({Key? key}) : super(key: key);
 
   @override
   State<DiscoverPage> createState() => _DiscoverPageState();
@@ -23,6 +19,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
       FirebaseFirestore.instance.collection('users');
   final TextEditingController _searchTextController = TextEditingController();
   bool showUsers = false;
+  List<bool> selectedGroups = [];
 
   @override
   void initState() {
@@ -52,147 +49,224 @@ class _DiscoverPageState extends State<DiscoverPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Discover',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-
-                /////// MODIFY THIS TO PREVENT RESIZE (CROSS)
-                ReusableTextField(
-                  controller: _searchTextController,
-                  hintText: 'Search',
-                  onChanged: (text) => _updateClearIconAndDisplay(),
-                  keyboardType: TextInputType.text,
-                  obscure: false,
-                  suffix: _searchTextController.text.isNotEmpty
-                      ? IconButton(
-                          icon: Icon(Icons.clear),
-                          onPressed: () {
-                            setState(() {
-                              _searchTextController.clear();
-                              _updateClearIconAndDisplay();
-                            });
-                          },
-                        )
-                      : null,
-                ),
-              ],
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Text(
+                'Discover',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          SizedBox(height: 16),
-          Expanded(
-            child: showUsers
-                ? StreamBuilder<QuerySnapshot>(
-                    stream: _firebaseFirestore.snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        final filteredUsers = snapshot.data!.docs
-                            .where((QueryDocumentSnapshot<Object?> element) {
-                          final data = element.data() as Map<String, dynamic>;
-                          if (!data.containsKey('username') ||
-                              !data.containsKey('profilePic') ||
-                              !data.containsKey('name') ||
-                              !data.containsKey('uid')) {
-                            return false;
-                          }
-                          return data['username']
-                              .toString()
-                              .toLowerCase()
-                              .contains(_searchTextController.text
-                                  .trim()
-                                  .toLowerCase());
-                        }).toList();
-                        if (filteredUsers.isEmpty) {
-                          return const Center(child: Text('No users found.'));
+            SizedBox(height: 16),
+            Container(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ReusableTextField(
+                      controller: _searchTextController,
+                      hintText: 'Search',
+                      onChanged: (text) => _updateClearIconAndDisplay(),
+                      keyboardType: TextInputType.text,
+                      obscure: false,
+                      suffix: _searchTextController.text.isNotEmpty
+                          ? IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                setState(() {
+                                  _searchTextController.clear();
+                                  _updateClearIconAndDisplay();
+                                });
+                              },
+                            )
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child: showUsers
+                  ? StreamBuilder<QuerySnapshot>(
+                      stream: _firebaseFirestore.snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         } else {
-                          return ListView(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            children: filteredUsers
-                                .map((QueryDocumentSnapshot<Object?> data) {
-                              final String username = data.get('username');
-                              final String profilePic = data['profilePic'];
-                              final String name = data['name'];
+                          final filteredUsers = snapshot.data!.docs
+                              .where((QueryDocumentSnapshot<Object?> element) {
+                            final data = element.data() as Map<String, dynamic>;
+                            if (!data.containsKey('username') ||
+                                !data.containsKey('profilePic') ||
+                                !data.containsKey('name') ||
+                                !data.containsKey('uid')) {
+                              return false;
+                            }
+                            return data['username']
+                                .toString()
+                                .toLowerCase()
+                                .contains(_searchTextController.text
+                                    .trim()
+                                    .toLowerCase());
+                          }).toList();
+                          if (filteredUsers.isEmpty) {
+                            return const Center(child: Text('No users found.'));
+                          } else {
+                            return ListView(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              children: filteredUsers
+                                  .map((QueryDocumentSnapshot<Object?> data) {
+                                final String username = data.get('username');
+                                final String profilePic = data['profilePic'];
+                                final String name = data['name'];
 
-                              return ListTile(
-                                onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => UserProfile(
-                                      uid: data['uid'],
+                                return ListTile(
+                                  onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => UserProfile(
+                                        uid: data['uid'],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                title: Text(username),
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(profilePic),
-                                ),
-                                subtitle: Text(name),
-                              );
-                            }).toList(),
+                                  title: Text(username),
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(profilePic),
+                                  ),
+                                  subtitle: Text(name),
+                                );
+                              }).toList(),
+                            );
+                          }
+                        }
+                      })
+                  : FutureBuilder(
+                      // Test group created in firebase
+                      future:
+                          FirebaseFirestore.instance.collection('groups').get(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
                         }
-                      }
-                    })
-                : FutureBuilder(
-                    // Test group created in firebase
-                    future:
-                        FirebaseFirestore.instance.collection('groups').get(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return ListView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: (snapshot.data! as dynamic).docs.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => GroupPage(
-                                    // uid: (snapshot.data! as dynamic).docs[index]
-                                    //     ['id'],
+                        return ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          itemCount: (snapshot.data! as dynamic).docs.length,
+                          itemBuilder: (context, index) {
+                            bool isSelected = selectedGroups.length > index
+                                ? selectedGroups[index]
+                                : false;
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => GroupPage()));
+                              },
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(vertical: 8),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.grey.shade200,
                                     ),
-                              ),
-                            ),
-                            child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 8),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.all(0),
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    (snapshot.data! as dynamic).docs[index]
-                                        ['avatar'],
+
+                                    // Try fixing the length of the rectangle box and the circle icon which is exceeding its limits
+                                    // Additionally, add the description
+                                    child: Container(
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: Image.network(
+                                              (snapshot.data! as dynamic)
+                                                  .docs[index]['avatar'],
+                                              height: 48,
+                                              width: 48,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          SizedBox(width: 12),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  (snapshot.data! as dynamic)
+                                                      .docs[index]['name'],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16),
+                                                ),
+                                                SizedBox(height: 4),
+                                                Text(
+                                                  (snapshot.data! as dynamic)
+                                                          .docs[index]
+                                                      ['description'],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontSize: 12),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  radius: 16,
-                                ),
-                                title: Text(
-                                  (snapshot.data! as dynamic).docs[index]
-                                      ['name'],
-                                ),
+                                  Positioned(
+                                    bottom: -10,
+                                    right: 20,
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          isSelected = !isSelected;
+                                          if (selectedGroups.length <= index) {
+                                            selectedGroups.add(isSelected);
+                                          } else {
+                                            selectedGroups[index] = isSelected;
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: isSelected
+                                              ? Colors.green
+                                              : Colors.blue,
+                                        ),
+                                        child: Icon(
+                                          isSelected ? Icons.check : Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-          ),
-        ],
-      )),
+                            );
+                          },
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
