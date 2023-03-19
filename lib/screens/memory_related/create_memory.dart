@@ -1,5 +1,7 @@
 //import 'dart:html';
 
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +12,7 @@ import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/screens/memory_related/post_memory.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cross_file/cross_file.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 //import 'package:anim_search_bar/anim_search_bar.dart';
 
@@ -25,25 +28,31 @@ class CreateMemory extends StatefulWidget {
 class _CreateMemoryState extends State<CreateMemory> {
   late CameraController _cam;
   bool _isrearCam = true;
-  //TextEditingController textController = TextEditingController();
   static XFile? imagefile;
+  bool flash = false;
 
-  late ImageStream? _imageStream;
-  late Uint8List? _bytes;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade600,
-      floatingActionButton: getFloatingButtons(),
-      body: getBody(),
-    );
-  }
+  //late ImageStream? _imageStream;
+  //late Uint8List? _bytes;
 
   @override
   void initState() {
     super.initState();
     initCamera(widget.cameras![0]);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _cam.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey.shade600,
+      //floatingActionButton: getFloatingButtons(),
+      body: getBody(),
+    );
   }
 
   Future initCamera(CameraDescription camDesc) async {
@@ -53,23 +62,43 @@ class _CreateMemoryState extends State<CreateMemory> {
         if (!mounted) return;
         setState(() {});
       });
-    } on CameraException catch (e) {
-      debugPrint("Error! $e");
+    } on Exception catch (e) {
+      debugPrint("error with camera: $e");
     }
   }
 
-  @override
-  void dispose() {
-    _cam.dispose();
-    super.dispose();
+  _cropImage(){
+    
+  }
+
+  Future _takePicture(BuildContext context) async {
+    if (_cam.value.isInitialized) {
+      XFile picFiletemp = await _cam.takePicture();
+      setState(() {
+        imagefile = picFiletemp;
+      });
+    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => AddPost(
+                  image: imagefile!,
+                )));
   }
 
   _openGallery() async {
     //Navigator.pop(context);
 
     imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    // .then(
+    //   (value) {
+    //     if (value != null) {
+    //       _cropImage(File(value.path));
+    //     }
+    //   },
+    // );
     //Image imageUpload = Image(image: XFileImage(imagefile!));
-    setState(() {});
+    //setState(() {});
     //if (!context.mounted) return;
     Navigator.push(
         context,
@@ -88,6 +117,7 @@ class _CreateMemoryState extends State<CreateMemory> {
             : Container(
                 color: Colors.black,
                 child: const Center(
+                  // circleloading icon while loading
                   child: CircularProgressIndicator(),
                 ),
               ),
@@ -114,12 +144,7 @@ class _CreateMemoryState extends State<CreateMemory> {
                 IconButton(
                   onPressed: () async {
                     try {
-                      if (_cam.value.isInitialized) {
-                        //imagefile = await _cam.takePicture();
-                        setState(() {
-                          //this.imagefile = _image;
-                        });
-                      }
+                      _takePicture(context);
                     } catch (e) {
                       debugPrint('Camera exception $e');
                     }
@@ -152,32 +177,32 @@ class _CreateMemoryState extends State<CreateMemory> {
     ));
   }
 
-  Widget getFloatingButtons() {
-    return Padding(
-      //search bar
-      padding: const EdgeInsets.only(top: 50, left: 35, right: 35),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                width: 80,
-                height: 40,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.search_rounded),
-                  color: Colors.white.withOpacity(0.75),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget getFloatingButtons() {
+  //   return Padding(
+  //     //search bar
+  //     padding: const EdgeInsets.only(top: 50, left: 35, right: 35),
+  //     child: Column(
+  //       children: [
+  //         Row(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           mainAxisAlignment: MainAxisAlignment.start,
+  //           children: [
+  //             Container(
+  //               width: 80,
+  //               height: 40,
+  //               decoration: const BoxDecoration(
+  //                 shape: BoxShape.circle,
+  //               ),
+  //               child: IconButton(
+  //                 onPressed: () {},
+  //                 icon: const Icon(Icons.search_rounded),
+  //                 color: Colors.white.withOpacity(0.75),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
