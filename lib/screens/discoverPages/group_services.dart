@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
-
 import '../../models/groups.dart';
 
 class GroupServices {
@@ -33,13 +32,14 @@ class GroupServices {
     return downloadURL;
   }
 
-  // Add the following methods to GroupServices
+  // Add user to group
   Future<void> addUserToGroup(String groupId, String userId) async {
     await _groups.doc(groupId).update({
       'members': FieldValue.arrayUnion([userId]),
     });
   }
 
+  // Remove user from the group
   Future<void> removeUserFromGroup(String groupId, String userId) async {
     await _groups.doc(groupId).update({
       'members': FieldValue.arrayRemove([userId]),
@@ -56,6 +56,7 @@ class GroupServices {
     return members.contains(userId);
   }
 
+  // Create the group
   Future<Community> createGroup({
     required String groupName,
     required String groupDescription,
