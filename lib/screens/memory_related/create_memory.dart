@@ -68,7 +68,7 @@ class _CreateMemoryState extends State<CreateMemory> {
   }
 
   _cropImage(){
-    
+
   }
 
   Future _takePicture(BuildContext context) async {
@@ -84,7 +84,7 @@ class _CreateMemoryState extends State<CreateMemory> {
             builder: (builder) => AddPost(
                   image: imagefile!,
                 )));
-  }
+  } 
 
   _openGallery() async {
     //Navigator.pop(context);

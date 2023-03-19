@@ -26,7 +26,7 @@ class _CMRouteState extends State<CMRoute> {
   void initState() {
     super.initState();
     _setupCams();
-  }
+  } 
 
   Future<List<CameraDescription>> _setupCams() async {
     try {

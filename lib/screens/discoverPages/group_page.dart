@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:geotagar/models/groups.dart';
 
 import '../../utils/methods.dart';
 
 class GroupPage extends StatefulWidget {
-  const GroupPage({super.key});
+  const GroupPage({super.key, this.group});
 
+  final Community? group;
   @override
   State<GroupPage> createState() => _GroupPageState();
 }
