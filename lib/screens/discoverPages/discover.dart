@@ -190,11 +190,11 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                 : false;
                             return InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => GroupPage(
-                                      group: Community.fromMap(
-                                          snapshot.data!.docs[index].data())),
-                                ));
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //   builder: (context) => GroupPage(
+                                //       group: Community.fromMap(
+                                //           snapshot.data!.docs[index].data())),
+                                // ));
                               },
                               child: Stack(
                                 children: [
