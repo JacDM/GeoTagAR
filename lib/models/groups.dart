@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 class Community {
   final String groupId;
   final String groupName;
   final String groupBanner;
   final String groupPicture;
+  final String groupDescription;
   final List<String> members;
   final List<String> mods;
   Community({
@@ -15,6 +15,7 @@ class Community {
     required this.groupPicture,
     required this.members,
     required this.mods,
+    required this.groupDescription,
   });
 
   static Community fromSnap(DocumentSnapshot snap) {
@@ -26,6 +27,7 @@ class Community {
         groupBanner: snapshot["groupBanner"],
         groupPicture: snapshot["groupPicture"],
         members: snapshot["members"],
+        groupDescription: snapshot["groupDescription"],
         mods: snapshot["mods"]);
   }
 
@@ -35,6 +37,7 @@ class Community {
         "groupBanner": groupBanner,
         "groupPicture": groupPicture,
         "members": members,
+        "groupDescription": groupDescription,
       };
 
   // Community copyWith({
@@ -63,7 +66,20 @@ class Community {
       'groupPicture': groupPicture,
       'members': members,
       'mods': mods,
+      'groupDescription': groupDescription,
     };
+  }
+
+  factory Community.fromMap(Map<String, dynamic> map) {
+    return Community(
+      groupId: map['id'] ?? '',
+      groupName: map['name'] ?? '',
+      groupBanner: map['banner'] ?? '',
+      groupPicture: map['avatar'] ?? '',
+      groupDescription: map['description'] ?? '',
+      members: List<String>.from(map['members']),
+      mods: List<String>.from(map['mods']),
+    );
   }
 
 //   }

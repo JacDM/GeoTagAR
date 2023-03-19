@@ -1,11 +1,15 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geotagar/models/groups.dart';
 import 'package:geotagar/screens/discoverPages/group_page.dart';
+import 'package:geotagar/screens/discoverPages/create_group.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
-
 import '../../utils/text_field.dart';
+import 'group_services.dart';
+//import 'package:geotagar/services/auth.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({Key? key}) : super(key: key);
@@ -17,6 +21,7 @@ class DiscoverPage extends StatefulWidget {
 class _DiscoverPageState extends State<DiscoverPage> {
   final CollectionReference _firebaseFirestore =
       FirebaseFirestore.instance.collection('users');
+  final GroupServices _groupServices = GroupServices();
   final TextEditingController _searchTextController = TextEditingController();
   bool showUsers = false;
   List<bool> selectedGroups = [];
@@ -24,6 +29,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
   @override
   void initState() {
     super.initState();
+    //fetchUsers();
     _searchTextController.addListener(_updateClearIconAndDisplay);
   }
 
@@ -49,6 +55,16 @@ class _DiscoverPageState extends State<DiscoverPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => CreateGroupPage(),
+              ),
+            );
+          },
+          child: Icon(Icons.add),
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -156,6 +172,15 @@ class _DiscoverPageState extends State<DiscoverPage> {
                             child: CircularProgressIndicator(),
                           );
                         }
+                        // Initialize the selectedGroups list
+                        (snapshot.data! as dynamic).docs.forEach((doc) async {
+                          String groupId = doc.id;
+                          String currentUserId =
+                              FirebaseAuth.instance.currentUser!.uid;
+                          bool isMember = await _groupServices.isUserInGroup(
+                              groupId, currentUserId);
+                          selectedGroups.add(isMember);
+                        });
                         return ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 24),
                           itemCount: (snapshot.data! as dynamic).docs.length,
@@ -166,12 +191,16 @@ class _DiscoverPageState extends State<DiscoverPage> {
                             return InkWell(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => GroupPage()));
+                                  builder: (context) => GroupPage(
+                                      group: Community.fromMap(
+                                          snapshot.data!.docs[index].data())),
+                                ));
                               },
                               child: Stack(
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.symmetric(vertical: 8),
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 8),
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 12, vertical: 16),
                                     decoration: BoxDecoration(
@@ -180,7 +209,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                     ),
 
                                     // Try fixing the length of the rectangle box and the circle icon which is exceeding its limits
-                                    // Additionally, add the description
                                     child: Container(
                                       child: Row(
                                         children: [
@@ -189,7 +217,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                                 BorderRadius.circular(8),
                                             child: Image.network(
                                               (snapshot.data! as dynamic)
-                                                  .docs[index]['avatar'],
+                                                  .docs[index]['groupPicture'],
                                               height: 48,
                                               width: 48,
                                               fit: BoxFit.cover,
@@ -203,7 +231,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                               children: [
                                                 Text(
                                                   (snapshot.data! as dynamic)
-                                                      .docs[index]['name'],
+                                                      .docs[index]['groupName'],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -213,7 +241,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                                 Text(
                                                   (snapshot.data! as dynamic)
                                                           .docs[index]
-                                                      ['description'],
+                                                      ['groupDescription'],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.normal,
@@ -230,15 +258,55 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                     top: 28,
                                     right: 20,
                                     child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          isSelected = !isSelected;
-                                          if (selectedGroups.length <= index) {
-                                            selectedGroups.add(isSelected);
-                                          } else {
-                                            selectedGroups[index] = isSelected;
-                                          }
-                                        });
+                                      onTap: () async {
+                                        String groupId =
+                                            (snapshot.data! as dynamic)
+                                                .docs[index]
+                                                .id;
+                                        String currentUserId = FirebaseAuth
+                                            .instance.currentUser!.uid;
+                                        bool isMember =
+                                            await _groupServices.isUserInGroup(
+                                                groupId, currentUserId);
+
+                                        if (isMember) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              title: const Text('Leave group?'),
+                                              content: const Text(
+                                                  'Are you sure you want to leave this group?'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('No'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    await _groupServices
+                                                        .removeUserFromGroup(
+                                                            groupId,
+                                                            currentUserId);
+                                                    setState(() {
+                                                      isSelected = false;
+                                                    });
+                                                    // Check if(mounted) stuff
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text('Yes'),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          await _groupServices.addUserToGroup(
+                                              groupId, currentUserId);
+                                          setState(() {
+                                            isSelected = true;
+                                          });
+                                        }
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(8),
