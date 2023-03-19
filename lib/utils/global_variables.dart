@@ -14,7 +14,7 @@ import '../screens/userAccountScreens/user_profile.dart';
 // import 'package:instagram_clone_flutter/screens/search_screen.dart';
 
 //const webScreenSize = 600;
-
+ 
 List<Widget> homeScreenItems = [
   const Feed(),
   const scrapBookLocations(),

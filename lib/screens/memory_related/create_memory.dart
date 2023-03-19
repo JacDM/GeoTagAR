@@ -84,7 +84,7 @@ class _CreateMemoryState extends State<CreateMemory> {
             builder: (builder) => AddPost(
                   image: imagefile!,
                 )));
-  } 
+  }  
 
   _openGallery() async {
     //Navigator.pop(context);
