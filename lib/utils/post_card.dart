@@ -273,74 +273,77 @@ class _PostCardState extends State<PostCard> {
             ],
           ),
           //DESCRIPTION AND NUMBER OF COMMENTS
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                DefaultTextStyle(
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2!
-                        .copyWith(fontWeight: FontWeight.w800),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  DefaultTextStyle(
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2!
+                          .copyWith(fontWeight: FontWeight.w800),
+                      child: Text(
+                        '${widget.snap['likes'].length} likes',
+                        style: const TextStyle(color: Colors.white),
+                      )),
+                  // Container(
+                  //   width: double.infinity,
+                  //   padding: const EdgeInsets.only(
+                  //     top: 10,
+                  //   ),
+                  //   child: RichText(
+                  //     text: TextSpan(
+                  //       style: const TextStyle(color: Pallete.whiteColor),
+                  //       children: [
+                  //         TextSpan(
+                  //           text: widget.snap['username'].toString(),
+                  //           style: const TextStyle(
+                  //             fontWeight: FontWeight.bold,
+                  //           ),
+                  //         ),
+                  //         TextSpan(
+                  //           text: ' ${widget.snap['description']}',
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   child: Container(
+                  //     child: Text(
+                  //       'View all $commentLen comments',
+                  //       style: const TextStyle(
+                  //         fontSize: 16,
+                  //         color: Pallete.whiteColor,
+                  //       ),
+                  //     ),
+                  //     padding: const EdgeInsets.symmetric(vertical: 4),
+                  //   ),
+                  //   onTap: () => Navigator.of(context).push(
+                  //     MaterialPageRoute(
+                  //       builder: (context) => CommentsScreen(
+                  //         postId: widget.snap['postId'].toString(),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Container(
                     child: Text(
-                      '${widget.snap['likes'].length} likes',
-                      style: const TextStyle(color: Colors.white),
-                    )),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                  ),
-                  child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(color: Pallete.whiteColor),
-                      children: [
-                        TextSpan(
-                          text: widget.snap['username'].toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' ${widget.snap['description']}',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                InkWell(
-                  child: Container(
-                    child: Text(
-                      'View all $commentLen comments',
+                      DateFormat.yMMMd()
+                          .format(widget.snap['datePublished'].toDate()),
                       style: const TextStyle(
-                        fontSize: 16,
                         color: Pallete.whiteColor,
+                        fontSize: 10,
                       ),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 4),
                   ),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => CommentsScreen(
-                        postId: widget.snap['postId'].toString(),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    DateFormat.yMMMd()
-                        .format(widget.snap['datePublished'].toDate()),
-                    style: const TextStyle(
-                      color: Pallete.whiteColor,
-                      fontSize: 10,
-                    ),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                ),
-              ],
+                ],
+              ),
             ),
           )
         ],

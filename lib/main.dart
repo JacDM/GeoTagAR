@@ -40,9 +40,9 @@ class MyApp extends StatelessWidget {
                 const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')),
             scaffoldBackgroundColor: Colors.white,
             appBarTheme: const AppBarTheme(
-              centerTitle: true,
-              foregroundColor: Colors.black,
-              backgroundColor: Colors.white,
+              centerTitle: false,
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.black,
               //shadowColor: Colors.teal[900],
               toolbarHeight: 60.0,
               elevation: 0,

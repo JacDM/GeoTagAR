@@ -27,20 +27,19 @@ class _FeedState extends State<Feed> {
               automaticallyImplyLeading: false,
               centerTitle: true,
               toolbarHeight: 90,
-              title: Image.asset(
-                Constants.logoPathBlack,
-                height: 270.0,
-                width: 270.0,
-              ),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.chat_bubble_outline_rounded,
-                    color: Pallete.whiteColor,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
+              title: const Text(
+                        'THE FEED',
+                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                      ),
+              // actions: [
+              //   IconButton(
+              //     icon: const Icon(
+              //       Icons.chat_bubble_outline_rounded,
+              //       color: Pallete.whiteColor,
+              //     ),
+              //     onPressed: () {},
+              //   ),
+              // ],
             ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
@@ -58,8 +57,25 @@ class _FeedState extends State<Feed> {
                 horizontal: width > 600 ? width * 0.3 : 0,
                 vertical: width > 600 ? 15 : 0,
               ),
-              child: PostCard(
-                snap: snapshot.data!.docs[index].data(),
+
+              child: Stack (
+                children: [
+                  Container(
+                    margin:
+                    const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.grey.shade200,
+                    ),
+
+                    // Try fixing the length of the rectangle box and the circle icon which is exceeding its limits
+                    child: PostCard(
+                      snap: snapshot.data!.docs[index].data(),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
