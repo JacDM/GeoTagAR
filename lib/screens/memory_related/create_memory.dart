@@ -74,20 +74,21 @@ class _CreateMemoryState extends State<CreateMemory> {
     final croppedImg = await ImageCropper().cropImage(
       sourcePath: tempFile.path,
       aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio16x9
-
+        //CropAspectRatioPreset.square,
+        //CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio16x9,
+        CropAspectRatioPreset.ratio4x3,
       ],
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: 'Crop/Resize',
           toolbarColor: Colors.black,
           toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false
+          initAspectRatio: CropAspectRatioPreset.ratio16x9,
+          lockAspectRatio: true
         ),
         IOSUiSettings(title: 'Crop/Resize'),
+        WebUiSettings(context: context),
       ]
     );
 
@@ -110,6 +111,7 @@ class _CreateMemoryState extends State<CreateMemory> {
 
   Future _takePicture(BuildContext context) async {
     if (_cam.value.isInitialized) {
+      
       XFile picFiletemp = await _cam.takePicture();
       if (picFiletemp != null) {
         _cropImage(picFiletemp);
@@ -200,33 +202,4 @@ class _CreateMemoryState extends State<CreateMemory> {
       ],
     ));
   }
-
-  // Widget getFloatingButtons() {
-  //   return Padding(
-  //     //search bar
-  //     padding: const EdgeInsets.only(top: 50, left: 35, right: 35),
-  //     child: Column(
-  //       children: [
-  //         Row(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           children: [
-  //             Container(
-  //               width: 80,
-  //               height: 40,
-  //               decoration: const BoxDecoration(
-  //                 shape: BoxShape.circle,
-  //               ),
-  //               child: IconButton(
-  //                 onPressed: () {},
-  //                 icon: const Icon(Icons.search_rounded),
-  //                 color: Colors.white.withOpacity(0.75),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

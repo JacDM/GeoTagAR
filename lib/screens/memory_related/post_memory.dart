@@ -16,6 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:geotagar/services/firestore.dart';
 import 'package:geolocator/geolocator.dart';
 //import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/methods.dart';
@@ -112,12 +113,8 @@ class _AddPostState extends State<AddPost> {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
       return Future.error('Location services are disabled.');
     }
 
@@ -140,220 +137,226 @@ class _AddPostState extends State<AddPost> {
   getLocation() async {
     Position position = await _determinePosition();
     //List<> placemarks = await Geolocator().placemarks
+    setState(() {
+      _locationCtrler.value = TextEditingValue(text: '$position');
+    });
   }
+
+  Color bgcol = Colors.black;
 
   @override
   Widget build(BuildContext context) {
     final UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey.shade900,
-        foregroundColor: Colors.white,
-        leading: IconButton(
-          color: Colors.white,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
+        appBar: AppBar(
+          backgroundColor: Colors.grey.shade900,
+          foregroundColor: Colors.white,
+          leading: IconButton(
             color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
           ),
+          title: const Text('Post Memory'),
+          centerTitle: false,
         ),
-        title: const Text('Post Memory'),
-        centerTitle: false,
-      ),
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        minimum: const EdgeInsets.all(4),
-        child: SingleChildScrollView(
-            child: Column(children: [
-          //linear indicator
-          isUploading
-              ? const LinearProgressIndicator()
-              : const Padding(padding: EdgeInsets.all(0)),
-          const Padding(padding: EdgeInsets.all(4)),
-          //post
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                //the pic
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.55,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Center(
-                    child: AspectRatio(
-                      aspectRatio: 4.5 / 3,
-                      child: Container(
-                        foregroundDecoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 1),
-                            image: DecorationImage(
-                                image: Image(image: XFileImage(widget.image))
-                                    .image,
-                                // isUploading
-                                //     ? MemoryImage(file!)
-                                //     : Image(
-                                //             image: NetworkImage(
-                                //                 'https://images.unsplash.com/photo-1668018367039-22526ebf2461?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=439&q=80'))
-                                //         .image, //
-                                fit: BoxFit.contain,
-                                alignment: FractionalOffset.topCenter)),
+        backgroundColor: bgcol,
+        body: SafeArea(
+          minimum: const EdgeInsets.all(4),
+          child: SingleChildScrollView(
+              child: Column(children: [
+            //linear indicator
+            isUploading
+                ? const LinearProgressIndicator()
+                : const Padding(padding: EdgeInsets.all(0)),
+            const Padding(padding: EdgeInsets.all(4)),
+            //post
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  //the pic
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Center(
+                      child: AspectRatio(
+                        aspectRatio: 4.5 / 3,
+                        child: Container(
+                          foregroundDecoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.white, width: 0.5),
+                              image: DecorationImage(
+                                  image: Image(image: XFileImage(widget.image))
+                                      .image,
+                                  fit: BoxFit.contain,
+                                  alignment: FractionalOffset.center)),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Row(
-              children: [
-                // Container(
-                //   width: MediaQuery.of(context).size.width * 0.08,
-                //   child: Flexible(
-                //     flex: 2,
-                //     fit: FlexFit.loose,
-                //     child: Container(),
-                //   ),
-                // ),
+            SizedBox(
+              height: 0,
+            ),
+            Container(
+              alignment: Alignment.topCenter,
+              height: MediaQuery.of(context).size.height * 0.1,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Row(
+                children: [
+                  Container(
+                    //height: MediaQuery.of(context).size.height * 0.1,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Flexible(
+                      flex: 2,
+                      fit: FlexFit.tight,
+                      child: TextFormField(
+                        mouseCursor: SystemMouseCursors.forbidden,
+                        enabled: false,
+                        controller: _locationCtrler,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: (bgcol == Colors.white)
+                                ? Colors.grey[300]
+                                : Color.fromARGB(255, 78, 78, 78),
+                            prefixIconColor: Colors.white70,
+                            hintText: 'Where was this picture taken?',
+                            hintStyle: TextStyle(
+                                color: (bgcol == Colors.white)
+                                    ? Colors.grey.shade700
+                                    : Color.fromARGB(255, 225, 222, 222),
+                                fontSize: 12)),
+                      ),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+                  Container(
+                      height: MediaQuery.of(context).size.height * 0.063,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: Tooltip(
+                        waitDuration: Duration(seconds: 2),
+                        showDuration: Duration(seconds: 1),
+                        message: 'Long press to clear location',
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              _locationCtrler.value =
+                                  TextEditingValue(text: 'location!!');
+                            });
+                          },
+                          onLongPress: () {
+                            setState(() {
+                              _locationCtrler.clear();
+                            });
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('Location cleared.'),
+                              duration: Duration(seconds: 4),
+                            ));
+                          },
+                          label: Text(
+                            'Use current location',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          icon: Icon(Icons.my_location_outlined),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 7, 63, 108)),
+                        ),
+                      ))
+                ],
+              ),
+            ), //for the location
+            SizedBox(
+              height: 0,
+            ),
+            Container(
+              //padding: EdgeInsets.only(bottom: 50),
+              height: MediaQuery.of(context).size.height * 0.15,
+              width: MediaQuery.of(context).size.width * 0.9, //
+              child: Row(children: [
                 Container(
-                  //height: MediaQuery.of(context).size.height * 0.1,
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  padding: EdgeInsets.only(right: 10),
                   child: Flexible(
                     flex: 2,
-                    fit: FlexFit.tight,
-                    child: TextFormField(
-                      mouseCursor: SystemMouseCursors.forbidden,
-                      enabled: false,
-                      controller: _locationCtrler,
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[300],
-                          prefixIconColor: Colors.white70,
-                          hintText: 'Where was this picture taken?',
-                          hintStyle: TextStyle(
-                              color: Colors.grey.shade700, fontSize: 12)),
+                    fit: FlexFit.loose,
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(user.profilePic),
+                      ),
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    child: Tooltip(
-                      waitDuration: Duration(seconds: 2),
-                      showDuration: Duration(seconds: 1),
-                      message: 'Long press to clear location',
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          setState(() {
-                            _locationCtrler.value =
-                                TextEditingValue(text: 'location!!');
-                          });
-                        },
-                        onLongPress: () {
-                          setState(() {
-                            _locationCtrler.clear();
-                          });
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text('Location cleared.'),
-                            duration: Duration(seconds: 4),
-                          ));
-                        },
-                        label: Text(
-                          'Use current location',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        icon: Icon(Icons.my_location_outlined),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue),
-                      ),
-                    ))
-              ],
-            ),
-          ), //for the location
-          SizedBox(
-            height: 0,
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.15,
-            width: MediaQuery.of(context).size.width * 0.9, //
-            child: Row(children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.08,
-                padding: EdgeInsets.only(right: 10),
-                child: Flexible(
+                Flexible(
                   flex: 2,
-                  fit: FlexFit.loose,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const CircleAvatar(
-                      backgroundImage: null,
-                    ),
+                  fit: FlexFit.tight,
+                  child: TextFormField(
+                    style: TextStyle(
+                        color: (bgcol == Colors.white)
+                            ? Colors.black
+                            : Colors.white),
+                    controller: _descCtrler,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.add_comment,
+                          color: Colors.grey.shade700,
+                        ),
+                        prefixIconColor: Colors.white70,
+                        hintText: 'Add a caption...',
+                        hintStyle: TextStyle(
+                          color: Colors.grey.shade700,
+                          fontSize: 15,
+                        )),
                   ),
+                )
+              ]),
+            ),
+            SizedBox(
+              height: 0,
+            )
+          ])),
+        ),
+        //the "post" button
+        floatingActionButton: Visibility(
+          visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 5, right: 5),
+            child: Align(
+              alignment: Alignment(1.03, 1.03),
+              child: ElevatedButton(
+                onPressed: isUploading
+                    ? null
+                    : () {
+                        handleSubmit(
+                          user.uid,
+                          user.username,
+                          user.profilePic,
+                        );
+                      }, //() => handleSubmit(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 27, 1, 78),
+                  disabledBackgroundColor: Colors.grey[600],
+                  disabledMouseCursor: SystemMouseCursors.forbidden,
+                  fixedSize: Size(MediaQuery.of(context).size.width * 0.9,
+                      MediaQuery.of(context).size.height * 0.075),
+                ),
+                child: Text(
+                  'Post',
+                  style: TextStyle(fontSize: 15),
                 ),
               ),
-              Flexible(
-                flex: 2,
-                fit: FlexFit.tight,
-                child: TextFormField(
-                  style: TextStyle(color: Colors.black),
-                  controller: _descCtrler,
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.add_comment,
-                        color: Colors.grey.shade700,
-                      ),
-                      prefixIconColor: Colors.white70,
-                      hintText: 'Add a caption...',
-                      hintStyle:
-                          TextStyle(color: Colors.grey.shade700, fontSize: 15)),
-                ),
-              )
-            ]),
-          ),
-          SizedBox(
-            height: 0,
-          )
-        ])),
-      ),
-      //the "post" button
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 5, right: 5),
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: ElevatedButton(
-            onPressed: isUploading
-                ? null
-                : () {
-                    handleSubmit(
-                      user.uid,
-                      user.username,
-                      user.profilePic,
-                    );
-                  }, //() => handleSubmit(),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 16, 80, 3),
-              disabledBackgroundColor: Colors.grey[600],
-              disabledMouseCursor: SystemMouseCursors.forbidden,
-              minimumSize: Size(MediaQuery.of(context).size.width * 0.135,
-                  MediaQuery.of(context).size.height * 0.075),
-            ),
-            child: Text(
-              'Post',
-              style: TextStyle(fontSize: 17.5),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

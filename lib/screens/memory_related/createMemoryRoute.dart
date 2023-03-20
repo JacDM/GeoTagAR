@@ -20,7 +20,6 @@ class CMRoute extends StatefulWidget {
 }
 
 class _CMRouteState extends State<CMRoute> {
-  static XFile? imagefile;
 
   @override
   void initState() {
