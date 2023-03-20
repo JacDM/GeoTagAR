@@ -145,6 +145,7 @@ class _EditProfileState extends State<EditProfile> {
                         hintText: 'Bio',
                         obscure: false,
                         textColor: Colors.white,
+                        // Might remove validator
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Enter a bio';
