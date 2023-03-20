@@ -1,23 +1,12 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/core/constants/constants.dart';
-import 'package:geotagar/layout/mobile_layout.dart';
-import 'package:geotagar/screens/userAccountScreens/UserSettings/user_settings.dart';
-import 'package:geotagar/screens/userAccountScreens/post_page.dart';
-import 'package:provider/provider.dart';
-import 'package:geotagar/models/users.dart' as model;
-import '../../models/users.dart';
-import '../../providers/user_provider.dart';
-import '../../services/auth.dart';
 import '../../services/firestore.dart';
 import '../../utils/follow_button.dart';
 import '../../utils/methods.dart';
-import '../userLogIn_Register/log_in.dart';
+import 'UserSettings/edit_profile.dart';
 
-const k_username = '@DATTEBAYOOO';
 class UserProfile extends StatefulWidget {
   final String uid;
   const UserProfile({super.key, required this.uid});
@@ -27,7 +16,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  var userData = {};
+  late Map<String, dynamic> userData;
+
   int postLen = 0;
   int followers = 0;
   int following = 0;
@@ -75,7 +65,6 @@ class _UserProfileState extends State<UserProfile> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     //final UserModel user = Provider.of<UserProvider>(context).getUser;
@@ -103,8 +92,8 @@ class _UserProfileState extends State<UserProfile> {
                   clipBehavior: Clip.none,
                   children: [
                     //Background Picture
-                    const Image(
-                      image: NetworkImage(Constants.bannerDefault),
+                    Image(
+                      image: NetworkImage(userData['banner']),
                     ),
 
                     //Settings
@@ -125,7 +114,6 @@ class _UserProfileState extends State<UserProfile> {
                             size: MediaQuery.of(context).size.width * 0.08,
                             color: Colors.white,
                           ),
-
                         ),
                       ),
                     ),
@@ -139,10 +127,8 @@ class _UserProfileState extends State<UserProfile> {
                         backgroundColor: Colors.white38,
                         child: CircleAvatar(
                           radius: MediaQuery.of(context).size.width * 0.14,
-                          backgroundImage:
-                              const NetworkImage(Constants.avatarDefault),
+                          backgroundImage: NetworkImage(userData['profilePic']),
                         ),
-
                       ),
                     ),
                   ],
@@ -160,7 +146,6 @@ class _UserProfileState extends State<UserProfile> {
                     fontSize: 30.0,
                     fontFamily: 'arial',
                     fontWeight: FontWeight.w900,
-
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -176,20 +161,22 @@ class _UserProfileState extends State<UserProfile> {
                   textAlign: TextAlign.center,
                 ),
 
-                //Bio/description (List)
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: ListTile(
-                    title: Text(
-                      'Bio Goes here',
-                      style: TextStyle(
-                        fontSize: 20.0,
+                //Bio/description
 
+                if (userData['bio'] != null &&
+                    userData['bio'].toString().trim().isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListTile(
+                      title: Text(
+                        userData['bio'],
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
 
                 //Moments, Followers, Following (Row)
 
@@ -212,7 +199,6 @@ class _UserProfileState extends State<UserProfile> {
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
-
                         ),
                       ),
                       Text(
@@ -250,24 +236,33 @@ class _UserProfileState extends State<UserProfile> {
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
-
                         ),
                       ),
                     ],
                   ),
                 ),
 
-
                 //Edit Profile Button  (not inserted yet)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     FirebaseAuth.instance.currentUser!.uid == widget.uid
-                        ? FollowButton(
-                            text: 'Edit Profile',
-                            backgroundColor: Colors.blue,
-                            textColor: Colors.white,
-                            borderColor: Colors.grey,
+                        ? ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditProfile(
+                                      userData:
+                                          userData.cast<String, dynamic>()),
+                                ),
+                              );
+                            },
+                            child: Text('Edit Profile'),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                              onPrimary: Colors.white,
+                            ),
                           )
                         : isFollowing
                             ? FollowButton(
@@ -309,95 +304,12 @@ class _UserProfileState extends State<UserProfile> {
 
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 20,
-                  child: Divider(
+                  child: const Divider(
                     color: Colors.black,
                     height: 20.0,
                     thickness: 1.0,
                   ),
                 ),
-
-                //Scrapbook, Tags (Row)
-                // Padding(
-                //   padding: const EdgeInsets.all(10.0),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //     children: [
-                //       TextButton(
-                //         style: TextButton.styleFrom(
-                //           shape: RoundedRectangleBorder(
-                //             side: BorderSide(
-                //               color: Colors.blueGrey,
-                //               width: pressedMemoriesTab ? 3 : 1,
-                //               style: BorderStyle.solid,
-                //             ),
-                //             borderRadius: const BorderRadius.all(
-                //               Radius.circular(5.0),
-                //             ),
-                //           ),
-                //         ),
-                //         onPressed: () {
-                //           setState(() {
-                //             pressedMemoriesTab = true;
-                //             pressedTagsTab = false;
-                //           });
-                //         },
-                //         child: Column(
-                //           children: [
-                //             Icon(
-                //               Icons.image_outlined,
-                //               size: 40.0,
-                //               color: Colors.teal[900],
-                //             ),
-                //             Text(
-                //               'Memories and Scrapbooks',
-                //               style: TextStyle(
-                //                 fontWeight: FontWeight.bold,
-                //                 fontSize: 15.0,
-                //                 color: Colors.teal[900],
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //       TextButton(
-                //         style: TextButton.styleFrom(
-                //           shape: RoundedRectangleBorder(
-                //             side: BorderSide(
-                //               color: Colors.blueGrey,
-                //               width: pressedTagsTab ? 3 : 1,
-                //               style: BorderStyle.solid,
-                //             ),
-                //             borderRadius:
-                //                 const BorderRadius.all(Radius.circular(5.0)),
-                //           ),
-                //         ),
-                //         onPressed: () {
-                //           setState(() {
-                //             pressedMemoriesTab = false;
-                //             pressedTagsTab = true;
-                //           });
-                //         },
-                //         child: Column(
-                //           children: [
-                //             Icon(
-                //               Icons.people_alt_outlined,
-                //               size: 35.0,
-                //               color: Colors.teal[900],
-                //             ),
-                //             Text(
-                //               'Tags',
-                //               style: TextStyle(
-                //                 fontWeight: FontWeight.bold,
-                //                 fontSize: 15.0,
-                //                 color: Colors.teal[900],
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 const Divider(),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0),
@@ -447,33 +359,5 @@ class _UserProfileState extends State<UserProfile> {
         ),
       );
     }
-
-    Column buildStatColumn(int num, String label) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            num.toString(),
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 4),
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        ],
-      );
-    }
   }
 }
-
