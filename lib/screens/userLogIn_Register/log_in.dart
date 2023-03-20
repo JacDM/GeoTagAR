@@ -11,7 +11,6 @@ import 'package:geotagar/services/auth.dart';
 import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
 import 'package:geotagar/screens/userLogIn_Register/register.dart';
-import 'package:geotagar/screens/homepage.dart';
 import 'package:geotagar/utils/rectangle_rounded_button.dart';
 
 import '../../core/constants/constants.dart';
