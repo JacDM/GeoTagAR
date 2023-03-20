@@ -40,6 +40,7 @@ class AuthServices {
       String? profilePic,
       Uint8List? file,
       String? gender,
+      String? bio,
       required String accountType}) async {
     String errorCheck = "Error signing up";
     try {
@@ -62,6 +63,7 @@ class AuthServices {
           name: name,
           gender: gender!,
           accountType: accountType,
+          bio: '',
         );
         final docUser = _users.doc(userCredential.user!.uid);
         await docUser
@@ -115,24 +117,6 @@ class AuthServices {
       return null;
     }
   }
-
-  // Future logIn({
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   try {
-  //     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-  //         email: email, password: password);
-  //     User? firebaseUser = userCredential.user;
-  //     return firebaseUser;
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'user-not-found') {
-  //       print('No user found for that email.');
-  //     } else if (e.code == 'wrong-password') {
-  //       print('Wrong password provided for that user.');
-  //     }
-  //   }
-  // }
 
   Future signOut(context) async {
     await _auth.signOut().then((value) => Navigator.of(context)
