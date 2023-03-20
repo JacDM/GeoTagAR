@@ -2,6 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geotagar/core/constants/constants.dart';
 import 'package:geotagar/layout/layout_select.dart';
 import 'package:geotagar/layout/mobile_layout.dart';
@@ -9,13 +11,12 @@ import 'package:geotagar/layout/web_layout.dart';
 import 'package:geotagar/main.dart';
 import 'package:geotagar/models/users.dart';
 import 'package:geotagar/providers/user_provider.dart';
-import 'package:image/image.dart' as Im;
+//import 'package:image/image.dart' as Im;
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:geotagar/services/firestore.dart';
 import 'package:geolocator/geolocator.dart';
-//import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../providers/user_provider.dart';
@@ -136,10 +137,16 @@ class _AddPostState extends State<AddPost> {
 
   getLocation() async {
     Position position = await _determinePosition();
-    //List<> placemarks = await Geolocator().placemarks
+    
+    //final coordinates = Coordinates(position.latitude, position.longitude);
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark placemark = placemarks.first;
+
+
     setState(() {
-      _locationCtrler.value = TextEditingValue(text: '$position');
+      _locationCtrler.value = TextEditingValue(text: '${placemark.administrativeArea}, ${placemark.country}');
     });
+    //${placemark.thoroughfare},
   }
 
   Color bgcol = Colors.black;
