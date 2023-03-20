@@ -206,74 +206,76 @@ class _AddPostState extends State<AddPost> {
             SizedBox(
               height: 0,
             ),
+            // Container(
+            //   alignment: Alignment.topCenter,
+            //   height: MediaQuery.of(context).size.height * 0.1,
+            //   width: MediaQuery.of(context).size.width * 0.9,
+            //   child: Row(
+            //     children: [
             Container(
-              alignment: Alignment.topCenter,
-              height: MediaQuery.of(context).size.height * 0.1,
+              //height: MediaQuery.of(context).size.height * 0.1,
+              alignment: Alignment.center,
               width: MediaQuery.of(context).size.width * 0.9,
-              child: Row(
-                children: [
-                  Container(
-                    //height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: TextFormField(
-                        mouseCursor: SystemMouseCursors.forbidden,
-                        enabled: false,
-                        controller: _locationCtrler,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: (bgcol == Colors.white)
-                                ? Colors.grey[300]
-                                : Color.fromARGB(255, 78, 78, 78),
-                            prefixIconColor: Colors.white70,
-                            hintText: 'Where was this picture taken?',
-                            hintStyle: TextStyle(
-                                color: (bgcol == Colors.white)
-                                    ? Colors.grey.shade700
-                                    : Color.fromARGB(255, 225, 222, 222),
-                                fontSize: 12)),
-                      ),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                  Container(
-                      height: MediaQuery.of(context).size.height * 0.063,
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      child: Tooltip(
-                        waitDuration: Duration(seconds: 2),
-                        showDuration: Duration(seconds: 1),
-                        message: 'Long press to clear location',
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            setState(() {
-                              _locationCtrler.value =
-                                  TextEditingValue(text: 'location!!');
-                            });
-                          },
-                          onLongPress: () {
-                            setState(() {
-                              _locationCtrler.clear();
-                            });
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Location cleared.'),
-                              duration: Duration(seconds: 4),
-                            ));
-                          },
-                          label: Text(
-                            'Use current location',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          icon: Icon(Icons.my_location_outlined),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromARGB(255, 7, 63, 108)),
-                        ),
-                      ))
-                ],
+              child: Flexible(
+                flex: 2,
+                fit: FlexFit.tight,
+                child: TextFormField(
+                  mouseCursor: SystemMouseCursors.forbidden,
+                  enabled: false,
+                  controller: _locationCtrler,
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  decoration: InputDecoration(
+                      
+                      filled: true,
+                      fillColor: (bgcol == Colors.white)
+                          ? Colors.grey[300]
+                          : Color.fromARGB(255, 78, 78, 78),
+                      prefixIconColor: Colors.white70,
+                      hintText: 'Where was this picture taken?',
+                      hintStyle: TextStyle(
+                          color: (bgcol == Colors.white)
+                              ? Colors.grey.shade700
+                              : Color.fromARGB(255, 225, 222, 222),
+                          fontSize: 12)),
+                ),
               ),
-            ), //for the location
+            ),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
+            Container(
+                alignment: Alignment.topLeft,
+                height: MediaQuery.of(context).size.height * 0.063,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Tooltip(
+                  waitDuration: Duration(seconds: 2),
+                  showDuration: Duration(seconds: 1),
+                  message: 'Long press to clear location',
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      getLocation();
+                    },
+                    onLongPress: () {
+                      setState(() {
+                        _locationCtrler.clear();
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Location cleared.'),
+                        duration: Duration(seconds: 4),
+                      ));
+                    },
+                    label: Text(
+                      'Use current location',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    icon: Icon(Icons.my_location_outlined),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 7, 63, 108)),
+                  ),
+                )),
+            //     ],
+            //   ),
+            // ),
+            //for the location
             SizedBox(
               height: 0,
             ),
