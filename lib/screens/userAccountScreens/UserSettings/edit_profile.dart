@@ -61,6 +61,7 @@ class _EditProfileState extends State<EditProfile> {
 
         if (_profilePictureFile != null) {
           profilePictureUrl =
+              // Need to update this to firebaseStorageMethods later
               await FireStoreMethods().uploadImageToFirebaseStorage(
             _profilePictureFile!,
             'profilePictures/${FirebaseAuth.instance.currentUser!.uid}',
@@ -68,6 +69,7 @@ class _EditProfileState extends State<EditProfile> {
         }
 
         if (_bannerFile != null) {
+          // Need to update this to firebaseStorageMethods later
           bannerUrl = await FireStoreMethods().uploadImageToFirebaseStorage(
             _bannerFile!,
             'banners/${FirebaseAuth.instance.currentUser!.uid}',
