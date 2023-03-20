@@ -1,181 +1,251 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../services/firestore.dart';
+import '../../../utils/text_Field.dart';
 import '../reusableWidgets/custom_button.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-const Color k_subHeadingsColor = Color(0xFF004D40);   //teal[900]
-TextStyle k_textstyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500, color: Colors.grey[600]);
-const Color k_fontTextColour = Colors.black;
-const k_username = '@DATTEBAYOOO';
-const k_name = 'Uzumaki Naruto';
-const k_bio = 'Naruto Uzumaki, a young ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village.';
-
-Widget k_verSpacing =  const SizedBox(height: 30.0,);
-
+Widget k_verSpacing = const SizedBox(
+  height: 30.0,
+);
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+  final Map<String, dynamic> userData;
+  const EditProfile({super.key, required this.userData});
 
   @override
   State<EditProfile> createState() => _EditProfileState();
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
+  bool isLoading = false;
 
+  File? _profilePictureFile;
+  File? _bannerFile;
+  String? _selectedGender;
+  String? _selectedAccountType;
+
+  Future<void> _pickProfilePicture() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profilePictureFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<void> _pickBanner() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _bannerFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<void> _saveProfile() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      try {
+        String? profilePictureUrl;
+        String? bannerUrl;
+
+        if (_profilePictureFile != null) {
+          profilePictureUrl =
+              await FireStoreMethods().uploadImageToFirebaseStorage(
+            _profilePictureFile!,
+            'profilePictures/${FirebaseAuth.instance.currentUser!.uid}',
+          );
+        }
+
+        if (_bannerFile != null) {
+          bannerUrl = await FireStoreMethods().uploadImageToFirebaseStorage(
+            _bannerFile!,
+            'banners/${FirebaseAuth.instance.currentUser!.uid}',
+          );
+        }
+
+        await FireStoreMethods().updateUserProfile(
+          uid: FirebaseAuth.instance.currentUser!.uid,
+          name: _nameController.text.trim(),
+          bio: _bioController.text.trim(),
+          profilePictureUrl: profilePictureUrl ?? widget.userData['profilePic'],
+          bannerUrl: bannerUrl ?? widget.userData['banner'],
+          accountType: _selectedAccountType.toString(),
+          gender: _selectedGender.toString(),
+        );
+        // Do the mount thing maybe
+        Navigator.pop(context);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error updating profile: $e')),
+        );
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.userData['name'];
+    _bioController.text = widget.userData['bio'];
+    _selectedGender = widget.userData['gender'];
+    _selectedAccountType = widget.userData['accountType'];
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
-      //appbar
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: const Text('EDIT PROFILE'),
+        backgroundColor: Colors.grey[850],
+        title:
+            const Text('Edit Profile', style: TextStyle(color: Colors.white)),
       ),
-
-
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children:  <Widget>[
-
-              //Edit profile and bg pic
-              Stack(
-                clipBehavior: Clip.none,
-                //alignment: Alignment.center,
-                children:  [
-
-                  //Background Picture
-                  const Image(
-                    image: NetworkImage(
-                        'https://images.squarespace-cdn.com/content/v1/5fe4caeadae61a2f19719512/1612119994906-GFOPIE3ZKXB79DS6A612/Naruto43.jpg'),
-                  ),
-
-                  Positioned(
-                    top: 10.0,
-                    right: 10.0,
-                    child: CircleAvatar(
-                      radius: MediaQuery.of(context).size.width * 0.05,
-                      backgroundColor: Colors.black,
-                      child: Icon(
-                        Icons.edit ,
-                        size: MediaQuery.of(context).size.width * 0.06,
-                        color: Colors.white,
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ReusableTextField(
+                        controller: _nameController,
+                        hintText: 'Name',
+                        obscure: false,
+                        textColor: Colors.white,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-
-                  ),
-
-                  //Profile Picture
-                  Positioned(
-                    bottom: -50.0,
-                    right: MediaQuery.of(context).size.width * 0.36,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children:  [
-                        CircleAvatar(
-                          radius: MediaQuery.of(context).size.width * 0.14,
-                          backgroundImage: NetworkImage('https://static.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png/revision/latest/scale-to-width-down/1920?cb=20150124180545'),
+                      const SizedBox(height: 10.0),
+                      ReusableTextField(
+                        controller: _bioController,
+                        hintText: 'Bio',
+                        obscure: false,
+                        textColor: Colors.white,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter a bio';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10.0),
+                      DropdownButtonFormField<String>(
+                        value: _selectedAccountType,
+                        decoration: const InputDecoration(
+                            labelText: 'Account Type',
+                            labelStyle: TextStyle(color: Colors.white)),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedAccountType = newValue;
+                          });
+                        },
+                        dropdownColor: const Color(
+                            0xFF121212), // Dark mode background color
+                        style: const TextStyle(
+                            color: Colors.white), // White text color
+                        items: <String>['General', 'Historian', 'Geocacher']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select your account type';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10.0),
+                      DropdownButtonFormField<String>(
+                        value: _selectedGender,
+                        decoration: const InputDecoration(
+                          labelText: 'Gender',
+                          labelStyle: TextStyle(color: Colors.white),
                         ),
-
-                        Positioned(
-                          bottom: -10.0,
-                          left: MediaQuery.of(context).size.width * 0.22,
-
-                          child: CircleAvatar(
-                            radius: MediaQuery.of(context).size.width * 0.05,
-                            backgroundColor: Colors.black,
-                            child: Icon(
-                              Icons.edit ,
-                              size: MediaQuery.of(context).size.width * 0.06,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-
-                    ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedGender = newValue;
+                          });
+                        },
+                        dropdownColor: const Color(
+                            0xFF121212), // Dark mode background color
+                        style: const TextStyle(
+                            color: Colors.white), // White text color
+                        items: <String>['Male', 'Female', 'Other']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,
+                                style: const TextStyle(color: Colors.white)),
+                          );
+                        }).toList(),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select your gender';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 30.0),
+                      ElevatedButton(
+                        onPressed: _pickProfilePicture,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[800]),
+                        child: const Text('Pick Profile Picture'),
+                      ),
+                      const SizedBox(height: 10.0),
+                      if (_profilePictureFile != null)
+                        Image.file(_profilePictureFile!,
+                            height: 100, width: 100, fit: BoxFit.cover),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: _pickBanner,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[800]),
+                        child: const Text('Pick Banner'),
+                      ),
+                      const SizedBox(height: 10.0),
+                      if (_bannerFile != null)
+                        Image.file(_bannerFile!,
+                            height: 100, width: 100, fit: BoxFit.cover),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: _saveProfile,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 35, 149, 255)),
+                        child: const Text('Save Profile'),
+                      ),
+                      const SizedBox(height: 10.0),
+                    ],
                   ),
-                ],
-              ),
-
-              k_verSpacing,
-
-
-              Padding(
-                padding: const EdgeInsets.all(35.0),
-                child: Column(
-                  children: [
-
-                    //Name
-                    Align(alignment: Alignment.centerLeft, child: Text('Name', style: k_textstyle)),
-                    TextField(
-                      textAlign: TextAlign.left,
-                      controller: TextEditingController(text: k_name),
-                      style: const TextStyle(fontSize: 20.0, height: 0.75),
-                      onSubmitted: null,
-                    ),
-                    k_verSpacing,
-
-
-                    //Username
-                    Align(alignment: Alignment.centerLeft, child: Text('Username', style: k_textstyle,)),
-                    const SizedBox( height: 7.0,),
-                    TextField(
-                      textAlign: TextAlign.left,
-                      controller: TextEditingController(text: k_username),
-                      style: const TextStyle(fontSize: 20.0, height: 0.75),
-                      onSubmitted: null,
-                    ),
-                    k_verSpacing,
-
-
-                    //Bio
-                    Align(alignment: Alignment.centerLeft, child: Text('Bio / Description', style: k_textstyle)),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      style: const TextStyle(fontSize: 20.0,),
-                      maxLines: 6,
-                      textAlign: TextAlign.left,
-                      maxLength: 500,
-                      controller: TextEditingController(text: k_bio),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        //labelText: 'Type here...',
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-
-
-                    RaisedGradientButton(
-                      gradient: const LinearGradient(
-                        colors: <Color>[Colors.deepPurple, Colors.purple],
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                      child: const Center(
-                        child: Text(
-                          'SUBMIT',
-                          style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
-
-
-                  ],
-                ),
-        ),
-      ),
-
-
+            ),
     );
   }
-
-
 }
