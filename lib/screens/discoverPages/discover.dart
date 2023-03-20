@@ -7,6 +7,8 @@ import 'package:geotagar/models/groups.dart';
 import 'package:geotagar/screens/discoverPages/group_page.dart';
 import 'package:geotagar/screens/discoverPages/create_group.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
+import '../../core/constants/constants.dart';
+import '../../utils/colors.dart';
 import '../../utils/text_field.dart';
 import 'group_services.dart';
 //import 'package:geotagar/services/auth.dart';
@@ -53,8 +55,45 @@ class _DiscoverPageState extends State<DiscoverPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: width > 600 ? Pallete.whiteColor : Pallete.blackColor,
+        appBar: width > 600
+            ? null
+            : AppBar(
+            backgroundColor: Color.fromARGB(255, 29, 29, 29),
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            toolbarHeight: 90,
+            title: Row(
+              children: [
+                Image.asset(
+                  Constants.logoPathBlack,
+                  height: 200.0,
+                  width: 200.0,
+
+                ),
+
+                const Text(
+                  'DISCOVER',
+                  style: TextStyle(fontSize: 34, ),
+                ),
+
+              ],
+            )
+
+
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(
+          //       Icons.chat_bubble_outline_rounded,
+          //       color: Pallete.whiteColor,
+          //     ),
+          //     onPressed: () {},
+          //   ),
+          // ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(
@@ -68,13 +107,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: const Text(
-                'Discover',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-              ),
-            ),
+
             SizedBox(height: 16),
             Container(
               padding: EdgeInsets.fromLTRB(16, 0, 16, 0),

@@ -18,6 +18,7 @@ import 'package:firebase_core/firebase_core.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../core/constants/constants.dart';
 
 class ARState extends StatefulWidget {
   ARState({Key? key}) : super(key: key);
@@ -81,10 +82,32 @@ class _ARStateState extends State<ARState> {
     //         Text("Initializing Firebase")
     //       ]))));
     // }
-
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Cloud Anchors'),
+        appBar: width > 600
+            ? null
+            : AppBar(
+            backgroundColor: Color.fromARGB(255, 29, 29, 29),
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            toolbarHeight: 90,
+            title: Row(
+              children: [
+                Image.asset(
+                  Constants.logoPathBlack,
+                  height: 200.0,
+                  width: 200.0,
+
+                ),
+
+                const Text(
+                  'CLOUD ANCHORS',
+                  style: TextStyle(fontSize: 20, ),
+                ),
+
+              ],
+            )
+
         ),
         body: Container(
             child: Stack(children: [

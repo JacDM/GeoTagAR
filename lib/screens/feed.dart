@@ -37,7 +37,7 @@ class _FeedState extends State<Feed> {
                   ),
 
                   const Text(
-                            'YOUR FEED',
+                            'FEED',
                             style: TextStyle(fontSize: 34, ),
                           ),
 
