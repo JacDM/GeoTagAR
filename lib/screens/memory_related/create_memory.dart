@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/screens/homepage.dart';
 
 import 'package:geotagar/screens/memory_related/post_memory.dart';
+import 'package:geotagar/utils/methods.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cross_file/cross_file.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -67,45 +68,68 @@ class _CreateMemoryState extends State<CreateMemory> {
     }
   }
 
-  _cropImage(){
+  _cropImage(XFile file) async {
+    File tempFile = File(file.path);
 
+    final croppedImg = await ImageCropper().cropImage(
+      sourcePath: tempFile.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio16x9
+
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop/Resize',
+          toolbarColor: Colors.black,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false
+        ),
+        IOSUiSettings(title: 'Crop/Resize'),
+      ]
+    );
+
+    if (croppedImg != null){
+      imageCache.clear();
+      setState(() {
+        imagefile = XFile(croppedImg.path);
+      });
+    }
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => AddPost(
+                  image: imagefile!,
+                )));    
+
+    //return XFile(tempFile.path);
   }
 
   Future _takePicture(BuildContext context) async {
     if (_cam.value.isInitialized) {
       XFile picFiletemp = await _cam.takePicture();
-      setState(() {
-        imagefile = picFiletemp;
-      });
+      if (picFiletemp != null) {
+        _cropImage(picFiletemp);
+      }
+      // setState(() {
+      //   imagefile = picFiletemp;
+      // });
     }
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (builder) => AddPost(
-                  image: imagefile!,
-                )));
-  }  
+
+  }
 
   _openGallery() async {
-    //Navigator.pop(context);
-
     imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    // .then(
-    //   (value) {
-    //     if (value != null) {
-    //       _cropImage(File(value.path));
-    //     }
-    //   },
-    // );
-    //Image imageUpload = Image(image: XFileImage(imagefile!));
-    //setState(() {});
-    //if (!context.mounted) return;
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (builder) => AddPost(
-                  image: imagefile!,
-                )));
+
+    if (imagefile != null) {
+      _cropImage(imagefile!);
+
+    } else {
+      showSnackBar(context, 'No image selected!');
+    }
   }
 
   Widget getBody() {

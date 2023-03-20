@@ -3,6 +3,9 @@ import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geotagar/core/constants/constants.dart';
+import 'package:geotagar/layout/layout_select.dart';
+import 'package:geotagar/layout/mobile_layout.dart';
+import 'package:geotagar/layout/web_layout.dart';
 import 'package:geotagar/main.dart';
 import 'package:geotagar/models/users.dart';
 import 'package:geotagar/providers/user_provider.dart';
@@ -12,16 +15,19 @@ import 'package:uuid/uuid.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:geotagar/services/firestore.dart';
 import 'package:geolocator/geolocator.dart';
+//import 'package:geoflutterfire/geoflutterfire.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/methods.dart';
+import 'package:geotagar/screens/map.dart';
 
 class AddPost extends StatefulWidget {
-  const AddPost(
-      {super.key,
-      //required this.cameraController,
-      //this.currentUser
-      required this.image});
+  const AddPost({
+    super.key,
+    //required this.cameraController,
+    //this.currentUser
+    required this.image,
+  });
   //final CameraController cameraController;
   //final currentUser;
   final XFile image;
@@ -43,16 +49,8 @@ class _AddPostState extends State<AddPost> {
     super.dispose();
   }
 
-  compressImage(
-      //XFile img
-      ) async {
-    //this will convert XFile image to Uint8list
-    //final tempDir = await getTemporaryDirectory();
-    //final path = tempDir.path;
+  compressImage() async {
     Uint8List compressedImg = await widget.image.readAsBytes();
-    // Im.Image imageFile = Im.decodeImage(file.readAsBytesSync());
-    // final compressedImageFile = File('$path/img_$postId.jpg');
-    // final compressedImg = await img.read
     setState(() {
       file = compressedImg;
     });
@@ -94,9 +92,54 @@ class _AddPostState extends State<AddPost> {
     });
     await compressImage();
     await uploadImage(uid, username, profImage);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (builder) => LayoutBuilder(builder: (context, constraints) {
+                if (constraints.maxWidth > 600) {
+                  return WebScreenLayout();
+                }
+                return MobileScreenLayout();
+              })),
+    );
+
     // setState(() {
     //   isUploading = false;
     // });
+  }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium);
+  }
+
+  getLocation() async {
+    Position position = await _determinePosition();
+    //List<> placemarks = await Geolocator().placemarks
   }
 
   @override
@@ -122,7 +165,8 @@ class _AddPostState extends State<AddPost> {
       backgroundColor: Colors.white,
       body: SafeArea(
         minimum: const EdgeInsets.all(4),
-        child: Column(children: [
+        child: SingleChildScrollView(
+            child: Column(children: [
           //linear indicator
           isUploading
               ? const LinearProgressIndicator()
@@ -140,7 +184,7 @@ class _AddPostState extends State<AddPost> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Center(
                     child: AspectRatio(
-                      aspectRatio: 1,
+                      aspectRatio: 4.5 / 3,
                       child: Container(
                         foregroundDecoration: BoxDecoration(
                             border: Border.all(color: Colors.black, width: 1),
@@ -240,7 +284,7 @@ class _AddPostState extends State<AddPost> {
             height: 0,
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.125,
+            height: MediaQuery.of(context).size.height * 0.15,
             width: MediaQuery.of(context).size.width * 0.9, //
             child: Row(children: [
               Container(
@@ -279,7 +323,7 @@ class _AddPostState extends State<AddPost> {
           SizedBox(
             height: 0,
           )
-        ]),
+        ])),
       ),
       //the "post" button
       floatingActionButton: Padding(
@@ -289,11 +333,13 @@ class _AddPostState extends State<AddPost> {
           child: ElevatedButton(
             onPressed: isUploading
                 ? null
-                : () => handleSubmit(
+                : () {
+                    handleSubmit(
                       user.uid,
                       user.username,
                       user.profilePic,
-                    ), //() => handleSubmit(),
+                    );
+                  }, //() => handleSubmit(),
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 16, 80, 3),
               disabledBackgroundColor: Colors.grey[600],
