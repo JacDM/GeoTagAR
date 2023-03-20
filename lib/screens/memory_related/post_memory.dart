@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:geotagar/services/firestore.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/methods.dart';
@@ -34,6 +35,7 @@ class _AddPostState extends State<AddPost> {
   final TextEditingController _locationCtrler = TextEditingController();
   String postId = Uuid().v4();
   Uint8List? file;
+
   @override
   void dispose() {
     _descCtrler.dispose();
@@ -169,17 +171,17 @@ class _AddPostState extends State<AddPost> {
             width: MediaQuery.of(context).size.width * 0.9,
             child: Row(
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.08,
-                  child: Flexible(
-                    flex: 2,
-                    fit: FlexFit.loose,
-                    child: Container(),
-                  ),
-                ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width * 0.08,
+                //   child: Flexible(
+                //     flex: 2,
+                //     fit: FlexFit.loose,
+                //     child: Container(),
+                //   ),
+                // ),
                 Container(
                   //height: MediaQuery.of(context).size.height * 0.1,
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: Flexible(
                     flex: 2,
                     fit: FlexFit.tight,
@@ -199,8 +201,8 @@ class _AddPostState extends State<AddPost> {
                 ),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                 Container(
-                    //height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     child: Tooltip(
                       waitDuration: Duration(seconds: 2),
                       showDuration: Duration(seconds: 1),
@@ -259,7 +261,7 @@ class _AddPostState extends State<AddPost> {
                 flex: 2,
                 fit: FlexFit.tight,
                 child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                   controller: _descCtrler,
                   decoration: InputDecoration(
                       prefixIcon: Icon(
@@ -293,7 +295,7 @@ class _AddPostState extends State<AddPost> {
                       user.profilePic,
                     ), //() => handleSubmit(),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepOrange.shade900,
+              backgroundColor: Color.fromARGB(255, 16, 80, 3),
               disabledBackgroundColor: Colors.grey[600],
               disabledMouseCursor: SystemMouseCursors.forbidden,
               minimumSize: Size(MediaQuery.of(context).size.width * 0.135,

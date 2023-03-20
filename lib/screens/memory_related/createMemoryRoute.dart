@@ -5,9 +5,12 @@ import 'package:geotagar/screens/memory_related/create_memory.dart';
 import 'package:geotagar/screens/memory_related/post_memory.dart';
 import 'package:image_picker/image_picker.dart';
 
+late List<CameraDescription> _cams;
+
 class CMRoute extends StatefulWidget {
-  const CMRoute({super.key, 
-  //required this.currentUser
+  const CMRoute({
+    super.key,
+    //required this.currentUser
   });
 
   //final User currentUser;
@@ -17,40 +20,37 @@ class CMRoute extends StatefulWidget {
 }
 
 class _CMRouteState extends State<CMRoute> {
-  late List<CameraDescription> _cams;
   static XFile? imagefile;
 
   @override
   void initState() {
     super.initState();
     _setupCams();
-  }
+  }  
 
-  Future<void> _setupCams() async {
+  Future<List<CameraDescription>> _setupCams() async {
     try {
       _cams = await availableCameras();
     } on CameraException catch (_) {
       debugPrint('Camera exception: $_');
     }
-  }
-
-  _openGallery() async {
-    //Navigator.pop(context);
-
-    imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    //Image imageUpload = Image(image: XFileImage(imagefile!));
-    setState(() {});
-    //if (!context.mounted) return;
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (builder) => AddPost(
-                  image: imagefile!,
-                )));
+    return _cams;
   }
 
   @override
   Widget build(BuildContext context) {
-    return _openGallery(); //CreateMemory(cameras: _cams);
+    //return _setupCams();//_openGallery(); //CreateMemory(cameras: _cams);
+    return FutureBuilder(
+      future: _setupCams(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            final cams = snapshot.data;
+            return CreateMemory(cameras: cams);
+          } 
+        }
+        return Text('error has occured');
+      },
+    );
   }
 }

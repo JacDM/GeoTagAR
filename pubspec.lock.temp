@@ -64,28 +64,7 @@ packages:
       sha256: "6cfb5af12253eaf2b368f07bacc5a80d1301a071c73360d746b7f2e32d762c66"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
-  cached_network_image:
-    dependency: "direct main"
-    description:
-      name: cached_network_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.3"
-  cached_network_image_platform_interface:
-    dependency: transitive
-    description:
-      name: cached_network_image_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
-  cached_network_image_web:
-    dependency: transitive
-    description:
-      name: cached_network_image_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
+    version: "2.1.1"
   camera:
     dependency: "direct main"
     description:
@@ -363,20 +342,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.2"
-  flutter_blurhash:
-    dependency: transitive
-    description:
-      name: flutter_blurhash
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0"
-  flutter_cache_manager:
-    dependency: transitive
-    description:
-      name: flutter_cache_manager
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.3.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -595,30 +560,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
-  image_cropper:
+  image_gallery_saver:
     dependency: "direct main"
     description:
-      name: image_cropper
-      sha256: "85324928ee8a8be35a529446435ca53067865b9353c8681983472eeec66d780f"
+      name: image_gallery_saver
+      sha256: be812580c7a320d3bf583af89cac6b376f170d48000aca75215a73285a3223a0
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
-  image_cropper_for_web:
-    dependency: transitive
-    description:
-      name: image_cropper_for_web
-      sha256: "09e93a8ec0435adcaa23622ac090442872f18145d70b9ff605ffedcf97d56255"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.3"
-  image_cropper_platform_interface:
-    dependency: transitive
-    description:
-      name: image_cropper_platform_interface
-      sha256: "62349e3aab63873ea9b9ab9f69d036ab8a0d74b3004beec4303981386cb9273f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.3"
+    version: "1.7.1"
   image_picker:
     dependency: "direct main"
     description:
@@ -747,13 +696,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  octo_image:
-    dependency: transitive
-    description:
-      name: octo_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   path:
     dependency: transitive
     description:
@@ -826,13 +768,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.5"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.11.1"
   permission_handler:
     dependency: transitive
     description:
@@ -1045,21 +980,7 @@ packages:
       sha256: dd904f795d4b4f3b870833847c461801f6750a9fa8e61ea5ac53f9422b31f250
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.0"
-  sqflite:
-    dependency: transitive
-    description:
-      name: sqflite
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.6"
-  sqflite_common:
-    dependency: transitive
-    description:
-      name: sqflite_common
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.4.3"
+    version: "1.9.1"
   stack_trace:
     dependency: transitive
     description:
@@ -1099,14 +1020,7 @@ packages:
       sha256: "556692adab6cfa87322a115640c11f13cb77b3f076ddcc5d6ae3c20242bedcde"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.1"
+    version: "1.2.0"
   term_glyph:
     dependency: transitive
     description:
