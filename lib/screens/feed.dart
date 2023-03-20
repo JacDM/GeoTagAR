@@ -23,24 +23,37 @@ class _FeedState extends State<Feed> {
       appBar: width > 600
           ? null
           : AppBar(
-              backgroundColor: Pallete.blackColor,
+              backgroundColor: Color.fromARGB(255, 29, 29, 29),
               automaticallyImplyLeading: false,
               centerTitle: true,
               toolbarHeight: 90,
-              title: Image.asset(
-                Constants.logoPathBlack,
-                height: 270.0,
-                width: 270.0,
-              ),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.chat_bubble_outline_rounded,
-                    color: Pallete.whiteColor,
+              title: Row(
+                children: [
+                  Image.asset(
+                    Constants.logoPathBlack,
+                    height: 200.0,
+                    width: 200.0,
+
                   ),
-                  onPressed: () {},
-                ),
-              ],
+
+                  const Text(
+                            'FEED',
+                            style: TextStyle(fontSize: 34, ),
+                          ),
+
+                ],
+              )
+
+
+              // actions: [
+              //   IconButton(
+              //     icon: const Icon(
+              //       Icons.chat_bubble_outline_rounded,
+              //       color: Pallete.whiteColor,
+              //     ),
+              //     onPressed: () {},
+              //   ),
+              // ],
             ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
@@ -58,8 +71,25 @@ class _FeedState extends State<Feed> {
                 horizontal: width > 600 ? width * 0.3 : 0,
                 vertical: width > 600 ? 15 : 0,
               ),
-              child: PostCard(
-                snap: snapshot.data!.docs[index].data(),
+
+              child: Stack (
+                children: [
+                  Container(
+                    margin:
+                    const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.grey.shade200,
+                    ),
+
+                    // Try fixing the length of the rectangle box and the circle icon which is exceeding its limits
+                    child: PostCard(
+                      snap: snapshot.data!.docs[index].data(),
+                    ),
+                  ),
+                ],
               ),
             ),
           );

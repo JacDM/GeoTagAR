@@ -53,7 +53,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: (_page == 0) ? Pallete.whiteColor : Pallete.whiteColor,
+              color: (_page == 0) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
             ),
             label: '',
             backgroundColor: Pallete.blackColor,
@@ -61,7 +61,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.location_pin,
-              color: (_page == 1) ? Pallete.whiteColor : Pallete.whiteColor,
+              color: (_page == 1) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
             ),
             label: '',
             backgroundColor: Pallete.blackColor,
@@ -69,26 +69,26 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.circle_outlined,
-                color: (_page == 2) ? Pallete.whiteColor : Pallete.whiteColor,
+                color: (_page == 2) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
                 size: 55,
               ),
               label: '',
-              backgroundColor: Pallete.blackColor),
+              backgroundColor: Color.fromARGB(255, 29, 29, 29)),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.group,
-              color: (_page == 3) ? Pallete.whiteColor : Pallete.whiteColor,
+              color: (_page == 3) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
             ),
             label: '',
-            backgroundColor: Pallete.blackColor,
+            backgroundColor: Color.fromARGB(255, 29, 29, 29),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
-              color: (_page == 4) ? Pallete.whiteColor : Pallete.whiteColor,
+              color: (_page == 4) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
             ),
             label: '',
-            backgroundColor: Pallete.blackColor,
+            backgroundColor: Color.fromARGB(255, 29, 29, 29),
           ),
         ],
         onTap: navigationTapped,

@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../core/constants/constants.dart';
 
 // ignore: camel_case_types
 class scrapBookLocations extends StatefulWidget {
@@ -36,23 +37,50 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        toolbarHeight: 90,
-        elevation: 3,
-        //used to remove the back button from appBar
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.black,
-        title: const Text(
-          "Near You",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.w900,
-            //fontFamily: 'arial',
-          ),
-        ),
+      // appBar: AppBar(
+      //   centerTitle: false,
+      //   toolbarHeight: 90,
+      //   elevation: 3,
+      //   //used to remove the back button from appBar
+      //   automaticallyImplyLeading: false,
+      //   backgroundColor: Colors.black,
+      //   title: const Text(
+      //     "Near You",
+      //     style: TextStyle(
+      //       color: Colors.white,
+      //       fontSize: 30,
+      //       fontWeight: FontWeight.w900,
+      //       //fontFamily: 'arial',
+      //     ),
+      //   ),
+      // ),
+
+      appBar: width > 600
+          ? null
+          : AppBar(
+          backgroundColor: Color.fromARGB(255, 29, 29, 29),
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          toolbarHeight: 90,
+          title: Row(
+            children: [
+              Image.asset(
+                Constants.logoPathBlack,
+                height: 200.0,
+                width: 200.0,
+
+              ),
+
+              const Text(
+                'NEAR YOU',
+                style: TextStyle(fontSize: 34, ),
+              ),
+
+            ],
+          )
+
       ),
       body: GoogleMap(
         initialCameraPosition: const CameraPosition(

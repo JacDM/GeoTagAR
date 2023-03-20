@@ -31,6 +31,7 @@ environment:
 dependencies:
   age_calculator: ^1.0.0
   ar_flutter_plugin: ^0.7.3
+  cached_network_image: ^3.2.3
   camera: ^0.10.1
   cloud_firestore: ^2.5.3
   cross_file_image: ^1.0.0

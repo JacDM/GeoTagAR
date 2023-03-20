@@ -7,13 +7,12 @@ import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/homepage.dart';
 
 import 'package:geotagar/screens/memory_related/post_memory.dart';
 import 'package:geotagar/utils/methods.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cross_file/cross_file.dart';
-import 'package:image_cropper/image_cropper.dart';
+//import 'package:image_cropper/image_cropper.dart';
 
 //import 'package:anim_search_bar/anim_search_bar.dart';
 

@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:geotagar/models/posts.dart';
 import 'package:geotagar/services/storage.dart';
 import 'package:uuid/uuid.dart';
@@ -121,6 +123,42 @@ class FireStoreMethods {
           'following': FieldValue.arrayUnion([followId])
         });
       }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<String> uploadImageToFirebaseStorage(File image, String path) async {
+    try {
+      Reference storageRef = FirebaseStorage.instance.ref().child(path);
+      UploadTask uploadTask = storageRef.putFile(image);
+      await uploadTask.whenComplete(() {});
+      String downloadUrl = await storageRef.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      print(e.toString());
+      return '';
+    }
+  }
+
+  Future<void> updateUserProfile({
+    required String uid,
+    required String name,
+    required String bio,
+    required String profilePictureUrl,
+    required String bannerUrl,
+    required String accountType,
+    required String gender,
+  }) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'name': name,
+        'bio': bio,
+        'profilePic': profilePictureUrl,
+        'banner': bannerUrl,
+        'accountType': accountType,
+        'gender': gender,
+      });
     } catch (e) {
       print(e.toString());
     }
