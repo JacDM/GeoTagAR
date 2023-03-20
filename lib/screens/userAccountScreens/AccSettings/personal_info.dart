@@ -6,8 +6,8 @@ const Color k_bgColor = Colors.white;
 const k_subHeadingTextStyle =
     TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold);
 const TextStyle k_textStyle = TextStyle(
-    fontSize: 22.0, fontWeight: FontWeight.w600, color: Colors.blueGrey);
-const k_valtextStyle = TextStyle(fontSize: 20.0);
+    fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.blueGrey);
+const k_valtextStyle = TextStyle(fontSize: 16.0);
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key});

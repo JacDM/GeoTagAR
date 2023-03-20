@@ -23,14 +23,28 @@ class _FeedState extends State<Feed> {
       appBar: width > 600
           ? null
           : AppBar(
-              backgroundColor: Pallete.blackColor,
+              backgroundColor: Color.fromARGB(255, 29, 29, 29),
               automaticallyImplyLeading: false,
               centerTitle: true,
               toolbarHeight: 90,
-              title: const Text(
-                        'THE FEED',
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                      ),
+              title: Row(
+                children: [
+                  Image.asset(
+                    Constants.logoPathBlack,
+                    height: 200.0,
+                    width: 200.0,
+
+                  ),
+
+                  const Text(
+                            'YOUR FEED',
+                            style: TextStyle(fontSize: 34, ),
+                          ),
+
+                ],
+              )
+
+
               // actions: [
               //   IconButton(
               //     icon: const Icon(
