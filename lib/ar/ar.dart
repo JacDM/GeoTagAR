@@ -18,13 +18,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 
-class CloudAnchorWidget extends StatefulWidget {
-  CloudAnchorWidget({Key? key}) : super(key: key);
+class ARState extends StatefulWidget {
+  ARState({Key? key}) : super(key: key);
   @override
-  _CloudAnchorWidgetState createState() => _CloudAnchorWidgetState();
+  _ARStateState createState() => _ARStateState();
 }
 
-class _CloudAnchorWidgetState extends State<CloudAnchorWidget> {
+class _ARStateState extends State<ARState> {
   // Firebase stuff
   bool _initialized = false;
   bool _error = false;
@@ -444,7 +444,7 @@ class FirebaseManager {
         geo!.point(latitude: location.latitude, longitude: location.longitude);
 
     Stream<List<DocumentSnapshot>> stream = geo!
-        .collection(collectionRef: anchorCollection!)
+        .collection(collectionRef: anchorCollection! as Query<Map<String, dynamic>>)
         .within(center: center, radius: radius, field: 'position');
 
     stream.listen((List<DocumentSnapshot> documentList) {

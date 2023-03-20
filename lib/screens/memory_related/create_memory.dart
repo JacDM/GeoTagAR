@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import 'package:geotagar/screens/memory_related/post_memory.dart';
 import 'package:geotagar/utils/methods.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cross_file/cross_file.dart';
 //import 'package:image_cropper/image_cropper.dart';
