@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 
-const Color k_fontTextColour = Colors.black;
-const Color k_bgColor = Colors.white;
+const Color k_fontTextColour = Colors.white;
+const Color k_bgColor = Colors.black;
 const k_subHeadingTextStyle =
-    TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold);
+    TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: Colors.white);
 const TextStyle k_textStyle = TextStyle(
     fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.blueGrey);
-const k_valtextStyle = TextStyle(fontSize: 16.0);
+const k_valtextStyle = TextStyle(fontSize: 16.0, color: Colors.white);
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key});
@@ -71,7 +71,7 @@ class _PersonalInfo extends State<PersonalInfo> {
                           Expanded(
                             child: Container(
                               margin: const EdgeInsets.all(10.0),
-                              color: Colors.white,
+                              color: Colors.black,
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -98,7 +98,7 @@ class _PersonalInfo extends State<PersonalInfo> {
                             flex: 2,
                             child: Container(
                               margin: const EdgeInsets.all(10.0),
-                              color: Colors.white,
+                              color: Colors.black,
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -154,7 +154,7 @@ class _PersonalInfo extends State<PersonalInfo> {
                           Expanded(
                             child: Container(
                               margin: const EdgeInsets.all(10.0),
-                              color: Colors.white,
+                              color: Colors.black,
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -178,7 +178,7 @@ class _PersonalInfo extends State<PersonalInfo> {
                             flex: 2,
                             child: Container(
                               margin: const EdgeInsets.all(10.0),
-                              color: Colors.white,
+                              color: Colors.black,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
