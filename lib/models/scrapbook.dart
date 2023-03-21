@@ -4,15 +4,15 @@ import 'package:geotagar/models/posts.dart';
 class Scrapbook {
   final String scrapbookId;
   final String scrapbookName;
-  final String scrapbookBanner;
+  final String scrapbookThumbnail;
   final String scrapbookDescription;
   final dynamic location;
-  final List<Post> posts;
+  final List<Post> postId;
   Scrapbook({
     required this.scrapbookId,
     required this.scrapbookName,
-    required this.scrapbookBanner,
-    required this.posts,
+    required this.scrapbookThumbnail,
+    required this.postId,
     required this.scrapbookDescription,
     required this.location,
   });
@@ -23,34 +23,34 @@ class Scrapbook {
     return Scrapbook(
         scrapbookId: snapshot["scrapbookId"],
         scrapbookName: snapshot["scrapbookName"],
-        scrapbookBanner: snapshot["scrapbookBanner"],
+        scrapbookThumbnail: snapshot["scrapbookThumbnail"],
         scrapbookDescription: snapshot["scrapbookpDescription"],
-        posts: snapshot["posts"],
-        location: snapshot["location"]); 
+        postId: snapshot["postId"],
+        location: snapshot["location"]);
   }
 
   Map<String, dynamic> toJson() => {
         "scrapbookId": scrapbookId,
         "scrapbookName": scrapbookName,
-        "scrapbookBanner": scrapbookBanner,
+        "scrapbookThumbnail": scrapbookThumbnail,
         "scrapbookDescription": scrapbookDescription,
-        "posts": posts,
+        "postId": postId,
       };
 
   // Scrapbook copyWith({
   //   String? groupId,
   //   String? groupName,
-  //   String? groupBanner,
+  //   String? groupthumbnail,
   //   String? groupPicture,
-  //   List<String>? posts,
+  //   List<String>? postId,
   //   List<String>? mods,
   // }) {
   //   return Scrapbook(
   //     groupId: groupId ?? this.groupId,
   //     groupName: groupName ?? this.groupName,
-  //     groupBanner: groupBanner ?? this.groupBanner,
+  //     groupthumbnail: groupthumbnail ?? this.groupthumbnail,
   //     groupPicture: groupPicture ?? this.groupPicture,
-  //     posts: posts ?? this.posts,
+  //     postId: postId ?? this.postId,
   //     mods: mods ?? this.mods,
   //   );
   // }
@@ -59,9 +59,10 @@ class Scrapbook {
     return {
       'scrapbookId': scrapbookId,
       'scrapbookName': scrapbookName,
-      'scrapbookBanner': scrapbookBanner,
-      'posts': posts,
+      'scrapbookThumbnail': scrapbookThumbnail,
+      'postId': postId,
       'scrapbookDescription': scrapbookDescription,
+      'location': location,
     };
   }
 
@@ -69,9 +70,10 @@ class Scrapbook {
     return Scrapbook(
       scrapbookId: map['id'] ?? '',
       scrapbookName: map['name'] ?? '',
-      scrapbookBanner: map['banner'] ?? '',
+      scrapbookThumbnail: map['thumbnail'] ?? '',
       scrapbookDescription: map['description'] ?? '',
-      posts: List<Post>.from(map['posts']),
-      location: map['location'],);
+      postId: List<Post>.from(map['postId']),
+      location: map['location'],
+    );
   }
 }
