@@ -22,6 +22,37 @@ class CommentsScreen extends StatefulWidget {
 class _CommentsScreenState extends State<CommentsScreen> {
   final TextEditingController commentEditingController =
       TextEditingController();
+  late Map<String, dynamic> userData;
+
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      var userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      userData = userSnap.data()!;
+      setState(() {});
+    } catch (e) {
+      showSnackBar(
+        context,
+        e.toString(),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   void postComment(String uid, String name, String profilePic) async {
     try {
@@ -49,7 +80,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = Provider.of<UserProvider>(context).getUser;
+    //final UserModel user = Provider.of<UserProvider>(context).getUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +127,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(user.profilePic),
+                backgroundImage: NetworkImage(userData['profilePic']),
                 radius: 18,
               ),
               Expanded(
@@ -109,7 +140,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     cursorColor: Colors.white,
                     controller: commentEditingController,
                     decoration: InputDecoration(
-                      hintText: 'Comment as ${user.username}',
+                      hintText: 'Comment as ${userData['username']}',
                       //border: InputBorder.,
                       hintStyle: const TextStyle(
                         color: Colors.white,
@@ -121,11 +152,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 ),
               ),
               InkWell(
-                onTap: () => postComment(
-                  user.uid,
-                  user.username,
-                  user.profilePic,
-                ),
+                onTap: () => postComment(userData['uid'], userData['username'],
+                    userData['profilePic']),
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
