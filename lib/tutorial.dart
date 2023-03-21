@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/userAccountScreens/reusableWidgets/custom_button.dart';
 import 'package:geotagar/utils/tutorialModel.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -58,19 +59,27 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 16, right: 16),
-            child: _buildImage('flutter.png', 100),
+            child: _buildImage('images/UpscaledLogoWhite.png', 150),
           ),
         ),
       ),
       globalFooter: SizedBox(
         width: double.infinity,
         height: 60,
-        child: ElevatedButton(
-          child: const Text(
-            'Skip App Tour',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+        child: RaisedGradientButton(
+          gradient: const LinearGradient(
+            colors: <Color>[Colors.deepPurple, Colors.purple],
           ),
           onPressed: () => _onIntroEnd(context),
+          child: const Center(
+            child: Text(
+              'Skip App Tour',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
         ),
       ),
       pages: [
@@ -79,7 +88,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           title: "Welcome to GeoTagAR",
           body:
           "Capture, share and relive memories as you go.",
-          image: _buildImage('images/earth.png'),
+          image: _buildImage('images/earth.png', 275),
           decoration: pageDecoration,
         ),
         PageViewModel(
@@ -129,19 +138,34 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           title: "Let's bring the world together.",
           body: "Create an Account to get started!",
           image: _buildImage('getStarted.jpg'),
-          footer: ElevatedButton(
-            onPressed: () {
-              introKey.currentState?.animateScroll(0);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.lightBlue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
+          // footer: ElevatedButton(
+          //   onPressed: () {
+          //     introKey.currentState?.animateScroll(0);
+          //   },
+          //   style: ElevatedButton.styleFrom(
+          //     backgroundColor: Colors.lightBlue,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(8.0),
+          //     ),
+          //   ),
+          //   child: const Text(
+          //     'Get Started!',
+          //     style: TextStyle(color: Colors.white),
+          //   ),
+          // ),
+          footer: RaisedGradientButton(
+            gradient: const LinearGradient(
+              colors: <Color>[Colors.deepPurple, Colors.deepPurpleAccent],
             ),
-            child: const Text(
-              'Get Started!',
-              style: TextStyle(color: Colors.white),
+            onPressed: () => introKey.currentState?.animateScroll(0),
+            child: const Center(
+              child: Text(
+                'GET STARTED!',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500),
+              ),
             ),
           ),
           decoration: pageDecoration.copyWith(
