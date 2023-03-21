@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/reusable_container.dart';
 
 Widget k_divider = Divider(
-  color: Colors.grey[900],
+  color: Colors.grey,
   height: 0.5,
   thickness: 0.5,
   endIndent: 20.0,
   indent: 20.0,
 );
-const k_textStyle = TextStyle(fontSize: 20.0);
+const k_textStyle = TextStyle(fontSize: 20.0, color: Colors.white);
 const k_selectedtextStyle =
-    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
+    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.blue);
 const k_containerColor = Color(0xFFBDBDBD); //grey[400]
 
 
@@ -68,7 +68,7 @@ class _AccVisibility extends State<AccVisibility> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .37,
                   child: ReusableContainer(
-                    colour: k_containerColor, //grey[400]
+                    colour: Colors.black, //grey[400]
                     containerChild: Column(
                       //mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
