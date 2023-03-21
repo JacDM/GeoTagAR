@@ -78,47 +78,55 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           title: "Welcome to GeoTagAR",
           body:
               "Capture, share and relive memories as you go.",
-          image: _buildImage('assets/images/earth.png'),
+          image: _buildImage('images/earth.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Discover",
           body:
               "Create and join groups \n Connect with friends and make new ones",
-          image: _buildImage('img2.jpg'),
+          image: _buildImage('discover1.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Tag the world",
           body:
               "Share your journeys and experiences as you travel. \n Capture memories and add them to your personal scrapbook or scrapbooks of other users.",
-          image: _buildImage('img3.jpg'),
+          image: _buildImage('tag.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Feed",
           body:
           "Like, Comment and annotate on posts.",
-          image: _buildImage('img3.jpg'),
+          image: _buildImage('likeComment.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "AR Features",
           body:
-              "Place an AR object to host your post and Geotag them to the map. ",
-          image: _buildFullscreenImage(),
-          decoration: pageDecoration.copyWith(
-            contentMargin: const EdgeInsets.symmetric(horizontal: 16),
-            fullScreen: true,
-            bodyFlex: 2,
-            imageFlex: 3,
-            safeArea: 100,
-          ),
+          "Place an AR object to host your post and Geotag them to the map. ",
+          image: _buildImage('AR1.jpg'),
+          decoration: pageDecoration,
         ),
+
+        // PageViewModel(
+        //   title: "AR Features",
+        //   body:
+        //       "Place an AR object to host your post and Geotag them to the map. ",
+        //   image: _buildFullscreenImage(),
+        //   decoration: pageDecoration.copyWith(
+        //     contentMargin: const EdgeInsets.symmetric(horizontal: 16),
+        //     fullScreen: true,
+        //     bodyFlex: 2,
+        //     imageFlex: 3,
+        //     safeArea: 100,
+        //   ),
+        // ),
         PageViewModel(
           title: "Let's bring the world together.",
           body: "Create an Account to get started!",
-          image: _buildImage('img2.jpg'),
+          image: _buildImage('getStarted.jpg'),
           footer: ElevatedButton(
             onPressed: () {
               introKey.currentState?.animateScroll(0);
@@ -140,25 +148,25 @@ class OnBoardingPageState extends State<OnBoardingPage> {
             safeArea: 80,
           ),
         ),
-        PageViewModel(
-          title: "Create an Account to get Started with!",
-          bodyWidget: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Click on ", style: bodyStyle),
-              Icon(Icons.edit),
-              Text(" to edit a post", style: bodyStyle),
-            ],
-          ),
-          decoration: pageDecoration.copyWith(
-            bodyFlex: 2,
-            imageFlex: 4,
-            bodyAlignment: Alignment.bottomCenter,
-            imageAlignment: Alignment.topCenter,
-          ),
-          image: _buildImage('img1.jpg'),
-          reverse: true,
-        ),
+        // PageViewModel(
+        //   title: "Create an Account to get Started with!",
+        //   bodyWidget: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: const [
+        //       Text("Click on ", style: bodyStyle),
+        //       Icon(Icons.edit),
+        //       Text(" to edit a post", style: bodyStyle),
+        //     ],
+        //   ),
+        //   decoration: pageDecoration.copyWith(
+        //     bodyFlex: 2,
+        //     imageFlex: 4,
+        //     bodyAlignment: Alignment.bottomCenter,
+        //     imageAlignment: Alignment.topCenter,
+        //   ),
+        //   image: _buildImage('img1.jpg'),
+        //   reverse: true,
+        // ),
       ],
       onDone: () => _onIntroEnd(context),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
