@@ -29,69 +29,63 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //removed 'const' keyword from return const MaterialApp
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-      ],
-      child: MaterialApp(
-          debugShowCheckedModeBanner: false,
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
 
-          //Theme set for User Account Screens
-          theme: ThemeData(
-            textTheme:
-                const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')),
-            scaffoldBackgroundColor: Colors.black, //white
-            appBarTheme: const AppBarTheme(
-              centerTitle: false,
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.black,
-              //shadowColor: Colors.teal[900],
-              toolbarHeight: 60.0,
-              elevation: 0,
-            ),
-            colorScheme:
-                ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
+        //Theme set for User Account Screens
+        theme: ThemeData(
+          textTheme:
+              const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')),
+          scaffoldBackgroundColor: Colors.black, //white
+          appBarTheme: const AppBarTheme(
+            centerTitle: false,
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.black,
+            //shadowColor: Colors.teal[900],
+            toolbarHeight: 60.0,
+            elevation: 0,
           ),
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
+        ),
 
-          // Added persistent state
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasData) {
-                  return const LayoutSelect(
-                    mobileLayout: MobileScreenLayout(),
-                    webLayout: WebScreenLayout(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('${snapshot.error}'),
-                  );
-                }
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+        // Added persistent state
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                return const LayoutSelect(
+                  mobileLayout: MobileScreenLayout(),
+                  webLayout: WebScreenLayout(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
                 );
               }
-              return OnBoardingPage();
-            },
-          ),
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return OnBoardingPage();
+          },
+        ),
 
-          //added routes to connect screens of the applications
-          routes: <String, WidgetBuilder>{
-            '/home': (BuildContext context) => const LayoutSelect(
-                mobileLayout: MobileScreenLayout(),
-                webLayout: WebScreenLayout()),
-            '/userProfile': (BuildContext context) =>
-                UserProfile(uid: FirebaseAuth.instance.currentUser!.uid),
-            '/settings': (BuildContext context) =>
-                SettingsPage(uid: FirebaseAuth.instance.currentUser!.uid),
-            //'/userProfilePt2': (BuildContext context) => UserProfilePt2(),
-            //'/createMemoryRoute': (BuildContext context) => CreateMemoryRoute(),
-            '/discover': (BuildContext context) => const DiscoverPage(),
-            //'/postPage': (BuildContext context) => PostPage(),
-          }),
-    );
+        //added routes to connect screens of the applications
+        routes: <String, WidgetBuilder>{
+          '/home': (BuildContext context) => const LayoutSelect(
+              mobileLayout: MobileScreenLayout(), webLayout: WebScreenLayout()),
+          '/userProfile': (BuildContext context) =>
+              UserProfile(uid: FirebaseAuth.instance.currentUser!.uid),
+          '/settings': (BuildContext context) =>
+              SettingsPage(uid: FirebaseAuth.instance.currentUser!.uid),
+          //'/userProfilePt2': (BuildContext context) => UserProfilePt2(),
+          //'/createMemoryRoute': (BuildContext context) => CreateMemoryRoute(),
+          '/discover': (BuildContext context) => const DiscoverPage(),
+          //'/postPage': (BuildContext context) => PostPage(),
+        });
   }
 }
