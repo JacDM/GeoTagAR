@@ -81,92 +81,103 @@ class _CommentsScreenState extends State<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
     //final UserModel user = Provider.of<UserProvider>(context).getUser;
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Pallete.blackColor,
-        title: const Text(
-          'Comments',
-          style: TextStyle(fontSize: 25),
+    if (isLoading) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: const [
+          CircularProgressIndicator(
+            value: 0.3,
+            color: Colors.greenAccent,
+          ),
+        ],
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Pallete.blackColor,
+          title: const Text(
+            'Comments',
+            style: TextStyle(fontSize: 25),
+          ),
+          centerTitle: false,
         ),
-        centerTitle: false,
-      ),
-      backgroundColor: Colors.black,
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('posts')
-            .doc(widget.postId)
-            .collection('comments')
-            .snapshots(),
-        builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (ctx, index) => CommentCard(
-                snap: snapshot.data!.docs[index],
-              ),
-            );
-          } else {
-            return Container();
-          }
-        },
-      ),
-      // text input
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          height: kToolbarHeight,
-          margin:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          padding: const EdgeInsets.only(left: 16, right: 8),
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(userData['profilePic']),
-                radius: 18,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 8),
-                  child: TextField(
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                    cursorColor: Colors.white,
-                    controller: commentEditingController,
-                    decoration: InputDecoration(
-                      hintText: 'Comment as ${userData['username']}',
-                      //border: InputBorder.,
-                      hintStyle: const TextStyle(
+        backgroundColor: Colors.black,
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('posts')
+              .doc(widget.postId)
+              .collection('comments')
+              .snapshots(),
+          builder: (context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (ctx, index) => CommentCard(
+                  snap: snapshot.data!.docs[index],
+                ),
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
+        // text input
+        bottomNavigationBar: SafeArea(
+          child: Container(
+            height: kToolbarHeight,
+            margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: const EdgeInsets.only(left: 16, right: 8),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(userData['profilePic']),
+                  radius: 18,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 8),
+                    child: TextField(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
+                      ),
+                      cursorColor: Colors.white,
+                      controller: commentEditingController,
+                      decoration: InputDecoration(
+                        hintText: 'Comment as ${userData['username']}',
+                        //border: InputBorder.,
+                        hintStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () => postComment(userData['uid'], userData['username'],
-                    userData['profilePic']),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: const Text(
-                    'Post',
-                    style: TextStyle(color: Colors.white),
+                InkWell(
+                  onTap: () => postComment(userData['uid'],
+                      userData['username'], userData['profilePic']),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: const Text(
+                      'Post',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
