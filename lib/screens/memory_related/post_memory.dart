@@ -48,6 +48,7 @@ class _AddPostState extends State<AddPost> {
   double lat = 15000;
   double long = 15000;
   bool locationSet = false;
+  bool normalmode = true;
 
   @override
   void dispose() {
@@ -104,7 +105,7 @@ class _AddPostState extends State<AddPost> {
     });
     await compressImage();
     await uploadImage(uid, username, profImage);
-    if (locationSet == true) {
+    if (locationSet == true && normalmode == true) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -356,7 +357,11 @@ class _AddPostState extends State<AddPost> {
                         onPressed: ((isUploading) || (_locationCtrler == null))
                             ? null
                             : () {
-                                handleSubmit(user.uid, user.username, user.profilePic);
+                                setState(() {
+                                  normalmode = false;
+                                });
+                                handleSubmit(
+                                    user.uid, user.username, user.profilePic);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
