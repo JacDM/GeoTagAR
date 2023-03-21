@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Image logo(String img) {
   return Image.asset(
     img,
-    //fit: BoxFit.fitWidth,
+    fit: BoxFit.fitWidth,
     //width: 240,
     //height: 240,
   );
