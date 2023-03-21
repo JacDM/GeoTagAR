@@ -39,6 +39,12 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   late Map<String, dynamic> userData;
   bool isLoading = false;
   bool isUploading = false;
@@ -51,12 +57,6 @@ class _AddPostState extends State<AddPost> {
   double long = 15000;
   bool locationSet = false;
   bool normalmode = true;
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
 
   @override
   void dispose() {
