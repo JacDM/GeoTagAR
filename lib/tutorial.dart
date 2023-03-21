@@ -24,7 +24,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
 
   Widget _buildFullscreenImage() {
     return Image.asset(
-      'assets/fullscreen.jpg',
+      'assets/fullscreen.jpg', //add AR IMAGE
       fit: BoxFit.cover,
       height: double.infinity,
       width: double.infinity,
@@ -67,7 +67,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         height: 60,
         child: ElevatedButton(
           child: const Text(
-            'Let\'s go right away!',
+            'Skip App Tour',
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
           onPressed: () => _onIntroEnd(context),
@@ -75,30 +75,37 @@ class OnBoardingPageState extends State<OnBoardingPage> {
       ),
       pages: [
         PageViewModel(
-          title: "Fractional shares",
+          title: "Welcome to GeoTagAR",
           body:
-              "Instead of having to buy an entire share, invest any amount you want.",
-          image: _buildImage('img1.jpg'),
+              "Capture, share and relive memories as you go.",
+          image: _buildImage('assets/images/earth.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Learn as you go",
+          title: "Discover",
           body:
-              "Download the Stockpile app and master the market with our mini-lesson.",
+              "Create and join groups \n Connect with friends and make new ones",
           image: _buildImage('img2.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Kids and teens",
+          title: "Tag the world",
           body:
-              "Kids and teens can track their stocks 24/7 and place trades that you approve.",
+              "Share your journeys and experiences as you travel. \n Capture memories and add them to your personal scrapbook or scrapbooks of other users.",
           image: _buildImage('img3.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Full Screen Page",
+          title: "Feed",
           body:
-              "Pages can be full screen as well.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id euismod lectus, non tempor felis. Nam rutrum rhoncus est ac venenatis.",
+          "Like, Comment and annotate on posts.",
+          image: _buildImage('img3.jpg'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "AR Features",
+          body:
+              "Place an AR object to host your post and Geotag them to the map. ",
           image: _buildFullscreenImage(),
           decoration: pageDecoration.copyWith(
             contentMargin: const EdgeInsets.symmetric(horizontal: 16),
@@ -109,8 +116,8 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           ),
         ),
         PageViewModel(
-          title: "Another title page",
-          body: "Another beautiful body text for this example onboarding",
+          title: "Let's bring the world together.",
+          body: "Create an Account to get started!",
           image: _buildImage('img2.jpg'),
           footer: ElevatedButton(
             onPressed: () {
@@ -123,7 +130,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
               ),
             ),
             child: const Text(
-              'FooButton',
+              'Get Started!',
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -134,7 +141,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           ),
         ),
         PageViewModel(
-          title: "Title of last page - reversed",
+          title: "Create an Account to get Started with!",
           bodyWidget: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
