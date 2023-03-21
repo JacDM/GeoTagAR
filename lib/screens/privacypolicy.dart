@@ -16,7 +16,7 @@ class _PP extends State<PP> {
     return Scaffold(
       //appbar
       appBar: AppBar(
-        title: const Text('TERMS AND CONDITIONS'),
+        title: const Text('PRIVACY POLICY'),
       ),
 
       //backgroundColor: Colors.white,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../privacypolicy.dart';
+import '../../t&c.dart';
 import '../reusableWidgets/page_tabs.dart';
 import '../PrivacyAndSecurity/acc_visibility.dart';
 import '../PrivacyAndSecurity/reset_password.dart';
@@ -48,6 +50,19 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
                 }, pageTabLabel: 'Account Visibility'),
                 spacing,
 
+                //Activity Status
+                PageTab(onPressed: () {
+                  setState(() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const ActivityStatus() ;
+                        })
+                    );
+                  });
+                }, pageTabLabel: 'Activity Status'),
+                spacing,
+
                 //Reset Password
                 PageTab(onPressed: () {
                   setState(() {
@@ -69,25 +84,31 @@ class _PrivacyAndSecurityState extends State<PrivacyAndSecurity> {
                 // }, pageTabLabel: 'Login Activity'),
                 // spacing,
 
-                //Blocked Accounts
-                PageTab(onPressed: () {
-                  setState(() {
-                    null;
-                  });
-                }, pageTabLabel: 'Blocked Accounts'),
-                spacing,
-
-                //Activity Status
+                //Terms and Conditions
                 PageTab(onPressed: () {
                   setState(() {
                     Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context){
-                          return const ActivityStatus() ;
+                          return const TNC() ;
                         })
                     );
                   });
-                }, pageTabLabel: 'Activity Status'),
+                }, pageTabLabel: 'Terms and Conditions'),
+                spacing,
+
+                //Privacy Policy
+                PageTab(onPressed: () {
+                  setState(() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const PP() ;
+                        })
+                    );
+                  });
+                }, pageTabLabel: 'Privacy Policy'),
+
 
               ],
             ),
