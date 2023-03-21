@@ -43,6 +43,8 @@ class _AddPostState extends State<AddPost> {
   final TextEditingController _locationCtrler = TextEditingController();
   String postId = Uuid().v4();
   Uint8List? file;
+  double lat = 15000;
+  double long = 15000;
 
   @override
   void dispose() {
@@ -66,17 +68,22 @@ class _AddPostState extends State<AddPost> {
 
   uploadImage(String uid, String username, String profImage) async {
     try {
-      String res = await FireStoreMethods()
-          .uploadPost(_descCtrler.text, file!, uid, username, profImage);
-      if (res == 'success') {
-        setState(() {
-          isUploading = false;
-        });
-        showSnackBar(context, 'Posted!');
-        clearImage();
+      if (lat != 15000 && long != 15000) {
+        String res = await FireStoreMethods().uploadPost(
+            _descCtrler.text, file!, uid, username, profImage, lat, long);
+        if (res == 'success') {
+          setState(() {
+            isUploading = false;
+          });
+          showSnackBar(context, 'Posted!');
+          clearImage();
+        } else {
+          showSnackBar(context, res);
+        }
       } else {
-        showSnackBar(context, res);
+        showSnackBar(context, "Must set a location to post!");
       }
+
     } catch (err) {
       setState(() {
         isUploading = false;
@@ -136,15 +143,18 @@ class _AddPostState extends State<AddPost> {
   }
 
   getLocation() async {
-    Position position = await _determinePosition();
-    
-    //final coordinates = Coordinates(position.latitude, position.longitude);
-    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-    Placemark placemark = placemarks.first;
-
-
+    Position pos = await _determinePosition();
     setState(() {
-      _locationCtrler.value = TextEditingValue(text: '${placemark.administrativeArea}, ${placemark.country}');
+      lat = pos.latitude;
+      long = pos.longitude;
+    });
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(pos.latitude, pos.longitude);
+    Placemark placemark = placemarks.first;
+    setState(() {  
+      _locationCtrler.value = TextEditingValue(
+          text:
+              '${placemark.administrativeArea}, ${placemark.country}');
     });
     //${placemark.thoroughfare},
   }
@@ -232,13 +242,13 @@ class _AddPostState extends State<AddPost> {
                   controller: _locationCtrler,
                   style: TextStyle(color: Colors.white, fontSize: 12),
                   decoration: InputDecoration(
-                      
                       filled: true,
                       fillColor: (bgcol == Colors.white)
                           ? Colors.grey[300]
                           : Color.fromARGB(255, 78, 78, 78),
                       prefixIconColor: Colors.white70,
-                      hintText: 'Where was this picture taken?',
+                      hintText:
+                          'Must provide the post location! (long press to clear)',
                       hintStyle: TextStyle(
                           color: (bgcol == Colors.white)
                               ? Colors.grey.shade700
@@ -247,8 +257,7 @@ class _AddPostState extends State<AddPost> {
                 ),
               ),
             ),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
             Container(
                 alignment: Alignment.topLeft,
                 height: MediaQuery.of(context).size.height * 0.063,
@@ -343,7 +352,7 @@ class _AddPostState extends State<AddPost> {
             child: Align(
               alignment: Alignment(1.03, 1.03),
               child: ElevatedButton(
-                onPressed: isUploading
+                onPressed: ((isUploading) && (_locationCtrler == null))
                     ? null
                     : () {
                         handleSubmit(

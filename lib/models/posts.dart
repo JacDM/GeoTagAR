@@ -21,7 +21,7 @@ class Post {
     required this.datePublished,
     required this.postUrl,
     required this.profImage,
-    this.location = const GeoPoint(0, 0),
+    this.location = const GeoPoint(0, 0), 
   });
 
   static Post fromSnap(DocumentSnapshot snap) {
