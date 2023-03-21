@@ -10,8 +10,15 @@ import 'package:uuid/uuid.dart';
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadPost(String description, Uint8List file, String uid,
-      String username, String profImage, double lat, double long, String postId) async {
+  Future<String> uploadPost(
+      String description,
+      Uint8List file,
+      String uid,
+      String username,
+      String profImage,
+      double lat,
+      double long,
+      String postId) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
@@ -27,7 +34,7 @@ class FireStoreMethods {
         datePublished: DateTime.now(),
         postUrl: photoUrl,
         profImage: profImage,
-        location: GeoPoint(lat,long),  
+        location: GeoPoint(lat, long),
       );
       _firestore.collection('posts').doc(postId).set(post.toJson());
       res = "success";
@@ -163,5 +170,29 @@ class FireStoreMethods {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<String> reportPost(String postId, String uid,
+      List<String> selectedReasons, String? comment) async {
+    String res = "Some error occurred";
+    try {
+      DocumentSnapshot postSnap =
+          await _firestore.collection('posts').doc(postId).get();
+      if (postSnap.exists) {
+        _firestore.collection('reportedPosts').add({
+          'postId': postId,
+          'reporterId': uid,
+          'reportDate': DateTime.now(),
+          'reasons': selectedReasons.toString(),
+          'comment': comment,
+        });
+        res = 'Success';
+      } else {
+        res = "Post not found";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
   }
 }
