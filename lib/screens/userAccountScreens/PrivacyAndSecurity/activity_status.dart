@@ -58,11 +58,11 @@ class _ActivityStatus extends State<ActivityStatus> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 k_spacing,
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     'WHO CAN SEE WHEN I AM ONLINE:',
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(fontSize: 18.0, color: Colors.grey[700]),
                   ),
                 ),
                 SizedBox(

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             textTheme:
                 const TextTheme(bodyText2: TextStyle(fontFamily: 'Nunito')),
-            scaffoldBackgroundColor: Colors.white,
+            scaffoldBackgroundColor: Colors.black, //white
             appBarTheme: const AppBarTheme(
               centerTitle: false,
               foregroundColor: Colors.white,

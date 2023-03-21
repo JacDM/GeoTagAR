@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const Color k_fontTextColour = Colors.black;
+const Color k_fontTextColour = Colors.white;
 const Color k_submitButtonBgColour = Colors.teal;
-const Color k_SwitchIconColour =  Color(0xFF263238);  //bluegrey[900]
+const Color k_SwitchIconColour =  Colors.white;  //Color(0xFF263238)
 
 class DataUsage extends StatefulWidget {
   const DataUsage({super.key});
@@ -63,7 +63,7 @@ class _DataUsage extends State<DataUsage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Data Usage', style: TextStyle(fontSize: 25.0),),
+                    const Text('Data Usage', style: TextStyle(fontSize: 25.0, color: k_fontTextColour),),
                     GestureDetector(
                       onTap: switchMode,
                       child: Align(

@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/custom_button.dart';
 
-TextStyle k_passwordtextstyle = const TextStyle(fontSize: 20.0);
+TextStyle k_passwordtextstyle = const TextStyle(fontSize: 20.0, color: k_fontTextColour);
+const Color k_fontTextColour = Colors.white;
 Widget k_textbox = const TextField(
   textAlign: TextAlign.left,
   obscureText: true,
-  style: TextStyle(fontSize: 27.0, height: 0.75),
+  style: TextStyle(fontSize: 27.0, height: 0.75, color: k_fontTextColour),
+  cursorColor:  k_fontTextColour,
+  decoration: InputDecoration(
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey),
+    ),
+  ),
   //cursorWidth: 3.0,
   //cursorHeight: 35.0,
 );
@@ -41,7 +51,7 @@ class _ResetPassword extends State<ResetPassword> {
               children: <Widget>[
                 const Text(
                   'RESET PASSWORD',
-                  style: TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold, color: k_fontTextColour),
                 ),
                 spacing,
                 Text('Current Password', style: k_passwordtextstyle),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const Color k_fontTextColour = Colors.black;
+const Color k_fontTextColour = Colors.white;
 const Color k_submitButtonBgColour = Color(0xFF263238);
-const Color k_SwitchIconColour = Color(0xFF263238); //bluegrey[900]
+const Color k_SwitchIconColour = Colors.white; //bluegrey[900]
 
 class SCC extends StatefulWidget {
   const SCC({super.key});
@@ -21,12 +21,12 @@ class _SCC extends State<SCC> {
   Icon onModeSwitch = const Icon(
     Icons.toggle_on,
     size: 75.0,
-    //color: k_SwitchIconColour,
+    color: k_SwitchIconColour,
   );
   Icon offModeSwitch = const Icon(
     Icons.toggle_off_outlined,
     size: 75.0,
-    //color: k_SwitchIconColour,
+    color: k_SwitchIconColour,
   );
 
   //determine dark/light mode based on
@@ -61,7 +61,7 @@ class _SCC extends State<SCC> {
                   children: [
                     const Text(
                       'Content Control',
-                      style: TextStyle(fontSize: 25.0),
+                      style: TextStyle(fontSize: 25.0, color: k_fontTextColour),
                     ),
                     GestureDetector(
                       onTap: switchMode,

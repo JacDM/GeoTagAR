@@ -47,14 +47,14 @@ class _AccountSettingsState extends State<AccountSettings> {
                 spacing,
 
                 //Language
-                PageTab(
-                    onPressed: () {
-                      setState(() {
-                        null;
-                      });
-                    },
-                    pageTabLabel: 'Language'),
-                spacing,
+                // PageTab(
+                //     onPressed: () {
+                //       setState(() {
+                //         null;
+                //       });
+                //     },
+                //     pageTabLabel: 'Language'),
+                // spacing,
 
                 //Sensitive Content Control
                 PageTab(

@@ -100,6 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 29, 29, 29),
         toolbarHeight: 90,

@@ -57,11 +57,11 @@ class _AccVisibility extends State<AccVisibility> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     'WHO CAN SEE WHEN I AM ONLINE:',
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(fontSize: 18.0, color: Colors.grey[700]),
 
                   ),
                 ),
