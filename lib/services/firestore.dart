@@ -172,7 +172,7 @@ class FireStoreMethods {
     }
   }
 
-  Future<String> reportPost(String postId, String uid,
+  Future<String> reportPost(String postId, String postUrl, String uid,
       List<String> selectedReasons, String? comment) async {
     String res = "Some error occurred";
     try {
@@ -181,6 +181,7 @@ class FireStoreMethods {
       if (postSnap.exists) {
         _firestore.collection('reportedPosts').add({
           'postId': postId,
+          'postUrl': postUrl,
           'reporterId': uid,
           'reportDate': DateTime.now(),
           'reasons': selectedReasons.toString(),
@@ -194,5 +195,13 @@ class FireStoreMethods {
       res = err.toString();
     }
     return res;
+  }
+
+  Future<void> removeFromReportedPosts(String postId) async {
+    try {
+      await _firestore.collection('reportedPosts').doc(postId).delete();
+    } catch (e) {
+      print('Error while removing post from reportedPosts: $e');
+    }
   }
 }
