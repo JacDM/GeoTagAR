@@ -23,6 +23,24 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   File? _groupAvatar;
   File? _groupBanner;
   final GroupServices _groupServices = GroupServices();
+  String _groupDescriptionError = '';
+  String _groupNameError = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _groupDescriptionController.addListener(_onGroupDescriptionChanged);
+    _groupNameController.addListener(_onGroupNameChanged);
+  }
+
+  @override
+  void dispose() {
+    _groupDescriptionController.removeListener(_onGroupDescriptionChanged);
+    _groupDescriptionController.dispose();
+    _groupNameController.removeListener(_onGroupNameChanged);
+    _groupNameController.dispose();
+    super.dispose();
+  }
 
   Future<void> _pickImage(ImageSource source, bool isAvatar) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
@@ -61,6 +79,27 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
     }
   }
 
+  void _onGroupDescriptionChanged() {
+    setState(() {
+      if (_groupDescriptionController.text.length > 150) {
+        _groupDescriptionError =
+            'Group description cannot be more than 150 characters';
+      } else {
+        _groupDescriptionError = '';
+      }
+    });
+  }
+
+  void _onGroupNameChanged() {
+    setState(() {
+      if (_groupNameController.text.length > 30) {
+        _groupNameError = 'Group name cannot be more than 30 characters';
+      } else {
+        _groupNameError = '';
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +108,12 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.check),
-            onPressed: _createGroup,
+            onPressed: () {
+              if (_groupDescriptionError.isEmpty && _groupNameError.isEmpty) {
+                // Create the group
+                _createGroup();
+              }
+            },
           ),
         ],
       ),
@@ -82,13 +126,25 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               controller: _groupNameController,
               hintText: 'Group Name',
               obscure: false,
+              maxLength: 30,
             ),
+            if (_groupNameError.isNotEmpty)
+              Text(
+                _groupNameError,
+                style: const TextStyle(color: Colors.red),
+              ),
             const SizedBox(height: 16),
             ReusableTextField(
               controller: _groupDescriptionController,
               hintText: 'Group Description',
               obscure: false,
+              maxLength: 150,
             ),
+            if (_groupDescriptionError.isNotEmpty)
+              Text(
+                _groupDescriptionError,
+                style: const TextStyle(color: Colors.red),
+              ),
             const SizedBox(height: 16),
             const Text('Group Picture:'),
             Row(

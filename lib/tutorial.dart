@@ -157,7 +157,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
             gradient: const LinearGradient(
               colors: <Color>[Colors.deepPurple, Colors.deepPurpleAccent],
             ),
-            onPressed: () => introKey.currentState?.animateScroll(0),
+            onPressed: () => _onIntroEnd(context),
             child: const Center(
               child: Text(
                 'GET STARTED!',

@@ -14,13 +14,13 @@ import '../screens/userAccountScreens/user_profile.dart';
 // import 'package:instagram_clone_flutter/screens/search_screen.dart';
 
 //const webScreenSize = 600;
- 
+
 List<Widget> homeScreenItems = [
-  const Feed(),
+  Feed(uid: FirebaseAuth.instance.currentUser!.uid),
   const scrapBookLocations(),
-  CMRoute(),//ARState(),
+  const CMRoute(), //ARState(),
   const DiscoverPage(),
-  UserProfile( 
+  UserProfile(
     uid: FirebaseAuth.instance.currentUser!.uid,
   ),
 ];

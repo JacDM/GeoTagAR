@@ -1,9 +1,6 @@
-// ignore_for_file: avoid_unnecessary_containers
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:geotagar/models/groups.dart';
 import 'package:geotagar/screens/discoverPages/group_page.dart';
 import 'package:geotagar/screens/discoverPages/create_group.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
@@ -11,7 +8,6 @@ import '../../core/constants/constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/text_field.dart';
 import 'group_services.dart';
-//import 'package:geotagar/services/auth.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({Key? key}) : super(key: key);
@@ -62,43 +58,41 @@ class _DiscoverPageState extends State<DiscoverPage> {
         appBar: width > 600
             ? null
             : AppBar(
-            backgroundColor: Color.fromARGB(255, 29, 29, 29),
-            automaticallyImplyLeading: false,
-            centerTitle: true,
-            toolbarHeight: 90,
-            title: Row(
-              children: [
-                Image.asset(
-                  Constants.logoPathBlack,
-                  height: 200.0,
-                  width: 200.0,
-
+                backgroundColor: Color.fromARGB(255, 29, 29, 29),
+                automaticallyImplyLeading: false,
+                centerTitle: true,
+                toolbarHeight: 90,
+                title: Row(
+                  children: [
+                    Image.asset(
+                      Constants.logoPathBlack,
+                      height: 100.0,
+                      width: 100.0,
+                    ),
+                    const Text(
+                      'Discover',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ABeeZee",
+                      ),
+                    ),
+                  ],
+                )
+                // actions: [
+                //   IconButton(
+                //     icon: const Icon(
+                //       Icons.chat_bubble_outline_rounded,
+                //       color: Pallete.whiteColor,
+                //     ),
+                //     onPressed: () {},
+                //   ),
+                // ],
                 ),
-
-                const Text(
-                  'DISCOVER',
-                  style: TextStyle(fontSize: 34, ),
-                ),
-
-              ],
-            )
-
-
-          // actions: [
-          //   IconButton(
-          //     icon: const Icon(
-          //       Icons.chat_bubble_outline_rounded,
-          //       color: Pallete.whiteColor,
-          //     ),
-          //     onPressed: () {},
-          //   ),
-          // ],
-        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => CreateGroupPage(),
+                builder: (context) => const CreateGroupPage(),
               ),
             );
           },
@@ -107,10 +101,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Row(
                 children: [
                   Expanded(
@@ -120,9 +113,10 @@ class _DiscoverPageState extends State<DiscoverPage> {
                       onChanged: (text) => _updateClearIconAndDisplay(),
                       keyboardType: TextInputType.text,
                       obscure: false,
+                      textColor: Colors.white,
                       suffix: _searchTextController.text.isNotEmpty
                           ? IconButton(
-                              icon: Icon(Icons.clear),
+                              icon: const Icon(Icons.clear),
                               onPressed: () {
                                 setState(() {
                                   _searchTextController.clear();
@@ -136,7 +130,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: showUsers
                   ? StreamBuilder<QuerySnapshot>(
@@ -177,19 +171,28 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                 final String name = data['name'];
 
                                 return ListTile(
-                                  onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => UserProfile(
-                                        uid: data['uid'],
+                                    onTap: () => Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => UserProfile(
+                                              uid: data['uid'],
+                                            ),
+                                          ),
+                                        ),
+                                    title: Text(
+                                      username,
+                                      style: const TextStyle(
+                                        color: Colors.white,
                                       ),
                                     ),
-                                  ),
-                                  title: Text(username),
-                                  leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(profilePic),
-                                  ),
-                                  subtitle: Text(name),
-                                );
+                                    leading: CircleAvatar(
+                                      backgroundImage: NetworkImage(profilePic),
+                                    ),
+                                    subtitle: Text(
+                                      name,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ));
                               }).toList(),
                             );
                           }
@@ -215,19 +218,24 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           selectedGroups.add(isMember);
                         });
                         return ListView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
                           itemCount: (snapshot.data! as dynamic).docs.length,
                           itemBuilder: (context, index) {
                             bool isSelected = selectedGroups.length > index
                                 ? selectedGroups[index]
                                 : false;
+                            print(index);
                             return InkWell(
                               onTap: () {
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //   builder: (context) => GroupPage(
-                                //       group: Community.fromMap(
-                                //           snapshot.data!.docs[index].data())),
-                                // ));
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => GroupPage(
+                                      groupId: (snapshot.data! as dynamic)
+                                          .docs[index]
+                                          .id,
+                                    ),
+                                  ),
+                                );
                               },
                               child: Stack(
                                 children: [
@@ -242,49 +250,46 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                     ),
 
                                     // Try fixing the length of the rectangle box and the circle icon which is exceeding its limits
-                                    child: Container(
-                                      child: Row(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Image.network(
-                                              (snapshot.data! as dynamic)
-                                                  .docs[index]['groupPicture'],
-                                              height: 48,
-                                              width: 48,
-                                              fit: BoxFit.cover,
-                                            ),
+                                    child: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: Image.network(
+                                            (snapshot.data! as dynamic)
+                                                .docs[index]['groupPicture'],
+                                            height: 48,
+                                            width: 48,
+                                            fit: BoxFit.cover,
                                           ),
-                                          const SizedBox(width: 12),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  (snapshot.data! as dynamic)
-                                                      .docs[index]['groupName'],
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16),
-                                                ),
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  (snapshot.data! as dynamic)
-                                                          .docs[index]
-                                                      ['groupDescription'],
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                (snapshot.data! as dynamic)
+                                                    .docs[index]['groupName'],
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16),
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                (snapshot.data! as dynamic)
+                                                        .docs[index]
+                                                    ['groupDescription'],
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 12),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   Positioned(
@@ -314,7 +319,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
-                                                  child: Text('No'),
+                                                  child: const Text('No'),
                                                 ),
                                                 TextButton(
                                                   onPressed: () async {
@@ -323,9 +328,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                                             groupId,
                                                             currentUserId);
                                                     setState(() {
-                                                      isSelected = false;
+                                                      selectedGroups[index] =
+                                                          false;
                                                     });
-                                                    // Check if(mounted) stuff
                                                     Navigator.of(context).pop();
                                                   },
                                                   child: const Text('Yes'),
@@ -337,7 +342,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                           await _groupServices.addUserToGroup(
                                               groupId, currentUserId);
                                           setState(() {
-                                            isSelected = true;
+                                            selectedGroups[index] = true;
                                           });
                                         }
                                       },

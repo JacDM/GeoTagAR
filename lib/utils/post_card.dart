@@ -290,46 +290,43 @@ class _PostCardState extends State<PostCard> {
                         '${widget.snap['likes'].length} likes',
                         style: const TextStyle(color: Colors.white),
                       )),
-                  // Container(
-                  //   width: double.infinity,
-                  //   padding: const EdgeInsets.only(
-                  //     top: 10,
-                  //   ),
-                  //   child: RichText(
-                  //     text: TextSpan(
-                  //       style: const TextStyle(color: Pallete.whiteColor),
-                  //       children: [
-                  //         TextSpan(
-                  //           text: widget.snap['username'].toString(),
-                  //           style: const TextStyle(
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  DefaultTextStyle(
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2!
+                          .copyWith(fontWeight: FontWeight.w800),
+                      child: Text(
+                        '${widget.snap['description']}',
+                        style: const TextStyle(color: Colors.white),
+                      )),
+                  // Just some code to test text within icons
+                  // Stack(
+                  //   children: [
+                  //     Icon(Icons.person),
+                  //     Positioned(
+                  //       top: 0,
+                  //       right: 0,
+                  //       child: Container(
+                  //         padding:
+                  //             EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.red,
+                  //           borderRadius: BorderRadius.circular(8),
+                  //         ),
+                  //         child: Text(
+                  //           '10',
+                  //           style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontSize: 12,
                   //             fontWeight: FontWeight.bold,
                   //           ),
                   //         ),
-                  //         TextSpan(
-                  //           text: ' ${widget.snap['description']}',
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  // InkWell(
-                  //   child: Container(
-                  //     child: Text(
-                  //       'View all $commentLen comments',
-                  //       style: const TextStyle(
-                  //         fontSize: 16,
-                  //         color: Pallete.whiteColor,
                   //       ),
                   //     ),
-                  //     padding: const EdgeInsets.symmetric(vertical: 4),
-                  //   ),
-                  //   onTap: () => Navigator.of(context).push(
-                  //     MaterialPageRoute(
-                  //       builder: (context) => CommentsScreen(
-                  //         postId: widget.snap['postId'].toString(),
-                  //       ),
-                  //     ),
-                  //   ),
+                  //   ],
                   // ),
                   Container(
                     child: Text(

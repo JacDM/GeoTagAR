@@ -12,7 +12,7 @@ class MobileScreenLayout extends StatefulWidget {
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   int _page = 0;
-  late PageController pageController; // for tabs animation
+  late PageController pageController;
 
   @override
   void initState() {
@@ -33,7 +33,6 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   }
 
   void navigationTapped(int page) {
-    //Animating Page
     pageController.jumpToPage(page);
   }
 
@@ -47,46 +46,61 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         onPageChanged: onPageChanged,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
         iconSize: 30,
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
         backgroundColor: Pallete.darkModeAppTheme.scaffoldBackgroundColor,
+        selectedItemColor: Color.fromARGB(255, 122, 227, 65),
+        unselectedItemColor: Colors.white,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: (_page == 0) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
-            ),
+            icon: Icon(Icons.home),
             label: '',
             backgroundColor: Pallete.blackColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.location_pin,
-              color: (_page == 1) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
-            ),
+            icon: Icon(Icons.map),
             label: '',
             backgroundColor: Pallete.blackColor,
           ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.circle_outlined,
-                color: (_page == 2) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
-                size: 55,
+            icon: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: _page == 2
+                      ? Color.fromARGB(255, 122, 227, 65)
+                      : Colors.white,
+                  width: 2,
+                ),
               ),
-              label: '',
-              backgroundColor: Color.fromARGB(255, 29, 29, 29)),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.group,
-              color: (_page == 3) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: _page == 2
+                          ? Color.fromARGB(255, 122, 227, 65)
+                          : Colors.white,
+                      width: 2,
+                    ),
+                  ),
+                ),
+              ),
             ),
             label: '',
             backgroundColor: Color.fromARGB(255, 29, 29, 29),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: (_page == 4) ? Color.fromARGB(255, 122, 227, 65) : Color.fromARGB(255, 122, 227, 65),
-            ),
+            icon: Icon(Icons.group),
+            label: '',
+            backgroundColor: Color.fromARGB(255, 29, 29, 29),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
             label: '',
             backgroundColor: Color.fromARGB(255, 29, 29, 29),
           ),
