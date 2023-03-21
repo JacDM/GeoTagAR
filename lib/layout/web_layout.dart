@@ -42,58 +42,62 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Pallete.darkModeAppTheme.scaffoldBackgroundColor,
-        centerTitle: false,
-        title: SvgPicture.asset(
-          'assets/images/forgotPasswordBG.png',
-          color: Pallete.greyColor,
-          height: 32,
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/forgotPasswordBG.png"),
+          fit: BoxFit.cover,
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.home,
-              color: _page == 0 ? Pallete.blackColor : Pallete.whiteColor,
-            ),
-            onPressed: () => navigationTapped(0),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: _page == 1 ? Pallete.blackColor : Pallete.whiteColor,
-            ),
-            onPressed: () => navigationTapped(1),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.add_a_photo,
-              color: _page == 2 ? Pallete.blackColor : Pallete.whiteColor,
-            ),
-            onPressed: () => navigationTapped(2),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.favorite,
-              color: _page == 3 ? Pallete.blackColor : Pallete.whiteColor,
-            ),
-            onPressed: () => navigationTapped(3),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.person,
-              color: _page == 4 ? Pallete.blackColor : Pallete.whiteColor,
-            ),
-            onPressed: () => navigationTapped(4),
-          ),
-        ],
       ),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        children: homeScreenItems,
-        controller: pageController,
-        onPageChanged: onPageChanged,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(31, 0, 0, 0),
+          centerTitle: false,
+          title: const Text("Reported Posts"),
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.report_outlined,
+                color: _page == 0 ? Colors.green : Pallete.whiteColor,
+              ),
+              onPressed: () => navigationTapped(0),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.group_remove_outlined,
+                color: _page == 1 ? Colors.green : Pallete.whiteColor,
+              ),
+              onPressed: () => navigationTapped(1),
+            ),
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.add_a_photo,
+            //     color: _page == 2 ? Colors.green : Pallete.whiteColor,
+            //   ),
+            //   onPressed: () => navigationTapped(2),
+            // ),
+            IconButton(
+              icon: Icon(
+                Icons.groups,
+                color: _page == 2 ? Colors.green : Pallete.whiteColor,
+              ),
+              onPressed: () => navigationTapped(2),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.admin_panel_settings,
+                color: _page == 3 ? Colors.green : Pallete.whiteColor,
+              ),
+              onPressed: () => navigationTapped(3),
+            ),
+          ],
+        ),
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          children: webScreenItems,
+          controller: pageController,
+          onPageChanged: onPageChanged,
+        ),
       ),
     );
   }
