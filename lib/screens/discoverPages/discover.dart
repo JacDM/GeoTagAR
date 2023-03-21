@@ -58,25 +58,36 @@ class _DiscoverPageState extends State<DiscoverPage> {
         appBar: width > 600
             ? null
             : AppBar(
-                backgroundColor: Pallete.blackColor,
+                backgroundColor: Color.fromARGB(255, 29, 29, 29),
                 automaticallyImplyLeading: false,
                 centerTitle: true,
-                toolbarHeight: 60,
+                toolbarHeight: 90,
                 title: Row(
                   children: [
-                    // Image.asset(
-                    //   Constants.logoPathBlack,
-                    //   height: 200.0,
-                    //   width: 200.0,
-                    // ),
+                    Image.asset(
+                      Constants.logoPathBlack,
+                      height: 100.0,
+                      width: 100.0,
+                    ),
                     const Text(
                       'Discover',
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 20,
+                        fontFamily: "ABeeZee",
                       ),
                     ),
                   ],
-                )),
+                )
+                // actions: [
+                //   IconButton(
+                //     icon: const Icon(
+                //       Icons.chat_bubble_outline_rounded,
+                //       color: Pallete.whiteColor,
+                //     ),
+                //     onPressed: () {},
+                //   ),
+                // ],
+                ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(
