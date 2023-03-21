@@ -120,7 +120,7 @@ class _CreateMemoryState extends State<CreateMemory> {
       });
     }
 
-    _cam.dispose();
+    //_cam.dispose();
     Navigator.push(
         context,
         MaterialPageRoute(
