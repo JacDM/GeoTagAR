@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:geotagar/ar/ar.dart';
 import 'package:geotagar/core/constants/constants.dart';
 import 'package:geotagar/layout/layout_select.dart';
 import 'package:geotagar/layout/mobile_layout.dart';
@@ -157,6 +158,7 @@ class _AddPostState extends State<AddPost> {
         await placemarkFromCoordinates(pos.latitude, pos.longitude);
     Placemark placemark = placemarks.first;
     setState(() {
+      locationSet = true;
       _locationCtrler.value = TextEditingValue(
           text: '${placemark.administrativeArea}, ${placemark.country}');
     });
@@ -266,6 +268,7 @@ class _AddPostState extends State<AddPost> {
                   },
                   onLongPress: () {
                     setState(() {
+                      locationSet = false;
                       _locationCtrler.clear();
                     });
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -347,10 +350,46 @@ class _AddPostState extends State<AddPost> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    Visibility(
+                      visible: (!kIsWeb),
+                      child: ElevatedButton(
+                        onPressed: ((isUploading) || (_locationCtrler == null))
+                            ? null
+                            : () {
+                                handleSubmit(user.uid, user.username, user.profilePic);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (builder) =>
+                                            ARState(postId: postId)));
+
+                                //Navigator.of(context).push(MaterialPageRoute())
+                              }, //() => handleSubmit(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 13, 110, 0),
+                          disabledBackgroundColor: Colors.grey[600],
+                          disabledMouseCursor: SystemMouseCursors.forbidden,
+                          fixedSize: Size(
+                              MediaQuery.of(context).size.width * 0.425,
+                              MediaQuery.of(context).size.height * 0.075),
+                        ),
+                        child: Text(
+                          'Add AR anchor',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ),
+                    ),
+                    const Visibility(
+                      visible: (!kIsWeb),
+                      child: SizedBox(
+                        width: 35,
+                      ),
+                    ),
                     ElevatedButton(
-                      onPressed: ((isUploading) || (_locationCtrler == null))
+                      onPressed: ((isUploading) || (locationSet == false))
                           ? null
                           : () {
+                              //print(locationSet);
                               handleSubmit(
                                 user.uid,
                                 user.username,
@@ -361,30 +400,14 @@ class _AddPostState extends State<AddPost> {
                         backgroundColor: Color.fromARGB(255, 27, 1, 78),
                         disabledBackgroundColor: Colors.grey[600],
                         disabledMouseCursor: SystemMouseCursors.forbidden,
-                        fixedSize: Size(MediaQuery.of(context).size.width * 0.425,
+                        fixedSize: Size(
+                            (!kIsWeb)
+                                ? MediaQuery.of(context).size.width * 0.425
+                                : MediaQuery.of(context).size.width * 0.9,
                             MediaQuery.of(context).size.height * 0.075),
                       ),
                       child: Text(
-                        'Post', 
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    SizedBox(width: 35,),
-                    ElevatedButton( 
-                      onPressed: ((isUploading) || (_locationCtrler == null))
-                          ? null
-                          : () {
-                              
-                            }, //() => handleSubmit(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 13, 110, 0),
-                        disabledBackgroundColor: Colors.grey[600],
-                        disabledMouseCursor: SystemMouseCursors.forbidden,
-                        fixedSize: Size(MediaQuery.of(context).size.width * 0.425,
-                            MediaQuery.of(context).size.height * 0.075),
-                      ),
-                      child: Text(
-                        'Add AR anchor',
+                        'Post',
                         style: TextStyle(fontSize: 15),
                       ),
                     ),

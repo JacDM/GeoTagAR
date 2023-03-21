@@ -76,39 +76,51 @@ class _CreateMemoryState extends State<CreateMemory> {
 
     // Navigator.push(context,
     //     MaterialPageRoute(builder: (builder) => Cropper(image: croppedImg)));
-    
-      final croppedImg = await ImageCropper()
-          .cropImage(sourcePath: tempFile.path, aspectRatioPresets: [
-        CropAspectRatioPreset.ratio16x9,
-        CropAspectRatioPreset.ratio4x3,
-      ], uiSettings: [
-        AndroidUiSettings(
-            toolbarTitle: 'Crop/Resize',
-            toolbarColor: Colors.black,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.ratio16x9,
-            lockAspectRatio: true),
-        IOSUiSettings(title: 'Crop/Resize'),
-        WebUiSettings(
-          context: context,
-          customDialogBuilder: (cropper, crop, rotate) {
-            return Dialog(
-              child: Builder(builder: (context) {
-                return Container();
-              }),
-            );
-          },
-        ),
-      ]);
 
-      if (croppedImg != null) {
-        imageCache.clear();
-        setState(() {
-          imagefile = XFile(croppedImg.path);
-        });
-      }
-    
+    final croppedImg = await ImageCropper()
+        .cropImage(sourcePath: tempFile.path, aspectRatioPresets: [
+      CropAspectRatioPreset.ratio16x9,
+      CropAspectRatioPreset.ratio4x3,
+    ], uiSettings: [
+      AndroidUiSettings(
+          toolbarTitle: 'Crop/Resize',
+          toolbarColor: Colors.black,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.ratio16x9,
+          lockAspectRatio: true),
+      IOSUiSettings(title: 'Crop/Resize'),
+      WebUiSettings(
+        context: context,
+        customDialogBuilder: (cropper, crop, rotate) {
+          return Dialog(
+            child: Builder(builder: (context) {
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Text(
+                      'Crop/Resize',
+                      textAlign: TextAlign.center,
+                    ),
+                    cropper,
+                    Row()
+                  ],
+                ),
+              );
+            }),
+          );
+        },
+      ),
+    ]);
 
+    if (croppedImg != null) {
+      imageCache.clear();
+      setState(() {
+        imagefile = XFile(croppedImg.path);
+      });
+    }
+
+    _cam.dispose();
     Navigator.push(
         context,
         MaterialPageRoute(
