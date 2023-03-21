@@ -9,8 +9,10 @@ import 'package:geotagar/screens/discoverPages/discover.dart';
 import 'package:geotagar/screens/userAccountScreens/UserSettings/user_settings.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/screens/userAccountScreens/user_profile.dart';
+import 'package:geotagar/tutorial.dart';
 import 'package:provider/provider.dart';
 import 'providers/user_provider.dart';
+import 'package:geotagar/utils/tutorialModel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,7 +74,7 @@ class MyApp extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              return const LogIn();
+              return OnBoardingPage();
             },
           ),
 
