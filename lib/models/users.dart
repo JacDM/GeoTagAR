@@ -11,10 +11,13 @@ class UserModel {
   final String username;
   final String name;
   final String bio;
+  final int age;
   final String gender;
   final String accountType;
   final List followers;
   final List following;
+  final List blockedUsers;
+  final bool isAdmin;
 
   const UserModel(
       {required this.username,
@@ -23,11 +26,14 @@ class UserModel {
       required this.email,
       required this.name,
       required this.bio,
+      required this.age,
       required this.accountType,
       required this.banner,
       required this.gender,
       required this.followers,
-      required this.following});
+      required this.following,
+      required this.blockedUsers,
+      required this.isAdmin});
 
   static UserModel fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -43,7 +49,10 @@ class UserModel {
         bio: snapshot["bio"],
         followers: snapshot["followers"],
         following: snapshot["following"],
-        name: snapshot['name']);
+        name: snapshot['name'],
+        blockedUsers: snapshot['blockedUsers'],
+        isAdmin: snapshot['isAdmin'],
+        age: snapshot['age']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -58,6 +67,9 @@ class UserModel {
         "accountType": accountType,
         "followers": followers,
         "following": following,
+        "blockedUsers": blockedUsers,
+        "isAdmin": isAdmin,
+        "age": age
       };
 
   ////////////////////////////////
@@ -71,8 +83,11 @@ class UserModel {
     String? gender,
     String? bio,
     String? accountType,
+    int? age,
     List<String>? followers,
     List<String>? following,
+    List<String>? blockedUsers,
+    bool? isAdmin,
   }) {
     return UserModel(
       email: email ?? this.email,
@@ -86,6 +101,9 @@ class UserModel {
       followers: followers ?? this.followers,
       following: following ?? this.following,
       bio: bio ?? this.bio,
+      blockedUsers: blockedUsers ?? this.blockedUsers,
+      isAdmin: isAdmin ?? this.isAdmin,
+      age: age ?? this.age,
     );
   }
 
@@ -102,6 +120,9 @@ class UserModel {
       'accountType': accountType,
       'followers': followers,
       'following': following,
+      'blockedUsers': blockedUsers,
+      'isAdmin': isAdmin,
+      'age': age,
     };
   }
 
@@ -122,6 +143,11 @@ class UserModel {
         ((map['following'] ?? const <String>[]) as List<String>),
       ),
       bio: (map["bio"] ?? '') as String,
+      blockedUsers: List<String>.from(
+        ((map['blockedUsers'] ?? const <String>[]) as List<String>),
+      ),
+      isAdmin: (map["isAdmin"] ?? false) as bool,
+      age: (map["age"] ?? 0) as int,
     );
   }
 
@@ -148,7 +174,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(email: $email, uid: $uid, name: $name, profilePicture: $profilePic, banner: $banner, username: $username, bio: $bio, gender: $gender, accountType: $accountType, followers: $followers, following: $following)';
+    return 'UserModel(email: $email, uid: $uid, name: $name, profilePicture: $profilePic, age: $age, banner: $banner, username: $username, bio: $bio, blockedUsers: $blockedUsers, isAdmin: $isAdmin, gender: $gender, accountType: $accountType, followers: $followers, following: $following)';
   }
 
   @override
@@ -164,6 +190,9 @@ class UserModel {
         other.gender == gender &&
         other.bio == bio &&
         other.accountType == accountType &&
+        other.isAdmin == isAdmin &&
+        other.age == age &&
+        listEquals(other.blockedUsers, blockedUsers) &&
         listEquals(other.followers, followers) &&
         listEquals(other.following, following);
   }
@@ -180,6 +209,9 @@ class UserModel {
         gender.hashCode ^
         accountType.hashCode ^
         followers.hashCode ^
-        following.hashCode;
+        following.hashCode ^
+        blockedUsers.hashCode ^
+        age.hashCode ^
+        isAdmin.hashCode;
   }
 }
