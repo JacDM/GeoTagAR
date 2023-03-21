@@ -39,12 +39,6 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
   late Map<String, dynamic> userData;
   bool isLoading = false;
   bool isUploading = false;
@@ -57,6 +51,12 @@ class _AddPostState extends State<AddPost> {
   double long = 15000;
   bool locationSet = false;
   bool normalmode = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
 
   @override
   void dispose() {
@@ -160,14 +160,15 @@ class _AddPostState extends State<AddPost> {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      return showSnackBar(context, 'Please enable Location services in Settings!');
+      //Future.error('Location services are disabled.');
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+        return showSnackBar(context, 'Location permissions were denied!');//Future.error('Location permissions are denied');
       }
     }
 
