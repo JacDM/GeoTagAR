@@ -242,11 +242,11 @@ class _CropperState extends State<Cropper> {
     Navigator.pop(context);
   }
   _finished(){
-    
+
   }
 
   _buttons() {
-    String val = '16:9';
+    String val = '16:9'; 
     List<DropdownMenuItem> ratios = [
             DropdownMenuItem(child: Text('16:9')),
             DropdownMenuItem(child: Text('4:3')),

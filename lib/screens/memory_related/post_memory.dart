@@ -151,7 +151,7 @@ class _AddPostState extends State<AddPost> {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(pos.latitude, pos.longitude);
     Placemark placemark = placemarks.first;
-    setState(() {
+    setState(() { 
       _locationCtrler.value = TextEditingValue(
           text:
               '${placemark.administrativeArea}, ${placemark.country}');
