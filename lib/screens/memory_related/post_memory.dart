@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:cross_file_image/cross_file_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -22,7 +23,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/methods.dart';
-import 'package:geotagar/screens/map.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({
@@ -39,6 +39,8 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
+  late Map<String, dynamic> userData;
+  bool isLoading = false;
   bool isUploading = false;
   final TextEditingController _descCtrler = TextEditingController();
   final TextEditingController _locationCtrler = TextEditingController();
@@ -51,10 +53,38 @@ class _AddPostState extends State<AddPost> {
   bool normalmode = true;
 
   @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  @override
   void dispose() {
     _descCtrler.dispose();
     _locationCtrler.dispose();
     super.dispose();
+  }
+
+  getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      var userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      userData = userSnap.data()!;
+      setState(() {});
+    } catch (e) {
+      showSnackBar(
+        context,
+        e.toString(),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   compressImage() async {
@@ -170,7 +200,7 @@ class _AddPostState extends State<AddPost> {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = Provider.of<UserProvider>(context).getUser;
+    //final UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,
@@ -305,7 +335,7 @@ class _AddPostState extends State<AddPost> {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(user.profilePic),
+                      backgroundImage: NetworkImage(userData['profilePic']),
                     ),
                   ),
                 ),
@@ -354,14 +384,16 @@ class _AddPostState extends State<AddPost> {
                     Visibility(
                       visible: (!kIsWeb), //add anchor
                       child: ElevatedButton(
-                        onPressed: ((isUploading) || (locationSet==false))
+                        onPressed: ((isUploading) || (locationSet == false))
                             ? null
                             : () {
                                 setState(() {
                                   normalmode = false;
                                 });
                                 handleSubmit(
-                                    user.uid, user.username, user.profilePic);
+                                    userData['uid'],
+                                    userData['username'],
+                                    userData['profilePic']);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -395,11 +427,8 @@ class _AddPostState extends State<AddPost> {
                           ? null
                           : () {
                               //print(locationSet);
-                              handleSubmit(
-                                user.uid,
-                                user.username,
-                                user.profilePic,
-                              );
+                              handleSubmit(userData['uid'],
+                                  userData['username'], userData['profilePic']);
                             }, //() => handleSubmit(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 27, 1, 78),
