@@ -57,6 +57,7 @@ dependencies:
   image: ^3.0.2
   image_cropper: ^3.0.1
   image_picker: ^0.8.6+1
+  introduction_screen: ^3.1.7
   location: ^4.4.0
   path_provider: ^2.0.12
   provider: ^6.0.5
@@ -118,6 +119,7 @@ flutter:
     - assets/images/forgotPasswordBG.png
     - assets/images/spaceBg.jpg
     - assets/images/earth.png
+    - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
