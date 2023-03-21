@@ -1,13 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_collection_literals
+// ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geotagar/services/firestore.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/constants/constants.dart';
-
-const double ZOOM = 1;
+import '../utils/methods.dart';
+import 'package:geolocator/geolocator.dart';
 
 // ignore: camel_case_types
 class scrapBookLocations extends StatefulWidget {
@@ -22,107 +22,89 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
   final Completer<GoogleMapController> _controller = Completer();
   static const LatLng sBook1 = LatLng(37.33500926, -122.03272188);
   static const LatLng sBook2 = LatLng(37.33429383, -122.06600055);
+  Future<Position> position =
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   BitmapDescriptor sBookIcon = BitmapDescriptor.defaultMarker;
-  void setCustomMarkerIcon() {
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/images/Marker.png")
-        .then(
+  late Map<String, dynamic> locations;
+  //GoogleMapController myController;
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
+  void setCustomMarkerIcon(String url) {
+    BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, url).then(
       (icon) {
         sBookIcon = icon;
       },
     );
   }
 
+  void initMarker(specify, specifyId) async {
+    var markerIdVal = specifyId;
+    final MarkerId markerId = MarkerId(markerIdVal);
+    setCustomMarkerIcon(specify['postUrl']);
+    final Marker marker = Marker(
+      markerId: markerId,
+      icon: sBookIcon,
+      position:
+          LatLng(specify['location'].latitude, specify['location'].longitude),
+    );
+    setState(() {
+      markers[markerId] = marker;
+    });
+  }
+
+  getMarkerData() async {
+    FirebaseFirestore.instance.collection('posts').get().then((locations) {
+      if (locations.docs.isNotEmpty) {
+        for (int i = 0; i < locations.docs.length; i++) {
+          initMarker(locations.docs[i].data(), locations.docs[i].id);
+        }
+      }
+    });
+  }
+
   @override
   void initState() {
-    setCustomMarkerIcon();
+    getMarkerData();
     super.initState();
   }
 
-  //static GoogleMapController _googleMapController;
-  Set<Marker> markers = Set();
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-        // appBar: AppBar(
-        //   centerTitle: false,
-        //   toolbarHeight: 90,
-        //   elevation: 3,
-        //   //used to remove the back button from appBar
-        //   automaticallyImplyLeading: false,
-        //   backgroundColor: Colors.black,
-        //   title: const Text(
-        //     "Near You",
-        //     style: TextStyle(
-        //       color: Colors.white,
-        //       fontSize: 30,
-        //       fontWeight: FontWeight.w900,
-        //       //fontFamily: 'arial',
-        //     ),
-        //   ),
-        // ),
-
-        appBar: width > 600
-            ? null
-            : AppBar(
-                backgroundColor: Color.fromARGB(255, 29, 29, 29),
-                automaticallyImplyLeading: false,
-                centerTitle: true,
-                toolbarHeight: 90,
-                title: Row(
-                  children: [
-                    Image.asset(
-                      Constants.logoPathBlack,
-                      height: 200.0,
-                      width: 200.0,
+      appBar: width > 600
+          ? null
+          : AppBar(
+              backgroundColor: Color.fromARGB(255, 29, 29, 29),
+              automaticallyImplyLeading: false,
+              centerTitle: true,
+              toolbarHeight: 90,
+              title: Row(
+                children: [
+                  Image.asset(
+                    Constants.logoPathBlack,
+                    height: 200.0,
+                    width: 200.0,
+                  ),
+                  const Text(
+                    'NEAR YOU',
+                    style: TextStyle(
+                      fontSize: 28,
                     ),
-                    const Text(
-                      'NEAR YOU',
-                      style: TextStyle(
-                        fontSize: 34,
-                      ),
-                    ),
-                  ],
-                )),
-        body: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection("Location").snapshots(),
-            builder: (context, snapshot) {
-              print(snapshot);
-              if (snapshot.hasData) {
-                //Extract the location from document
-                GeoPoint location = snapshot.data!.docs.first.get("location");
-
-                // Check if location is valid
-                if (location == null) {
-                  return Text("There was no location data");
-                }
-
-                // Remove any existing markers
-                markers.clear();
-
-                final latLng = LatLng(location.latitude, location.longitude);
-
-                // Add new marker with markerId.
-                markers.add(
-                    Marker(markerId: MarkerId("location"), position: latLng));
-
-                return GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(location.latitude, location.longitude)),
-                  // Markers to be pointed
-                  markers: markers,
-                  // onMapCreated: (controller) {
-                  //   // Assign the controller value to use it later
-                  //   controller = controller;
-                  // },
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }));
+                  ),
+                ],
+              )),
+      body: GoogleMap(
+        initialCameraPosition: const CameraPosition(
+          target: position,
+          zoom: 10,
+        ),
+        markers: Set<Marker>.of(markers.values),
+        myLocationEnabled: true,
+        onMapCreated: (GoogleMapController controller) {
+          controller = controller;
+        },
+      ),
+    );
   }
 }
