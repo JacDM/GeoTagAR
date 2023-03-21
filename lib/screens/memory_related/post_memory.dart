@@ -352,9 +352,9 @@ class _AddPostState extends State<AddPost> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Visibility(
-                      visible: (!kIsWeb),
+                      visible: (!kIsWeb), //add anchor
                       child: ElevatedButton(
-                        onPressed: ((isUploading) || (_locationCtrler == null))
+                        onPressed: ((isUploading) || (locationSet==false))
                             ? null
                             : () {
                                 setState(() {
