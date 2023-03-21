@@ -21,6 +21,8 @@ class LogIn extends StatefulWidget {
 
   @override
   State<LogIn> createState() => _LogInState();
+
+  void logIn() {}
 }
 
 class _LogInState extends State<LogIn> {
