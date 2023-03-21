@@ -1,5 +1,6 @@
 //import 'dart:html';
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -7,14 +8,14 @@ import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:geotagar/screens/memory_related/post_memory.dart';
 import 'package:geotagar/utils/methods.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cross_file/cross_file.dart';
-//import 'package:image_cropper/image_cropper.dart';
-
+import 'package:crop_image/crop_image.dart';
 //import 'package:anim_search_bar/anim_search_bar.dart';
 
 class CreateMemory extends StatefulWidget {
@@ -71,32 +72,37 @@ class _CreateMemoryState extends State<CreateMemory> {
   _cropImage(XFile file) async {
     File tempFile = File(file.path);
 
-    final croppedImg = await ImageCropper().cropImage(
-      sourcePath: tempFile.path,
-      aspectRatioPresets: [
-        //CropAspectRatioPreset.square,
-        //CropAspectRatioPreset.original,
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (builder) => Cropper(image: croppedImg)));
+    if (!kIsWeb) {
+      final croppedImg = await ImageCropper()
+          .cropImage(sourcePath: tempFile.path, aspectRatioPresets: [
         CropAspectRatioPreset.ratio16x9,
         CropAspectRatioPreset.ratio4x3,
-      ],
-      uiSettings: [
+      ], uiSettings: [
         AndroidUiSettings(
-          toolbarTitle: 'Crop/Resize',
-          toolbarColor: Colors.black,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.ratio16x9,
-          lockAspectRatio: true
-        ),
+            toolbarTitle: 'Crop/Resize',
+            toolbarColor: Colors.black,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.ratio16x9,
+            lockAspectRatio: true),
         IOSUiSettings(title: 'Crop/Resize'),
         WebUiSettings(context: context),
-      ]
-    );
+      ]);
 
-    if (croppedImg != null){
-      imageCache.clear();
-      setState(() {
-        imagefile = XFile(croppedImg.path);
-      });
+      if (croppedImg != null) {
+        imageCache.clear();
+        setState(() {
+          imagefile = XFile(croppedImg.path);
+        });
+      }
+    } else {
+      final webImg = Image(image: XFileImage(file));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Cropper(image: webImg),
+          ));
     }
 
     Navigator.push(
@@ -104,14 +110,13 @@ class _CreateMemoryState extends State<CreateMemory> {
         MaterialPageRoute(
             builder: (builder) => AddPost(
                   image: imagefile!,
-                )));    
+                )));
 
     //return XFile(tempFile.path);
   }
 
   Future _takePicture(BuildContext context) async {
     if (_cam.value.isInitialized) {
-      
       XFile picFiletemp = await _cam.takePicture();
       if (picFiletemp != null) {
         _cropImage(picFiletemp);
@@ -120,7 +125,6 @@ class _CreateMemoryState extends State<CreateMemory> {
       //   imagefile = picFiletemp;
       // });
     }
-
   }
 
   _openGallery() async {
@@ -128,7 +132,6 @@ class _CreateMemoryState extends State<CreateMemory> {
 
     if (imagefile != null) {
       _cropImage(imagefile!);
-
     } else {
       showSnackBar(context, 'No image selected!');
     }
@@ -201,5 +204,82 @@ class _CreateMemoryState extends State<CreateMemory> {
         )
       ],
     ));
+  }
+}
+
+class Cropper extends StatefulWidget {
+  const Cropper({super.key, required this.image});
+
+  final Image image;
+  @override
+  State<Cropper> createState() => _CropperState();
+}
+
+class _CropperState extends State<Cropper> {
+  final _cropCtrler = CropController(
+    aspectRatio: 16 / 9,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Crop/Resize'),
+      ),
+      body: Center(
+        child: CropImage(
+          controller: _cropCtrler,
+          image: widget.image,
+          paddingSize: 25,
+          alwaysMove: true,
+        ),
+      ),
+      bottomNavigationBar: _buttons(),
+    );
+  }
+
+  aspectRatios() {
+    Navigator.pop(context);
+  }
+  _finished(){
+    
+  }
+
+  _buttons() {
+    String val = '16:9';
+    List<DropdownMenuItem> ratios = [
+            DropdownMenuItem(child: Text('16:9')),
+            DropdownMenuItem(child: Text('4:3')),
+          ];
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        IconButton(
+          onPressed: () {
+            _cropCtrler.rotation = CropRotation.up;
+            _cropCtrler.crop = Rect.fromLTRB(0.1, 0.1, 0.9, 0.9);
+            _cropCtrler.aspectRatio = 16 / 9;
+          },
+          icon: Icon(Icons.close),
+        ),
+        DropdownButton(
+          value: val,
+          items: ratios, 
+          onChanged: aspectRatios()),
+        IconButton(
+          onPressed: () => _cropCtrler.rotateLeft(),
+          icon: Icon(Icons.rotate_left),
+        ),
+        IconButton(
+          onPressed: () => _cropCtrler.rotateRight(),
+          icon: Icon(Icons.rotate_right),
+        ),
+        IconButton(
+          onPressed: _finished(),
+          icon: Icon(Icons.close),
+        ),
+      ],
+    );
   }
 }
