@@ -56,7 +56,7 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
     var postData = FirebaseFirestore.instance.collection('posts').get();
     if (postData.toString().isNotEmpty) {
       for (int i = 0; i < postData.toString().length; i++) {
-        initMarker(postData.document(), i);
+        initMarker(postData, i);
       }
     }
   }
