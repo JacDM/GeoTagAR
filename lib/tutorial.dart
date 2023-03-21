@@ -74,10 +74,11 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         ),
       ),
       pages: [
+
         PageViewModel(
           title: "Welcome to GeoTagAR",
           body:
-              "Capture, share and relive memories as you go.",
+          "Capture, share and relive memories as you go.",
           image: _buildImage('images/earth.png'),
           decoration: pageDecoration,
         ),
@@ -91,10 +92,11 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         PageViewModel(
           title: "Tag the world",
           body:
-              "Share your journeys and experiences as you travel. \n Capture memories and add them to your personal scrapbook or scrapbooks of other users.",
+          "Share your journeys and experiences as you travel. \n Capture memories and add them to your personal scrapbook or scrapbooks of other users.",
           image: _buildImage('tag.jpg'),
           decoration: pageDecoration,
         ),
+
         PageViewModel(
           title: "Feed",
           body:
