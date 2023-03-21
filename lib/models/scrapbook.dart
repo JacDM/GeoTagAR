@@ -8,6 +8,7 @@ class Scrapbook {
   final String scrapbookDescription;
   final dynamic location;
   final List<Post> postId;
+  final bool isPrivate;
   Scrapbook({
     required this.scrapbookId,
     required this.scrapbookName,
@@ -15,6 +16,7 @@ class Scrapbook {
     required this.postId,
     required this.scrapbookDescription,
     required this.location,
+    required this.isPrivate,
   });
 
   static Scrapbook fromSnap(DocumentSnapshot snap) {
@@ -26,7 +28,8 @@ class Scrapbook {
         scrapbookThumbnail: snapshot["scrapbookThumbnail"],
         scrapbookDescription: snapshot["scrapbookpDescription"],
         postId: snapshot["postId"],
-        location: snapshot["location"]);
+        location: snapshot["location"],
+        isPrivate: snapshot["isPrivate"]);
   }
 
   Map<String, dynamic> toJson() => {
@@ -35,6 +38,8 @@ class Scrapbook {
         "scrapbookThumbnail": scrapbookThumbnail,
         "scrapbookDescription": scrapbookDescription,
         "postId": postId,
+        "location": location,
+        "isPrivate": isPrivate,
       };
 
   // Scrapbook copyWith({
@@ -63,6 +68,7 @@ class Scrapbook {
       'postId': postId,
       'scrapbookDescription': scrapbookDescription,
       'location': location,
+      'isPrivate': isPrivate,
     };
   }
 
@@ -74,6 +80,7 @@ class Scrapbook {
       scrapbookDescription: map['description'] ?? '',
       postId: List<Post>.from(map['postId']),
       location: map['location'],
+      isPrivate: map['isPrivate'],
     );
   }
 }
