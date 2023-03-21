@@ -101,6 +101,8 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 29, 29, 29),
+        toolbarHeight: 90,
         title: const Text('Settings'),
       ),
       body: isLoading

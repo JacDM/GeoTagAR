@@ -44,6 +44,8 @@ class _ActivityStatus extends State<ActivityStatus> {
     return Scaffold(
       //appbar
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 29, 29, 29),
+        toolbarHeight: 90,
         title: const Text('ACTIVITY STATUS'),
       ),
 

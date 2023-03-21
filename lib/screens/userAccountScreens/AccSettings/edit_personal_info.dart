@@ -26,6 +26,8 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
     return Scaffold(
       //appbar
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 29, 29, 29),
+        toolbarHeight: 90,
         title: const Text('EDIT PERSONAL INFO'),
       ),
 

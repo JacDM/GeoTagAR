@@ -22,6 +22,8 @@ class _AccountSettingsState extends State<AccountSettings> {
     return Scaffold(
       //appbar
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 29, 29, 29),
+        toolbarHeight: 90,
         title: const Text('ACCOUNT SETTINGS'),
       ),
 
