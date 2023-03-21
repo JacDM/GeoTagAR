@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
@@ -12,14 +11,24 @@ import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
+import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../layout/mobile_layout.dart';
+import '../layout/web_layout.dart';
+
 class ARState extends StatefulWidget {
-  ARState({Key? key}) : super(key: key);
+  final String postId;
+
+  const ARState({
+    super.key,
+    required this.postId,
+  });
+
   @override
   _ARStateState createState() => _ARStateState();
 }
@@ -28,6 +37,9 @@ class _ARStateState extends State<ARState> {
   // Firebase stuff
   bool _initialized = false;
   bool _error = false;
+  bool _placed = false;
+  bool _placing = false;
+  bool _oneHit = false;
   FirebaseManager firebaseManager = FirebaseManager();
   Map<String, Map> anchorsInDownloadProgress = Map<String, Map>();
 
@@ -38,16 +50,27 @@ class _ARStateState extends State<ARState> {
 
   List<ARNode> nodes = [];
   List<ARAnchor> anchors = [];
+  ARAnchor? anchor;
+  ARNode? node;
   String lastUploadedAnchor = "";
 
   bool readyToUpload = false;
   bool readyToDownload = true;
+
+  void _GoToPost() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const LogIn()),
+    );
+  }
 
   @override
   void initState() {
     firebaseManager.initializeFlutterFire().then((value) => setState(() {
           _initialized = value;
           _error = !value;
+          _placing = false;
+          _placed = false;
+          _oneHit = false;
         }));
 
     super.initState();
@@ -86,7 +109,7 @@ class _ARStateState extends State<ARState> {
           ),
           body: Container(
               child: Center(
-                  child: Column(children: [
+                  child: Column(children: const [
             CircularProgressIndicator(),
             Text("Initializing Firebase")
           ]))));
@@ -109,7 +132,7 @@ class _ARStateState extends State<ARState> {
                 children: [
                   ElevatedButton(
                       onPressed: onRemoveEverything,
-                      child: Text("Remove Everything")),
+                      child: const Text("Remove Everything")),
                 ]),
           ),
           Align(
@@ -121,12 +144,24 @@ class _ARStateState extends State<ARState> {
                       visible: readyToUpload,
                       child: ElevatedButton(
                           onPressed: onUploadButtonPressed,
-                          child: Text("Upload"))),
+                          child: const Text("Upload"))),
+                  Visibility(
+                      visible: _placing,
+                      child: Column(children: const [
+                        CircularProgressIndicator(),
+                        Text("Uploading Anchor")
+                      ])),
+                  Visibility(
+                      visible: _placed,
+                      child: ElevatedButton(
+                          onPressed: _GoToPost,
+                          child: const Text("Create Post"))),
+                  //addpsot
                   Visibility(
                       visible: readyToDownload,
                       child: ElevatedButton(
                           onPressed: onDownloadButtonPressed,
-                          child: Text("Download"))),
+                          child: const Text("Get Anchors Back"))),
                 ]),
           )
         ])));
@@ -157,8 +192,8 @@ class _ARStateState extends State<ARState> {
     this.arAnchorManager!.onAnchorDownloaded = onAnchorDownloaded;
 
     this
-        .arLocationManager
-        !.startLocationUpdates()
+        .arLocationManager!
+        .startLocationUpdates()
         .then((value) => null)
         .onError((error, stackTrace) {
       switch (error.toString()) {
@@ -213,6 +248,7 @@ class _ARStateState extends State<ARState> {
       this.arAnchorManager!.removeAnchor(anchor);
     });
     anchors = [];
+    //this.arAnchorManager!.removeAnchor(this.anchor!);
     if (lastUploadedAnchor != "") {
       setState(() {
         readyToDownload = true;
@@ -227,9 +263,10 @@ class _ARStateState extends State<ARState> {
   }
 
   Future<void> onNodeTapped(List<String> nodeNames) async {
-    var foregroundNode =
-        nodes.firstWhere((element) => element.name == nodeNames.first);
+    var foregroundNode = nodes.firstWhere((element) => element.name == nodeNames.first);
     this.arSessionManager!.onError(foregroundNode.data!["onTapText"]);
+    print(foregroundNode.data!["postid"]);
+    this.arSessionManager!.onError(foregroundNode.data!["postid"]);
   }
 
   Future<void> onPlaneOrPointTapped(
@@ -245,17 +282,20 @@ class _ARStateState extends State<ARState> {
         // Add note to anchor
         var newNode = ARNode(
             type: NodeType.webGLB,
-            uri: "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
+            uri:
+                "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
             scale: Vector3(0.2, 0.2, 0.2),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0),
-            data: {"onTapText": "Ouch, that hurt!"});
-        bool? didAddNodeToAnchor =
-            await this.arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
+            data: {"onTapText": "Ouch, that hurt!","postid" : widget.postId});
+        bool? didAddNodeToAnchor = await this
+            .arObjectManager!
+            .addNode(newNode, planeAnchor: newAnchor);
         if (didAddNodeToAnchor ?? false) {
           this.nodes.add(newNode);
           setState(() {
             readyToUpload = true;
+            _oneHit = true;
           });
         } else {
           this.arSessionManager!.onError("Adding Node to Anchor failed");
@@ -270,6 +310,7 @@ class _ARStateState extends State<ARState> {
     this.arAnchorManager!.uploadAnchor(this.anchors.last);
     setState(() {
       readyToUpload = false;
+      _placing = true;
     });
   }
 
@@ -285,19 +326,34 @@ class _ARStateState extends State<ARState> {
     setState(() {
       readyToDownload = true;
       readyToUpload = false;
+      _placing = false;
+      _placed = true;
     });
     this.arSessionManager!.onError("Upload successful");
+     Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (builder) => LayoutBuilder(builder: (context, constraints) {
+                if (constraints.maxWidth > 600) {
+                  return WebScreenLayout();
+                }
+                return MobileScreenLayout();
+              })),
+    );
   }
 
-  ARAnchor onAnchorDownloaded(Map<String, dynamic>serializedAnchor) {
-    final anchor = ARPlaneAnchor.fromJson(anchorsInDownloadProgress[serializedAnchor["cloudanchorid"]] as Map<String, dynamic>);
+  ARAnchor onAnchorDownloaded(Map<String, dynamic> serializedAnchor) {
+    final anchor = ARPlaneAnchor.fromJson(
+        anchorsInDownloadProgress[serializedAnchor["cloudanchorid"]]
+            as Map<String, dynamic>);
     anchorsInDownloadProgress.remove(anchor.cloudanchorid);
     this.anchors.add(anchor);
 
     // Download nodes attached to this anchor
     firebaseManager.getObjectsFromAnchor(anchor, (snapshot) {
       snapshot.docs.forEach((objectDoc) {
-        ARNode object = ARNode.fromMap(objectDoc.data() as Map<String, dynamic>);
+        ARNode object =
+            ARNode.fromMap(objectDoc.data() as Map<String, dynamic>);
         arObjectManager!.addNode(object, planeAnchor: anchor);
         this.nodes.add(object);
       });
@@ -318,7 +374,8 @@ class _ARStateState extends State<ARState> {
     if (this.arLocationManager!.currentLocation != null) {
       firebaseManager.downloadAnchorsByLocation((snapshot) {
         final cloudAnchorId = snapshot.get("cloudanchorid");
-        anchorsInDownloadProgress[cloudAnchorId] = snapshot.data() as Map<String, dynamic>;
+        anchorsInDownloadProgress[cloudAnchorId] =
+            snapshot.data() as Map<String, dynamic>;
         arAnchorManager!.downloadAnchor(cloudAnchorId);
       }, this.arLocationManager!.currentLocation, 0.1);
       setState(() {
@@ -444,7 +501,8 @@ class FirebaseManager {
         geo!.point(latitude: location.latitude, longitude: location.longitude);
 
     Stream<List<DocumentSnapshot>> stream = geo!
-        .collection(collectionRef: anchorCollection! as Query<Map<String, dynamic>>)
+        .collection(
+            collectionRef: anchorCollection! as Query<Map<String, dynamic>>)
         .within(center: center, radius: radius, field: 'position');
 
     stream.listen((List<DocumentSnapshot> documentList) {

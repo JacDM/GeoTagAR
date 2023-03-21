@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geotagar/utils/colors.dart';
@@ -14,6 +15,15 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
+  Future<List<String>> _getFollowingList() async {
+    DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    return List<String>.from(userDoc.data()!['following']);
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -33,65 +43,58 @@ class _FeedState extends State<Feed> {
                     Constants.logoPathBlack,
                     height: 200.0,
                     width: 200.0,
-
                   ),
-
                   const Text(
-                            'FEED',
-                            style: TextStyle(fontSize: 34, ),
-                          ),
-
+                    'FEED',
+                    style: TextStyle(
+                      fontSize: 34,
+                    ),
+                  ),
                 ],
-              )
-
-
-              // actions: [
-              //   IconButton(
-              //     icon: const Icon(
-              //       Icons.chat_bubble_outline_rounded,
-              //       color: Pallete.whiteColor,
-              //     ),
-              //     onPressed: () {},
-              //   ),
-              // ],
-            ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-        builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+              )),
+      body: FutureBuilder<List<String>>(
+        future: _getFollowingList(),
+        builder: (context, followingSnapshot) {
+          if (!followingSnapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (ctx, index) => Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: width > 600 ? width * 0.3 : 0,
-                vertical: width > 600 ? 15 : 0,
-              ),
-
-              child: Stack (
-                children: [
-                  Container(
-                    margin:
-                    const EdgeInsets.symmetric(vertical: 8),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.grey.shade200,
-                    ),
-
-                    // Try fixing the length of the rectangle box and the circle icon which is exceeding its limits
-                    child: PostCard(
-                      snap: snapshot.data!.docs[index].data(),
-                    ),
+          final List<String> followingList = followingSnapshot.data!;
+          return StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('posts')
+                .where('uid', whereIn: followingList)
+                .snapshots(),
+            builder: (context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (ctx, index) => Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: width > 600 ? width * 0.3 : 0,
+                    vertical: width > 600 ? 15 : 0,
                   ),
-                ],
-              ),
-            ),
+                  child: Stack(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 16),
+                        child: PostCard(
+                          snap: snapshot.data!.docs[index].data(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

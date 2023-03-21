@@ -19,7 +19,8 @@ class ReusableTextField extends StatelessWidget {
       this.suffix,
       this.prefix,
       this.textColor,
-      this.onFieldSubmitted});
+      this.onFieldSubmitted,
+      this.maxLength});
 
   final Color? textColor;
 
@@ -35,6 +36,7 @@ class ReusableTextField extends StatelessWidget {
   final String hintText;
   final Widget? suffix;
   final Widget? prefix;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class ReusableTextField extends StatelessWidget {
           enableSuggestions: !obscure,
           autocorrect: !obscure,
           controller: controller,
+          maxLength: maxLength,
           style: TextStyle(
             color: textColor ??
                 const Color.fromARGB(255, 58, 58, 58).withOpacity(0.9),

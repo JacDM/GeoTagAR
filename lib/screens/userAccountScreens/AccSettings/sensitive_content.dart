@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const Color k_fontTextColour = Colors.black;
 const Color k_submitButtonBgColour = Color(0xFF263238);
-const Color k_SwitchIconColour =  Color(0xFF263238);  //bluegrey[900]
+const Color k_SwitchIconColour = Color(0xFF263238); //bluegrey[900]
 
 class SCC extends StatefulWidget {
   const SCC({super.key});
@@ -12,14 +12,12 @@ class SCC extends StatefulWidget {
 }
 
 int counter = 0;
-enum SCCSwitchMode{
-  on,
-  off
-}
+
+enum SCCSwitchMode { on, off }
+
 SCCSwitchMode switchSCCModeFlag = SCCSwitchMode.off;
 
 class _SCC extends State<SCC> {
-
   Icon onModeSwitch = const Icon(
     Icons.toggle_on,
     size: 75.0,
@@ -31,20 +29,17 @@ class _SCC extends State<SCC> {
     //color: k_SwitchIconColour,
   );
 
-
   //determine dark/light mode based on
-  void switchMode (){
+  void switchMode() {
     setState(() {
-      counter++;
-      switchSCCModeFlag = counter%2 == 0 ? SCCSwitchMode.on : SCCSwitchMode.off;
+      switchSCCModeFlag = switchSCCModeFlag == SCCSwitchMode.on
+          ? SCCSwitchMode.off
+          : SCCSwitchMode.on;
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       //appbar
       appBar: AppBar(
@@ -58,44 +53,38 @@ class _SCC extends State<SCC> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
-              children:   <Widget>[
-
+              children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Content Control', style: TextStyle(fontSize: 25.0),),
+                    const Text(
+                      'Content Control',
+                      style: TextStyle(fontSize: 25.0),
+                    ),
                     GestureDetector(
                       onTap: switchMode,
                       child: Align(
                         alignment: Alignment.topRight,
-                        child: switchSCCModeFlag == SCCSwitchMode.on ? onModeSwitch : offModeSwitch,
+                        child: switchSCCModeFlag == SCCSwitchMode.on
+                            ? onModeSwitch
+                            : offModeSwitch,
                       ),
                     ),
                   ],
                 ),
-
-                const SizedBox(height: 50.0,),
+                const SizedBox(
+                  height: 50.0,
+                ),
                 Text(
                   'Blocks any NSFW content. '
-                      'You may see fewer photos, videos and content tht may be upsetting or offensive.',
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey[700]
-                  ),
+                  'You may see fewer photos, videos and content tht may be upsetting or offensive.',
+                  style: TextStyle(fontSize: 18.0, color: Colors.grey[700]),
                 ),
-
-
-
-
               ],
             ),
           ),
         ),
       ),
-
-
     );
   }
-
-
 }

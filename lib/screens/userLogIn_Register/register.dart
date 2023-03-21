@@ -1,16 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
-//import 'package:flutter/cupertino.dart';
-import 'package:age_calculator/age_calculator.dart';
-import 'package:geotagar/models/users.dart' as model;
+import 'package:intl/intl.dart';
+
 import 'package:geotagar/services/auth.dart';
 import 'package:geotagar/utils/rectangle_rounded_button.dart';
 
@@ -25,14 +20,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  // _genderState() {
-  //   _selectedGender = _gender[0];
-  // }
-
-  // _accountTypeState() {
-  //   _selectedAccountType = _accountType[0];
-  // }
-
   // Variables
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _usernameTextController = TextEditingController();
@@ -40,16 +27,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordTextController =
       TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  //final TextEditingController _lastNameController = TextEditingController();
-  // final TextEditingController _genderController = TextEditingController();
-  // MODIFY WITH DATE OF BIRTH
   final TextEditingController _ageController = TextEditingController();
-  // final TextEditingController _dayController = TextEditingController();
-  // final TextEditingController _monthController = TextEditingController();
-  // final TextEditingController _yearController = TextEditingController();
-  //final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _birthdateController = TextEditingController();
 
-  String _emailError = '';
   // Prefer not to say?
   final _gender = ["Male", "Female", "Other"];
   final _accountType = ["General", "Geocacher", "Historian"];
@@ -65,8 +45,6 @@ class _RegisterPageState extends State<RegisterPage> {
   int year = 0;
   DateTime birthday = DateTime(0, 0, 0);
 
-  bool _isLoading = false;
-
   @override
   void dispose() {
     _emailTextController.dispose();
@@ -74,38 +52,32 @@ class _RegisterPageState extends State<RegisterPage> {
     _passwordTextController.dispose();
     _confirmPasswordTextController.dispose();
     _nameController.dispose();
-    //_lastNameController.dispose();
     _ageController.dispose();
-    // _dayController.dispose();
-    // _monthController.dispose();
-    // _yearController.dispose();
     super.dispose();
   }
 
   Future register() async {
-    setState(() {
-      _isLoading = true;
-    });
-
     if (passwordMatch()) {
-      await AuthServices()
-          .signUp(
-            email: email,
-            username: username,
-            password: _passwordTextController.text.trim(),
-            name: name,
-            gender: _selectedGender,
-            accountType: _selectedAccountType,
-            // file: Constants.avatarDefault,
-          )
-          .then((value) => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => LogIn()))
-              .onError((error, stackTrace) => print("#${error.toString()}")));
+      int age = calculateAge(_birthdateController.text.trim());
+      if (age >= 18) {
+        await AuthServices()
+            .signUp(
+              email: email,
+              username: username,
+              password: _passwordTextController.text.trim(),
+              name: name,
+              gender: _selectedGender,
+              accountType: _selectedAccountType,
+              age: age,
+            )
+            .then((value) => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => LogIn()))
+                .onError((error, stackTrace) => print("#${error.toString()}")));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Usage is restricted to users below 18!")));
+      }
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   void convert() {
@@ -113,12 +85,6 @@ class _RegisterPageState extends State<RegisterPage> {
       username = _usernameTextController.text.trim();
       email = _emailTextController.text.trim();
       name = _nameController.text.trim();
-      //password = _passwordTextController.text.trim();
-      //lastName = _lastNameController.text.trim();
-      age = int.parse(_ageController.text.trim());
-      // day = int.parse(_dayController.text.trim());
-      // month = int.parse(_monthController.text.trim());
-      // year = int.parse(_yearController.text.trim());
     });
   }
 
@@ -137,9 +103,6 @@ class _RegisterPageState extends State<RegisterPage> {
     if (EmailValidator.validate(_emailTextController.text.trim())) {
       print("Valid email");
     } else if (_emailTextController.text.trim().isEmpty) {
-      setState(() {
-        _emailError = "Email can not be empty";
-      });
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Email address cannot be empty.")));
     } else {
@@ -169,8 +132,6 @@ class _RegisterPageState extends State<RegisterPage> {
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             body: Container(
-                //width: MediaQuery.of(context).size.width,
-                //height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
                     child: Form(
                         key: formKey,
@@ -200,11 +161,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                     controller: _nameController,
                                   ),
                                   SizedBox(height: 20),
-                                  // ReusableTextField(
-                                  //     hintText: "Last Name",
-                                  //     obscure: false,
-                                  //     controller: _lastNameController),
-                                  // SizedBox(height: 20),
                                   ReusableTextField(
                                       hintText: "Username",
                                       obscure: false,
@@ -245,52 +201,37 @@ class _RegisterPageState extends State<RegisterPage> {
                                       controller:
                                           _confirmPasswordTextController),
                                   SizedBox(height: 20),
-                                  ReusableTextField(
-                                      hintText: "Age",
-                                      obscure: false,
-                                      controller: _ageController),
+                                  InkWell(
+                                    onTap: () async {
+                                      final DateTime? picked =
+                                          await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime.now(),
+                                      );
+                                      if (picked != null) {
+                                        _birthdateController.text =
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(picked);
+                                      }
+                                    },
+                                    child: IgnorePointer(
+                                      child: ReusableTextField(
+                                        hintText: "Birthdate",
+                                        obscure: false,
+                                        controller: _birthdateController,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return "Birthdate cannot be empty";
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+
                                   SizedBox(height: 20),
-                                  //ageCalc(),
-                                  // ListTile(
-                                  //   contentPadding:
-                                  //       EdgeInsets.only(left: 0.0, right: 0.0),
-                                  //   title: Row(
-                                  //     mainAxisAlignment: MainAxisAlignment.end,
-                                  //     children: <Widget>[
-                                  //       Flexible(
-                                  //           child: Padding(
-                                  //         padding: const EdgeInsets.symmetric(
-                                  //             vertical: 12, horizontal: 5),
-                                  //         child: ReusableTextField(
-                                  //           hintText: "Day",
-                                  //           obscure: false,
-                                  //           controller: _dayController,
-                                  //         ),
-                                  //       )),
-                                  //       Flexible(
-                                  //           child: Padding(
-                                  //         padding: const EdgeInsets.symmetric(
-                                  //             vertical: 12, horizontal: 5),
-                                  //         child: ReusableTextField(
-                                  //           hintText: "Month",
-                                  //           obscure: false,
-                                  //           controller: _monthController,
-                                  //         ),
-                                  //       )),
-                                  //       Flexible(
-                                  //           child: Padding(
-                                  //         padding: const EdgeInsets.symmetric(
-                                  //             vertical: 12, horizontal: 5),
-                                  //         child: ReusableTextField(
-                                  //           hintText: "Year",
-                                  //           obscure: false,
-                                  //           controller: _yearController,
-                                  //         ),
-                                  //       )),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  //SizedBox(height: 20),
                                   DropdownButtonFormField(
                                     items: _gender
                                         .map((e) => DropdownMenuItem(
@@ -380,95 +321,64 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
 
                                   SizedBox(height: 20),
-                                  RectangleButton(title: "Sign Up", onTap: () {
-                                    // Requires validation
-                                    // final name =
-                                    //   _usernameTextController.text.trim();
-                                    setState(() {
-                                      if (formKey.currentState!.validate()) {
-                                        print("Validated");
-                                        convert();
-                                        emailValidator();
-                                        print("Select gender is: " +
-                                            _selectedGender);
-                                        print("Select account type is: " +
-                                            _selectedAccountType);
+                                  RectangleButton(
+                                      title: "Sign Up",
+                                      onTap: () {
+                                        // Requires validation
+                                        // final name =
+                                        //   _usernameTextController.text.trim();
+                                        setState(() {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            print("Validated");
+                                            convert();
+                                            emailValidator();
+                                            print("Select gender is: " +
+                                                _selectedGender);
+                                            print("Select account type is: " +
+                                                _selectedAccountType);
 
-                                        //modelData();
-                                        //DatabaseMethods().addUser(user);
+                                            //modelData();
+                                            //DatabaseMethods().addUser(user);
 
-                                        register();
-                                      } else {
-                                        print("Not Validated");
-                                      }
-                                    });
-                                  }, buttonColor: Color.fromARGB(255, 214, 238, 120)),
-                                  // SizedBox(height: 20),
-                                  // SizedBox(
-                                  //   height: 200,
-                                  //   child: CupertinoDatePicker(
-                                  //     mode: CupertinoDatePickerMode.date,
-                                  //     initialDateTime: DateTime(1969, 1, 1),
-                                  //     onDateTimeChanged:
-                                  //         (DateTime newDateTime) {
-                                  //       // Do something
-                                  //     },
-                                  //   ),
-                                  // ),
+                                            register();
+                                          } else {
+                                            print("Not Validated");
+                                          }
+                                        });
+                                      },
+                                      buttonColor:
+                                          Color.fromARGB(255, 214, 238, 120)),
                                   SizedBox(height: 30),
                                   signInLink(),
                                   SizedBox(height: 100),
                                 ])))))));
   }
 
-  // void modelData() {
-  //   model.User user = model.User(
-  //     uid: UserCredential.user!.uid,
-  //     email: email,
-  //     username: username,
-  //     name: name,
-  //     //'lastName': lastName,
-  //     age: age,
-  //     gender: _selectedGender,
-  //     accountType: _selectedAccountType,
-  //   );
-  // }
+  int calculateAge(String birthdate) {
+    DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+    DateTime birthDate = dateFormat.parse(birthdate);
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+    int month1 = currentDate.month;
+    int month2 = birthDate.month;
 
-  Row ageCalc() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              // Modify controller
-              ReusableTextField(
-                  hintText: "Day", obscure: false, controller: _ageController),
-              ReusableTextField(
-                  hintText: "Month",
-                  obscure: false,
-                  controller: _ageController),
-              ReusableTextField(
-                  hintText: "Year", obscure: false, controller: _ageController),
-              //Text("Age: "),
-              Text(""),
-            ],
-          ),
-
-          //Text("Age: "),
-        )
-      ],
-    );
+    if (month2 > month1) {
+      age--;
+    } else if (month1 == month2) {
+      int day1 = currentDate.day;
+      int day2 = birthDate.day;
+      if (day2 > day1) {
+        age--;
+      }
+    }
+    return age;
   }
 
   Row signInLink() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // const Text("Don't have account?",
-        //     style: TextStyle(color: Colors.white70)),
         GestureDetector(
           onTap: () {
             Navigator.push(

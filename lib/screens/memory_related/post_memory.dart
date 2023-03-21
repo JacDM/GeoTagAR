@@ -365,12 +365,12 @@ class _AddPostState extends State<AddPost> {
                             MediaQuery.of(context).size.height * 0.075),
                       ),
                       child: Text(
-                        'Post',
+                        'Post', 
                         style: TextStyle(fontSize: 15),
                       ),
                     ),
                     SizedBox(width: 35,),
-                    ElevatedButton(
+                    ElevatedButton( 
                       onPressed: ((isUploading) || (_locationCtrler == null))
                           ? null
                           : () {
