@@ -243,7 +243,7 @@ class _CropperState extends State<Cropper> {
   }
   _finished(){
 
-  }
+  } 
 
   _buttons() {
     String val = '16:9'; 

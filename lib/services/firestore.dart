@@ -27,7 +27,7 @@ class FireStoreMethods {
         datePublished: DateTime.now(),
         postUrl: photoUrl,
         profImage: profImage,
-        location: GeoPoint(lat,long), 
+        location: GeoPoint(lat,long),  
       );
       _firestore.collection('posts').doc(postId).set(post.toJson());
       res = "success";

@@ -18,9 +18,9 @@ import '../screens/userAccountScreens/user_profile.dart';
 List<Widget> homeScreenItems = [
   const Feed(),
   const scrapBookLocations(),
-  ARState(),
+  CMRoute(),//ARState(),
   const DiscoverPage(),
-  UserProfile(
+  UserProfile( 
     uid: FirebaseAuth.instance.currentUser!.uid,
   ),
 ];
