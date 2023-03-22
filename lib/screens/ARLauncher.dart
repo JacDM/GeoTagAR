@@ -1,9 +1,5 @@
 /*
-Name: Akshath Jain
-Date: 3/18/2019 - 4/26/2021
-Purpose: Example app that implements the package: sliding_up_panel
-Copyright: © 2021, Akshath Jain. All rights reserved.
-Licensing: More information can be found here: https://github.com/akshathjain/sliding_up_panel/blob/master/LICENSE
+Boiler plate provided by: Akshath Jain https://github.com/akshathjain/sliding_up_panel/blob/master/LICENSE
 */
 
 import 'dart:async';

@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geotagar/screens/singlePost.dart';
 import 'package:geotagar/utils/post_card.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/constants/constants.dart';
@@ -53,14 +54,19 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
   void initMarker(specify, specifyId) async {
     var markerIdVal = specifyId;
     final MarkerId markerId = MarkerId(markerIdVal);
+    var postId = specify['postId'];
     final Marker marker = Marker(
       markerId: markerId,
       icon: specify['locked'] ? sBookIcon : sBookIcon1,
       //icon: sBookIcon,
-      onTap: () => Dialog(
-        child: Container(
-          child: PostCard(snap: locationSnap),
-        ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) =>
+                LayoutBuilder(builder: (context, constraints) {
+                  dispose();
+                  return SingleFeed(postID: postId);
+                })),
       ),
       position:
           LatLng(specify['location'].latitude, specify['location'].longitude),
