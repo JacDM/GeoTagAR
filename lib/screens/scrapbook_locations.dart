@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
+import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -37,6 +38,13 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
         sBookIcon = icon;
       },
     );
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration.empty, 'assets/images/icon_map.png')
+        .then(
+      (icon) {
+        sBookIcon1 = icon;
+      },
+    );
   }
 
   void initMarker(specify, specifyId) async {
@@ -44,16 +52,28 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
     final MarkerId markerId = MarkerId(markerIdVal);
     final Marker marker = Marker(
       markerId: markerId,
-       icon: specify['locked']
-       ?sBookIcon
-       :sBookIcon1,
+      icon: specify['locked'] ? sBookIcon : sBookIcon1,
       //icon: sBookIcon,
+      onTap: () => BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            backgroundColor: Colors.black,
+            child: _dialogContent(specify['postUrl']),
+          )),
       position:
           LatLng(specify['location'].latitude, specify['location'].longitude),
     );
     setState(() {
       markers[markerId] = marker;
     });
+  }
+
+  Widget _dialogContent(String url) {
+    print(url.toString());
+    // ignore: avoid_unnecessary_containers
+    return Container(child: Image.network(url));
   }
 
   getMarkerData() async {
@@ -85,13 +105,8 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
               centerTitle: true,
               toolbarHeight: 90,
               title: Row(
-                children: [
-                  Image.asset(
-                    Constants.logoPathBlack,
-                    height: 100.0,
-                    width: 100.0,
-                  ),
-                  const Text(
+                children: const [
+                  Text(
                     'NEAR YOU',
                     style: TextStyle(
                       fontSize: 20,

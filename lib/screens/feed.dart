@@ -112,7 +112,7 @@ class _FeedState extends State<Feed> {
             final List<String> followingList = followingSnapshot.data!;
             if (followingList.isEmpty) {
               // show a message or return a Widget that tells the user to follow some users
-              return Center(
+              return const Center(
                 child: Text(
                   'Follow some users by visiting the discover page',
                   style: TextStyle(color: Colors.grey),
@@ -150,12 +150,12 @@ class _FeedState extends State<Feed> {
                         child: Stack(
                           children: [
                             Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              margin: const EdgeInsets.symmetric(vertical: 10),
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 16),
+                                  horizontal: 2, vertical: 2),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(180, 238, 238, 238),
                               ),
                               child: PostCard(
                                 snap: snapshot.data!.docs[index].data(),

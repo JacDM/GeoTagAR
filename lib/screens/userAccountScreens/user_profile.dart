@@ -197,12 +197,12 @@ class _UserProfileState extends State<UserProfile> {
         backgroundColor: Colors.black, // Added
         appBar: AppBar(
           title: Text(userData['username']),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          // leading: IconButton(
+          //   icon: const Icon(Icons.arrow_back),
+          //   onPressed: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
         ),
         body: SingleChildScrollView(
           child: SafeArea(
@@ -474,7 +474,7 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.5,
+                        height: MediaQuery.of(context).size.height * 1.2,
                         child: TabBarView(
                           children: [
                             Padding(
@@ -550,7 +550,7 @@ class _UserProfileState extends State<UserProfile> {
 
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
+                                  physics: const ScrollPhysics(),
                                   itemCount: scrapbooks.isNotEmpty
                                       ? scrapbooks.length * 2 - 1
                                       : 0,
