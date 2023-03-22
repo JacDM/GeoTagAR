@@ -2,35 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geotagar/screens/userLogIn_Register/forgot_password.dart';
 
+// Issues with call Firebase.initializeApp()
 void main() {
-  testWidgets('ForgotPassword widget test', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: MediaQuery(
-          data: MediaQueryData(size: Size(400, 800)),
-          child: ForgotPassword(),
-        ),
-      ),
-    );
+  group('ForgotPassword', () {
+    Widget createWidgetForTesting({required Widget child}) {
+      return MaterialApp(
+        home: child,
+      );
+    }
 
-    // Check if all widgets are displayed correctly
-    expect(find.text('Forgot Password?'), findsOneWidget);
-    expect(
-        find.text(
-            'Enter the email address associated with your account to receive a link to reset your password.'),
-        findsOneWidget);
-    expect(find.byType(TextFormField), findsOneWidget);
-    expect(find.text('Reset password'), findsOneWidget);
+    testWidgets('Should show error message for empty email field',
+        (WidgetTester tester) async {
+      // Build the widget
+      await tester.pumpWidget(createWidgetForTesting(child: ForgotPassword()));
 
-    // Test the button tap
-    await tester.tap(find.text('Reset password'));
-    await tester.pumpAndSettle();
+      // Enter an empty email address
+      await tester.enterText(find.byType(TextField), '');
 
-    // Check if the email validator works
-    final emailField = find.byType(TextFormField);
-    await tester.enterText(emailField, 'invalid-email');
-    await tester.tap(find.text('Reset password'));
-    await tester.pumpAndSettle();
-    expect(find.text('Please enter a valid email address.'), findsOneWidget);
+      // Tap the reset password button
+      await tester.tap(find.text('Reset password'));
+
+      // Verify that an error message is displayed
+      expect(find.text('Email address cannot be empty.'), findsOneWidget);
+    });
+
+    testWidgets('Should show error message for invalid email address',
+        (WidgetTester tester) async {
+      // Build the widget
+      await tester.pumpWidget(createWidgetForTesting(child: ForgotPassword()));
+
+      // Enter an invalid email address
+      await tester.enterText(find.byType(TextField), 'example.com');
+
+      // Tap the reset password button
+      await tester.tap(find.text('Reset password'));
+
+      // Verify that an error message is displayed
+      expect(find.text('Please enter a valid email address.'), findsOneWidget);
+    });
+
+    testWidgets('Should show "Valid email" message for valid email address',
+        (WidgetTester tester) async {
+      // Build the widget
+      await tester.pumpWidget(createWidgetForTesting(child: ForgotPassword()));
+
+      // Enter a valid email address
+      await tester.enterText(find.byType(TextField), 'example@mail.com');
+
+      // Tap the reset password button
+      await tester.tap(find.text('Reset password'));
+
+      // Verify that the "Valid email" message is printed to the console
+      expect(tester.getSemantics(find.byType(Row)),
+          matchesSemantics(label: 'Valid email'));
+    });
   });
 }

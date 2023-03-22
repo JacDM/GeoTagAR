@@ -12,7 +12,7 @@ void main() {
     // Verify that the appbar title is 'RESET PASSWORD'.
     expect(find.text('RESET PASSWORD'), findsNWidgets(2));
 
-    // Verify that there are three text fields for password inputs.
+    // Verify that there are three text fields for all the corresponding password inputs.
     expect(find.byType(TextField), findsNWidgets(3));
 
     // Verify that the update password button is present.
