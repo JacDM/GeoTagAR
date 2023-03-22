@@ -65,15 +65,15 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 toolbarHeight: 90,
                 title: Row(
                   children: [
-                    Image.asset(
-                      Constants.logoPathBlack,
-                      height: 100.0,
-                      width: 100.0,
-                    ),
+                    // Image.asset(
+                    //   Constants.logoPathBlack,
+                    //   height: 100.0,
+                    //   width: 100.0,
+                    // ),
                     const Text(
                       'Discover',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 25,
                         fontFamily: "ABeeZee",
                       ),
                     ),

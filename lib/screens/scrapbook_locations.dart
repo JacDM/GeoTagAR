@@ -102,9 +102,9 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
               title: Row(
                 children: const [
                   Text(
-                    'NEAR YOU',
+                    'Near You',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontFamily: "ABeeZee",
                     ),
                   ),
