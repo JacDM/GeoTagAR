@@ -22,7 +22,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
   final GroupServices _groupServices = GroupServices();
   final TextEditingController _searchTextController = TextEditingController();
   bool showUsers = false;
-  List<bool> selectedGroups = [];
+  //List<bool> selectedGroups = [];
+  Map<String, bool> selectedGroups = {};
 
   @override
   void initState() {
@@ -199,7 +200,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
                         }
                       })
                   : FutureBuilder(
-                      // Test group created in firebase
                       future:
                           FirebaseFirestore.instance.collection('groups').get(),
                       builder: (context, snapshot) {
@@ -208,31 +208,34 @@ class _DiscoverPageState extends State<DiscoverPage> {
                             child: CircularProgressIndicator(),
                           );
                         }
-                        // Initialize the selectedGroups list
-                        (snapshot.data! as dynamic).docs.forEach((doc) async {
-                          String groupId = doc.id;
-                          String currentUserId =
-                              FirebaseAuth.instance.currentUser!.uid;
-                          bool isMember = await _groupServices.isUserInGroup(
-                              groupId, currentUserId);
-                          selectedGroups.add(isMember);
-                        });
+                        if (selectedGroups.isEmpty) {
+                          (snapshot.data! as dynamic).docs.forEach((doc) async {
+                            String groupId = doc.id;
+                            String currentUserId =
+                                FirebaseAuth.instance.currentUser!.uid;
+                            bool isMember = await _groupServices.isUserInGroup(
+                                groupId, currentUserId);
+                            selectedGroups[groupId] = isMember;
+                          });
+                        }
                         return ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           itemCount: (snapshot.data! as dynamic).docs.length,
                           itemBuilder: (context, index) {
-                            bool isSelected = selectedGroups.length > index
-                                ? selectedGroups[index]
-                                : false;
+                            String groupId =
+                                (snapshot.data! as dynamic).docs[index].id;
+                            bool isSelected =
+                                selectedGroups.containsKey(groupId)
+                                    ? selectedGroups[groupId]!
+                                    : false;
+
                             print(index);
                             return InkWell(
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => GroupPage(
-                                      groupId: (snapshot.data! as dynamic)
-                                          .docs[index]
-                                          .id,
+                                      groupId: groupId,
                                     ),
                                   ),
                                 );
@@ -297,10 +300,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                     right: 20,
                                     child: InkWell(
                                       onTap: () async {
-                                        String groupId =
-                                            (snapshot.data! as dynamic)
-                                                .docs[index]
-                                                .id;
                                         String currentUserId = FirebaseAuth
                                             .instance.currentUser!.uid;
                                         bool isMember =
@@ -328,7 +327,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                                             groupId,
                                                             currentUserId);
                                                     setState(() {
-                                                      selectedGroups[index] =
+                                                      selectedGroups[groupId] =
                                                           false;
                                                     });
                                                     Navigator.of(context).pop();
@@ -342,7 +341,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                           await _groupServices.addUserToGroup(
                                               groupId, currentUserId);
                                           setState(() {
-                                            selectedGroups[index] = true;
+                                            selectedGroups[groupId] = true;
                                           });
                                         }
                                       },
