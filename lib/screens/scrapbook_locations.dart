@@ -83,13 +83,14 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
                 children: [
                   Image.asset(
                     Constants.logoPathBlack,
-                    height: 200.0,
-                    width: 200.0,
+                    height: 100.0,
+                    width: 100.0,
                   ),
                   const Text(
                     'NEAR YOU',
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 20,
+                      fontFamily: "ABeeZee",
                     ),
                   ),
                 ],
