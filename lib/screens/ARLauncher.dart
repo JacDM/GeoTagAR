@@ -10,6 +10,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:geotagar/screens/memory_related/createMemoryRoute.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -101,93 +102,123 @@ class _ARLauncherState extends State<ARLauncher> {
               ],
             ),
             const SizedBox(
-              height: 7.0,
+              height: 27.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _button("Create a post", Icons.create, Colors.blue, "CRRoute"),
-                _button(
-                    "Find a Post", Icons.filter_hdr_outlined, Colors.red, "AR"),
+                _button("Create a post", Icons.create, Colors.blue, CMRoute()),
+                _button("Find a Post", Icons.filter_hdr_outlined, Colors.red,
+                    ARState(postId: '00')),
               ],
             ),
-            const SizedBox(
-              height: 36.0,
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Text("Images",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      )),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      CachedNetworkImage(
-                        imageUrl:
-                            "https://images.fineartamerica.com/images-medium-large-5/new-pittsburgh-emmanuel-panagiotakis.jpg",
-                        height: 120.0,
-                        width: (MediaQuery.of(context).size.width - 48) / 2 - 2,
-                        fit: BoxFit.cover,
-                      ),
-                      CachedNetworkImage(
-                        imageUrl:
-                            "https://cdn.pixabay.com/photo/2016/08/11/23/48/pnc-park-1587285_1280.jpg",
-                        width: (MediaQuery.of(context).size.width - 48) / 2 - 2,
-                        height: 120.0,
-                        fit: BoxFit.cover,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 36.0,
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  Text("About",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      )),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
+            // const SizedBox(
+            //   height: 36.0,
+            // ),
+
+            // Container(
+            //   padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+            //   child:
+            //   Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: <Widget>[
+            //       const Text("Images",
+            //           style: TextStyle(
+            //             fontWeight: FontWeight.w600,
+            //           )),
+            //       const SizedBox(
+            //         height: 12.0,
+            //       ),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: <Widget>[
+            //           CachedNetworkImage(
+            //             imageUrl:
+            //                 "https://images.fineartamerica.com/images-medium-large-5/new-pittsburgh-emmanuel-panagiotakis.jpg",
+            //             height: 120.0,
+            //             width: (MediaQuery.of(context).size.width - 48) / 2 - 2,
+            //             fit: BoxFit.cover,
+            //           ),
+            //           CachedNetworkImage(
+            //             imageUrl:
+            //                 "https://cdn.pixabay.com/photo/2016/08/11/23/48/pnc-park-1587285_1280.jpg",
+            //             width: (MediaQuery.of(context).size.width - 48) / 2 - 2,
+            //             height: 120.0,
+            //             fit: BoxFit.cover,
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
+            // const SizedBox(
+            //   height: 36.0,
+            // ),
+            // Container(
+            //   padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: const <Widget>[
+            //       Text("About",
+            //           style: TextStyle(
+            //             fontWeight: FontWeight.w600,
+            //           )),
+            //     ],
+            //   ),
+            // ),
+
+            // const SizedBox(
+            //   height: 24,
+            // ),
           ],
         ));
   }
 
-  Widget _button(String label, IconData icon, Color color, String route) {
+  Widget _button(
+      String label, IconData icon, Color color, StatefulWidget route) {
     return Column(
       children: <Widget>[
         Container(
           padding: const EdgeInsets.all(16.0),
-          child: Icon(
-            icon,
-            color: Colors.white,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (builder) => route));
+            },
+            child: Icon(
+              icon,
+              color: Colors.white,
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color,
+              shadowColor: Colors.transparent,
+            ),
           ),
           decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              boxShadow: const [
-                BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.15),
-                  blurRadius: 8.0,
-                )
-              ]),
+            color: color,
+            shape: BoxShape.circle,
+            boxShadow: const [
+              BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, 0.15),
+                blurRadius: 8.0,
+              )
+            ],
+          ),
+          // child: Icon(
+          //   icon,
+          //   color: Colors.white,
+          // ),
+          //BoxDecoration(
+          //   color: color,
+          //   shape: BoxShape.circle,
+          //   boxShadow: const [
+          //     BoxShadow(
+          //       color: Color.fromRGBO(0, 0, 0, 0.15),
+          //       blurRadius: 8.0,
+          //     )
+          //   ],
+          // ),
         ),
         const SizedBox(
           height: 12.0,
