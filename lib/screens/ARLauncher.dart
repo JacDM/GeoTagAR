@@ -95,8 +95,8 @@ class _ARLauncherState extends State<ARLauncher> {
                 Text(
                   "TAG THE WORLD",
                   style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 33.0,
+                    fontSize: 20,
+                    fontFamily: "ABeeZee",
                   ),
                 ),
               ],
