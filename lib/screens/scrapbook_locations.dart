@@ -20,8 +20,7 @@ class scrapBookLocations extends StatefulWidget {
 // ignore: camel_case_types
 class _scrapBookLocationsState extends State<scrapBookLocations> {
   final Completer<GoogleMapController> _controller = Completer();
-  static const LatLng sBook1 = LatLng(37.33500926, -122.03272188);
-  static const LatLng sBook2 = LatLng(37.33429383, -122.06600055);
+  static const LatLng sBook1 = LatLng(25.102054, 55.162265);
   Future<Position> position =
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   BitmapDescriptor sBookIcon = BitmapDescriptor.defaultMarker;
@@ -29,8 +28,10 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
   //GoogleMapController myController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
-  void setCustomMarkerIcon(String url) {
-    BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, url).then(
+  void setCustomMarkerIcon() {
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration.empty, 'assets/images/lock_icon_map.png')
+        .then(
       (icon) {
         sBookIcon = icon;
       },
@@ -40,9 +41,11 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
   void initMarker(specify, specifyId) async {
     var markerIdVal = specifyId;
     final MarkerId markerId = MarkerId(markerIdVal);
-    setCustomMarkerIcon(specify['postUrl']);
     final Marker marker = Marker(
       markerId: markerId,
+      // icon: specify['locked']
+      // ?something if true
+      // :something if false,
       icon: sBookIcon,
       position:
           LatLng(specify['location'].latitude, specify['location'].longitude),
@@ -64,6 +67,7 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
 
   @override
   void initState() {
+    setCustomMarkerIcon();
     getMarkerData();
     super.initState();
   }
@@ -96,7 +100,7 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
               )),
       body: GoogleMap(
         initialCameraPosition: const CameraPosition(
-          target: position,
+          target: sBook1,
           zoom: 10,
         ),
         markers: Set<Marker>.of(markers.values),
