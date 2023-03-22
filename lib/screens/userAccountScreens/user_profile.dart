@@ -91,7 +91,8 @@ class _UserProfileState extends State<UserProfile> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Create a new scrapbook'),
+          title: const Text('Create a new scrapbook',
+              style: TextStyle(color: Colors.white)),
           content: TextField(
             controller: _scrapbookNameController,
             decoration: InputDecoration(
@@ -145,7 +146,10 @@ class _UserProfileState extends State<UserProfile> {
             List<DocumentSnapshot> scrapbooks = snapshot.data!.docs;
 
             return AlertDialog(
-              title: Text('Select a scrapbook'),
+              title: const Text(
+                'Select a scrapbook',
+                style: TextStyle(color: Colors.white),
+              ),
               content: Container(
                 width: double.maxFinite,
                 child: ListView.builder(
@@ -547,7 +551,9 @@ class _UserProfileState extends State<UserProfile> {
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: scrapbooks.length * 2 - 1,
+                                  itemCount: scrapbooks.isNotEmpty
+                                      ? scrapbooks.length * 2 - 1
+                                      : 0,
                                   itemBuilder: (context, index) {
                                     if (index.isOdd) {
                                       // Add a divider between the list tiles
@@ -568,14 +574,16 @@ class _UserProfileState extends State<UserProfile> {
                                       onTap: () async {
                                         List<String> postIds =
                                             List<String>.from(
-                                                scrapbooks[index]['posts']);
+                                                scrapbooks[scrapbookIndex]
+                                                    ['posts']);
 
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
                                               title: Text(
-                                                  scrapbooks[index]['name']),
+                                                  scrapbooks[scrapbookIndex]
+                                                      ['name']),
                                               content: Container(
                                                 width: double.maxFinite,
                                                 child: FutureBuilder<
@@ -627,7 +635,7 @@ class _UserProfileState extends State<UserProfile> {
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(context),
-                                                  child: Text('Close'),
+                                                  child: const Text('Close'),
                                                 ),
                                               ],
                                             );
