@@ -24,6 +24,7 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
   Future<Position> position =
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   BitmapDescriptor sBookIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor sBookIcon1 = BitmapDescriptor.defaultMarker;
   late Map<String, dynamic> locations;
   //GoogleMapController myController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
@@ -43,10 +44,10 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
     final MarkerId markerId = MarkerId(markerIdVal);
     final Marker marker = Marker(
       markerId: markerId,
-      // icon: specify['locked']
-      // ?something if true
-      // :something if false,
-      icon: sBookIcon,
+       icon: specify['locked']
+       ?sBookIcon
+       :sBookIcon1,
+      //icon: sBookIcon,
       position:
           LatLng(specify['location'].latitude, specify['location'].longitude),
     );
