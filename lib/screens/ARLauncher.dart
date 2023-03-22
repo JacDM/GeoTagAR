@@ -95,8 +95,8 @@ class _ARLauncherState extends State<ARLauncher> {
                 Text(
                   "TAG THE WORLD",
                   style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "ABeeZee",
+                    fontWeight: FontWeight.normal,
+                    fontSize: 33.0,
                   ),
                 ),
               ],
@@ -107,70 +107,11 @@ class _ARLauncherState extends State<ARLauncher> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _button("Create a post", Icons.create, Colors.blue, CMRoute()),
-                _button("Find a Post", Icons.filter_hdr_outlined, Colors.red,
-                    ARState(postId: '00')),
+                _button("Create a Post", Icons.create, Colors.blue, CMRoute()),
+                _button("Find an Anchor", Icons.filter_hdr_outlined, Colors.red,ARState(postId: '00')),
+                //_button("Place historic Anchor", Icons.history_outlined, Colors.green,ARState(postId: "01")),
               ],
             ),
-            // const SizedBox(
-            //   height: 36.0,
-            // ),
-
-            // Container(
-            //   padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-            //   child:
-            //   Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: <Widget>[
-            //       const Text("Images",
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.w600,
-            //           )),
-            //       const SizedBox(
-            //         height: 12.0,
-            //       ),
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: <Widget>[
-            //           CachedNetworkImage(
-            //             imageUrl:
-            //                 "https://images.fineartamerica.com/images-medium-large-5/new-pittsburgh-emmanuel-panagiotakis.jpg",
-            //             height: 120.0,
-            //             width: (MediaQuery.of(context).size.width - 48) / 2 - 2,
-            //             fit: BoxFit.cover,
-            //           ),
-            //           CachedNetworkImage(
-            //             imageUrl:
-            //                 "https://cdn.pixabay.com/photo/2016/08/11/23/48/pnc-park-1587285_1280.jpg",
-            //             width: (MediaQuery.of(context).size.width - 48) / 2 - 2,
-            //             height: 120.0,
-            //             fit: BoxFit.cover,
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
-            // const SizedBox(
-            //   height: 36.0,
-            // ),
-            // Container(
-            //   padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: const <Widget>[
-            //       Text("About",
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.w600,
-            //           )),
-            //     ],
-            //   ),
-            // ),
-
-            // const SizedBox(
-            //   height: 24,
-            // ),
           ],
         ));
   }
@@ -206,19 +147,6 @@ class _ARLauncherState extends State<ARLauncher> {
             ],
           ),
           // child: Icon(
-          //   icon,
-          //   color: Colors.white,
-          // ),
-          //BoxDecoration(
-          //   color: color,
-          //   shape: BoxShape.circle,
-          //   boxShadow: const [
-          //     BoxShadow(
-          //       color: Color.fromRGBO(0, 0, 0, 0.15),
-          //       blurRadius: 8.0,
-          //     )
-          //   ],
-          // ),
         ),
         const SizedBox(
           height: 12.0,

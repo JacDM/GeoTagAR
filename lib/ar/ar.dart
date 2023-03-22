@@ -12,6 +12,8 @@ import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
+import 'package:geotagar/utils/methods.dart';
+import 'package:geotagar/utils/text_Field.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,9 +41,13 @@ class _ARStateState extends State<ARState> {
   bool _error = false;
   bool _placed = false;
   bool _placing = false;
+  bool _downloading = false;
   bool _oneHit = false;
+  bool _historian = false;
+  String _textVal = "";
   FirebaseManager firebaseManager = FirebaseManager();
   Map<String, Map> anchorsInDownloadProgress = Map<String, Map>();
+  TextEditingController _textController = TextEditingController();
 
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
@@ -69,8 +75,15 @@ class _ARStateState extends State<ARState> {
           _initialized = value;
           _error = !value;
           _placing = false;
+          _downloading = false;
           _placed = false;
           _oneHit = false;
+          _textVal = "";
+          if (widget.postId == "01") {
+            _historian = true;
+          } else {
+            _historian = false;
+          }
         }));
 
     super.initState();
@@ -116,62 +129,64 @@ class _ARStateState extends State<ARState> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Cloud Anchors'),
-        ),
+      appBar: AppBar(
+            title: const Text('Cloud Anchors'),
+          ),
         body: Container(
             child: Stack(children: [
-          ARView(
-            onARViewCreated: onARViewCreated,
-            planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
-          ),
-          Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: onRemoveEverything,
-                      child: const Text("Remove Everything")),
-                ]),
-          ),
-          Align(
-            alignment: FractionalOffset.topCenter,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Visibility(
-                      visible: readyToUpload,
-                      child: ElevatedButton(
-                          onPressed: onUploadButtonPressed,
-                          child: const Text("Upload"))),
-                  Visibility(
-                      visible: _placing,
-                      child: Column(children: const [
-                        CircularProgressIndicator(),
-                        Text("Uploading Anchor")
-                      ])),
-                  Visibility(
-                      visible: _placed,
-                      child: ElevatedButton(
-                          onPressed: _GoToPost,
-                          child: const Text("Create Post"))),
-                  //addpsot
-                  Visibility(
-                      visible: readyToDownload,
-                      child: ElevatedButton(
-                          onPressed: onDownloadButtonPressed,
-                          child: const Text("Get Anchors Back"))),
-                ]),
-          )
-        ])));
+      ARView(
+        onARViewCreated: onARViewCreated,
+        planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
+      ),
+      Align(
+        alignment: FractionalOffset.bottomCenter,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          ElevatedButton(
+              onPressed: onRemoveEverything,
+              child: const Text("Remove Everything")),
+        ]),
+      ),
+      Align(
+        alignment: FractionalOffset.topCenter,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Visibility(
+              visible: readyToUpload,
+              child: ElevatedButton(
+                  onPressed: onUploadButtonPressed,
+                  child: const Text("Upload"))),
+          Visibility(
+              visible: _placed,
+              child: ElevatedButton(
+                  onPressed: _GoToPost, child: const Text("Create Post"))),
+          //addpsot
+          Visibility(
+              visible: readyToDownload,
+              child: ElevatedButton(
+                  onPressed: onDownloadButtonPressed,
+                  child: const Text("Get Anchors Back"))),
+          Visibility(
+              visible: _placing,
+              child: Column(children: const [
+                CircularProgressIndicator(),
+                Text("Uploading Anchor")
+              ])),
+          Visibility(
+              visible: _downloading,
+              child: Column(children: const [
+                CircularProgressIndicator(),
+                Text("Downloading Anchor")
+              ])),
+        ]),
+      )
+    ])));
   }
 
   void onARViewCreated(
-      ARSessionManager arSessionManager,
-      ARObjectManager arObjectManager,
-      ARAnchorManager arAnchorManager,
-      ARLocationManager arLocationManager) {
+    ARSessionManager arSessionManager,
+    ARObjectManager arObjectManager,
+    ARAnchorManager arAnchorManager,
+    ARLocationManager arLocationManager,
+  ) {
     this.arSessionManager = arSessionManager;
     this.arObjectManager = arObjectManager;
     this.arAnchorManager = arAnchorManager;
@@ -253,60 +268,105 @@ class _ARStateState extends State<ARState> {
       setState(() {
         readyToDownload = true;
         readyToUpload = false;
+        _placed = false;
+        _placing = false;
       });
     } else {
       setState(() {
         readyToDownload = true;
         readyToUpload = false;
+        _placed = false;
+        _placing = false;
       });
     }
   }
 
   Future<void> onNodeTapped(List<String> nodeNames) async {
-    var foregroundNode = nodes.firstWhere((element) => element.name == nodeNames.first);
+    var foregroundNode =
+        nodes.firstWhere((element) => element.name == nodeNames.first);
     this.arSessionManager!.onError(foregroundNode.data!["onTapText"]);
     print(foregroundNode.data!["postid"]);
     this.arSessionManager!.onError(foregroundNode.data!["postid"]);
   }
 
-  Future<void> onPlaneOrPointTapped(List<ARHitTestResult> hitTestResults) async {
-    if (_placing) {
+  Future<void> onPlaneOrPointTapped(
+      List<ARHitTestResult> hitTestResults) async {
+    if (_placing || _placed) {
       return;
     }
-    else if (_placed) {
+    if (widget.postId == "00") {
+      readyToUpload = false;
       return;
     }
-    var singleHitTestResult = hitTestResults.firstWhere(
-        (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
-    if (singleHitTestResult != null) {
-      var newAnchor = ARPlaneAnchor(
-          transformation: singleHitTestResult.worldTransform, ttl: 2);
-      bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
-      if (didAddAnchor ?? false) {
-        this.anchors.add(newAnchor);
-        // Add note to anchor
-        var newNode = ARNode(
-            type: NodeType.webGLB,
-            uri:
-                "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-            scale: Vector3(0.2, 0.2, 0.2),
-            position: Vector3(0.0, 0.0, 0.0),
-            rotation: Vector4(1.0, 0.0, 0.0, 0.0),
-            data: {"onTapText": "Ouch, that hurt!","postid" : widget.postId});
-        bool? didAddNodeToAnchor = await this
-            .arObjectManager!
-            .addNode(newNode, planeAnchor: newAnchor);
-        if (didAddNodeToAnchor ?? false) {
-          this.nodes.add(newNode);
-          setState(() {
-            readyToUpload = true;
-            _oneHit = true;
-          });
+    if (widget.postId == "01") {
+      _historian = true;
+
+      var singleHitTestResult = hitTestResults.firstWhere(
+          (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
+      if (singleHitTestResult != null) {
+        var newAnchor = ARPlaneAnchor(
+            transformation: singleHitTestResult.worldTransform, ttl: 24);
+        bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
+        if (didAddAnchor ?? false) {
+          this.anchors.add(newAnchor);
+          // Add note to anchor
+          var newNode = ARNode(
+              type: NodeType.webGLB,
+              uri:
+                  "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
+              scale: Vector3(0.2, 0.2, 0.2),
+              position: Vector3(0.0, 0.0, 0.0),
+              rotation: Vector4(1.0, 0.0, 0.0, 0.0),
+              data: {"onTapText": this._textVal, "postid": widget.postId});
+          bool? didAddNodeToAnchor = await this
+              .arObjectManager!
+              .addNode(newNode, planeAnchor: newAnchor);
+          if (didAddNodeToAnchor ?? false) {
+            this.nodes.add(newNode);
+            setState(() {
+              readyToUpload = true;
+              _oneHit = true;
+            });
+          } else {
+            this.arSessionManager!.onError("Adding Node to Anchor failed");
+          }
         } else {
-          this.arSessionManager!.onError("Adding Node to Anchor failed");
+          this.arSessionManager!.onError("Adding Anchor failed");
         }
-      } else {
-        this.arSessionManager!.onError("Adding Anchor failed");
+      }
+    } else {
+      var singleHitTestResult = hitTestResults.firstWhere(
+          (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
+      if (singleHitTestResult != null) {
+        var newAnchor = ARPlaneAnchor(
+            transformation: singleHitTestResult.worldTransform, ttl: 24);
+        bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
+        if (didAddAnchor ?? false) {
+          this.anchors.add(newAnchor);
+          // Add note to anchor
+          var newNode = ARNode(
+              type: NodeType.webGLB,
+              uri:
+                  "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
+              scale: Vector3(0.2, 0.2, 0.2),
+              position: Vector3(0.0, 0.0, 0.0),
+              rotation: Vector4(1.0, 0.0, 0.0, 0.0),
+              data: {"onTapText": "Ouch, that hurt!", "postid": widget.postId});
+          bool? didAddNodeToAnchor = await this
+              .arObjectManager!
+              .addNode(newNode, planeAnchor: newAnchor);
+          if (didAddNodeToAnchor ?? false) {
+            this.nodes.add(newNode);
+            setState(() {
+              readyToUpload = true;
+              _oneHit = true;
+            });
+          } else {
+            this.arSessionManager!.onError("Adding Node to Anchor failed");
+          }
+        } else {
+          this.arSessionManager!.onError("Adding Anchor failed");
+        }
       }
     }
   }
@@ -335,10 +395,11 @@ class _ARStateState extends State<ARState> {
       _placed = true;
     });
     this.arSessionManager!.onError("Upload successful");
-     Navigator.push(
+    Navigator.push(
       context,
       MaterialPageRoute(
           builder: (builder) => LayoutBuilder(builder: (context, constraints) {
+                dispose();
                 if (constraints.maxWidth > 600) {
                   return WebScreenLayout();
                 }
@@ -364,6 +425,9 @@ class _ARStateState extends State<ARState> {
       });
     });
 
+    setState(() {
+      _downloading = false;
+    });
     return anchor;
   }
 
@@ -385,6 +449,7 @@ class _ARStateState extends State<ARState> {
       }, this.arLocationManager!.currentLocation, 0.1);
       setState(() {
         readyToDownload = false;
+        _downloading = true;
       });
     } else {
       this
