@@ -11,6 +11,7 @@ import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
+import 'package:geotagar/screens/singlePost.dart';
 import 'package:geotagar/screens/userLogIn_Register/log_in.dart';
 import 'package:geotagar/utils/methods.dart';
 import 'package:geotagar/utils/text_Field.dart';
@@ -129,56 +130,61 @@ class _ARStateState extends State<ARState> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-            title: const Text('Cloud Anchors'),
-          ),
+        appBar: AppBar(
+          title: const Text('Cloud Anchors'),
+        ),
         body: Container(
             child: Stack(children: [
-      ARView(
-        onARViewCreated: onARViewCreated,
-        planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
-      ),
-      Align(
-        alignment: FractionalOffset.bottomCenter,
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          ElevatedButton(
-              onPressed: onRemoveEverything,
-              child: const Text("Remove Everything")),
-        ]),
-      ),
-      Align(
-        alignment: FractionalOffset.topCenter,
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Visibility(
-              visible: readyToUpload,
-              child: ElevatedButton(
-                  onPressed: onUploadButtonPressed,
-                  child: const Text("Upload"))),
-          Visibility(
-              visible: _placed,
-              child: ElevatedButton(
-                  onPressed: _GoToPost, child: const Text("Create Post"))),
-          //addpsot
-          Visibility(
-              visible: readyToDownload,
-              child: ElevatedButton(
-                  onPressed: onDownloadButtonPressed,
-                  child: const Text("Get Anchors Back"))),
-          Visibility(
-              visible: _placing,
-              child: Column(children: const [
-                CircularProgressIndicator(),
-                Text("Uploading Anchor")
-              ])),
-          Visibility(
-              visible: _downloading,
-              child: Column(children: const [
-                CircularProgressIndicator(),
-                Text("Downloading Anchor")
-              ])),
-        ]),
-      )
-    ])));
+          ARView(
+            onARViewCreated: onARViewCreated,
+            planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
+          ),
+          Align(
+            alignment: FractionalOffset.bottomCenter,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: onRemoveEverything,
+                      child: const Text("Remove Everything")),
+                ]),
+          ),
+          Align(
+            alignment: FractionalOffset.topCenter,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Visibility(
+                      visible: readyToUpload,
+                      child: ElevatedButton(
+                          onPressed: onUploadButtonPressed,
+                          child: const Text("Upload"))),
+                  Visibility(
+                      visible: _placed,
+                      child: ElevatedButton(
+                          onPressed: _GoToPost,
+                          child: const Text("Create Post"))),
+                  //addpsot
+                  Visibility(
+                      visible: readyToDownload,
+                      child: ElevatedButton(
+                          onPressed: onDownloadButtonPressed,
+                          child: const Text("Get Anchors Back"))),
+                  Visibility(
+                      visible: _placing,
+                      child: Column(children: const [
+                        CircularProgressIndicator(),
+                        Text("Uploading Anchor")
+                      ])),
+                  Visibility(
+                      visible: _downloading,
+                      child: Column(children: const [
+                        CircularProgressIndicator(),
+                        Text("Downloading Anchor")
+                      ])),
+                ]),
+          )
+        ])));
   }
 
   void onARViewCreated(
@@ -287,6 +293,14 @@ class _ARStateState extends State<ARState> {
     this.arSessionManager!.onError(foregroundNode.data!["onTapText"]);
     print(foregroundNode.data!["postid"]);
     this.arSessionManager!.onError(foregroundNode.data!["postid"]);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (builder) => LayoutBuilder(builder: (context, constraints) {
+                dispose();
+                return SingleFeed(postID: foregroundNode.data!["postid"]);
+              })),
+    );
   }
 
   Future<void> onPlaneOrPointTapped(
