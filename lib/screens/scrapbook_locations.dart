@@ -20,17 +20,18 @@ class scrapBookLocations extends StatefulWidget {
 // ignore: camel_case_types
 class _scrapBookLocationsState extends State<scrapBookLocations> {
   final Completer<GoogleMapController> _controller = Completer();
-  static const LatLng sBook1 = LatLng(25.1022, 55.1622);
-  //HWU = 25.1022° N, 55.1622° E
-  static const LatLng sBook2 = LatLng(37.33429383, -122.06600055);
-  Future<Position> position = Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  static const LatLng sBook1 = LatLng(25.102054, 55.162265);
+  Future<Position> position =
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   BitmapDescriptor sBookIcon = BitmapDescriptor.defaultMarker;
   late Map<String, dynamic> locations;
   //GoogleMapController myController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
-  void setCustomMarkerIcon(String url) {
-    BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, url).then(
+  void setCustomMarkerIcon() {
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration.empty, 'assets/images/lock_icon_map.png')
+        .then(
       (icon) {
         sBookIcon = icon;
       },
@@ -40,9 +41,11 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
   void initMarker(specify, specifyId) async {
     var markerIdVal = specifyId;
     final MarkerId markerId = MarkerId(markerIdVal);
-    setCustomMarkerIcon(specify['postUrl']);
     final Marker marker = Marker(
       markerId: markerId,
+      // icon: specify['locked']
+      // ?something if true
+      // :something if false,
       icon: sBookIcon,
       position:
           LatLng(specify['location'].latitude, specify['location'].longitude),
@@ -64,6 +67,7 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
 
   @override
   void initState() {
+    setCustomMarkerIcon();
     getMarkerData();
     super.initState();
   }
