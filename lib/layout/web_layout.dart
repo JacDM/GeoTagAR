@@ -18,34 +18,34 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
   int _page = 0;
   late PageController pageController; // for tabs animation
 
-  // late Map<String, dynamic> userData;
-  // bool isLoading = false;
+  late Map<String, dynamic> userData;
+  bool isLoading = false;
 
-  // getData() async {
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   try {
-  //     var userSnap = await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(FirebaseAuth.instance.currentUser!.uid)
-  //         .get();
-  //     userData = userSnap.data()!;
-  //     setState(() {});
-  //   } catch (e) {
-  //     showSnackBar(
-  //       context,
-  //       e.toString(),
-  //     );
-  //   }
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-  // }
+  getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      var userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      userData = userSnap.data()!;
+      setState(() {});
+    } catch (e) {
+      showSnackBar(
+        context,
+        e.toString(),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   void initState() {
-    //getData();
+    getData();
     super.initState();
 
     pageController = PageController();
@@ -73,6 +73,19 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: const [
+          CircularProgressIndicator(
+            value: 0.3,
+            color: Colors.greenAccent,
+          ),
+        ],
+      );
+    } else {
+    
+    
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -80,11 +93,12 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
           fit: BoxFit.cover,
         ),
       ),
-      child: (false) //userData['isAdmin']=='true')
+      child: (userData['isAdmin'])=='true' //userData['isAdmin']=='true')
           ? Scaffold(
               //admin
               appBar: AppBar(
                 backgroundColor: Color.fromARGB(31, 0, 0, 0),
+                automaticallyImplyLeading: false,
                 centerTitle: false,
                 title: const Text("Reported Posts"),
                 actions: [
@@ -134,6 +148,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
             )
           : Scaffold(
               appBar: AppBar(
+                automaticallyImplyLeading: false,
                 backgroundColor:
                     Pallete.darkModeAppTheme.scaffoldBackgroundColor,
                 centerTitle: false,
@@ -184,4 +199,5 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
             ), //normal user
     );
   }
+}
 }
