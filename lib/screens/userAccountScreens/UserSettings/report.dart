@@ -3,6 +3,22 @@ import 'package:geotagar/screens/userAccountScreens/reusableWidgets/custom_butto
 
 const Color k_fontTextColour = Colors.black;
 const Color k_submitButtonBgColour = Colors.teal;
+Widget k_textbox = const TextField(
+  textAlign: TextAlign.left,
+  obscureText: true,
+  style: TextStyle(fontSize: 23.0, height: 0.75, color: Colors.white),
+  cursorColor: Colors.white,
+  decoration: InputDecoration(
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey),
+    ),
+  ),
+  //cursorWidth: 3.0,
+  //cursorHeight: 35.0,
+);
 
 class Report extends StatefulWidget {
   const Report({super.key});
@@ -37,6 +53,7 @@ class _ReportState extends State<Report> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 23.0,
+                    color: Colors.white,
                     //fontFamily: 'FiraCode',
                     //color: k_fontTextColour,
                   ),
@@ -44,17 +61,19 @@ class _ReportState extends State<Report> {
                 const SizedBox(
                   height: 30.0,
                 ),
-
+                k_textbox,
                 //Text Box
-                const TextField(
-                  maxLines: 6,
-                  textAlign: TextAlign.left,
-                  maxLength: 500,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Type here...',
-                  ),
-                ),
+                // const TextField(
+                //   maxLines: 6,
+                //   textAlign: TextAlign.left,
+                //   maxLength: 500,
+                //   decoration: InputDecoration(
+                //     border: OutlineInputBorder(),
+                //     fillColor: Color.fromARGB(255, 63, 62, 59),
+                //     labelText: 'Type here...',
+
+                //   ),
+                // ),
 
                 const SizedBox(
                   height: 20.0,
