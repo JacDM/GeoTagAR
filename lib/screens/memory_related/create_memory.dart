@@ -53,6 +53,13 @@ class _CreateMemoryState extends State<CreateMemory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Icon(Icons.arrow_back),
+        ),
+        title: Text('Create a Post'),
+      ),
       backgroundColor: Colors.grey.shade600,
       //floatingActionButton: getFloatingButtons(),
       body: getBody(),
@@ -90,9 +97,18 @@ class _CreateMemoryState extends State<CreateMemory> {
           lockAspectRatio: true),
       IOSUiSettings(title: 'Crop/Resize'),
       WebUiSettings(
+        boundary: CroppieBoundary(
+            width: (MediaQuery.of(context).size.width * 0.8).round(),
+            height: (MediaQuery.of(context).size.height * 0.4).round()),
+        viewPort: CroppieViewPort(type: 'square'),
+        enableZoom: true,
+        mouseWheelZoom: true,
+        showZoomer: true,
         context: context,
+        presentStyle: CropperPresentStyle.dialog,
         customDialogBuilder: (cropper, crop, rotate) {
           return Dialog(
+            backgroundColor: Colors.black,
             child: Builder(builder: (context) {
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -100,10 +116,34 @@ class _CreateMemoryState extends State<CreateMemory> {
                   children: [
                     Text(
                       'Crop/Resize',
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.left,
+                      
                     ),
-                    cropper,
-                    Row()
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child: cropper,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.5,
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              final res = await crop();
+                              //final List<int> codeUnits = res.codeUnits;
+                              //Navigator.push(context, MaterialPageRoute(builder: (builder) => AddPost(image: image)))
+                            },
+                            icon: Icon(
+                              Icons.done,
+                              color: Colors.blue,
+                            ))
+                      ],
+                    )
                   ],
                 ),
               );
@@ -222,6 +262,25 @@ class _CreateMemoryState extends State<CreateMemory> {
     ));
   }
 }
+
+// class CropperWEB extends StatefulWidget {
+//   const CropperWEB({super.key, required this.cropper, required this.crop, required});
+
+//   @override
+//   State<CropperWEB> createState() => _CropperWEBState();
+// }
+
+// class _CropperWEBState extends State<CropperWEB> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+
+//     );
+//   }
+// }
+
+
+
 
 // class Cropper extends StatefulWidget {
 //   const Cropper({super.key, required this.image});
