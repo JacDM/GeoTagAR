@@ -178,28 +178,28 @@ class _SettingsPageState extends State<SettingsPage> {
                         },
                         pageTabLabel: 'Report a Problem',
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            const Text(
-                              'Dark Mode',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 26.0,
-                                color: k_darkModeFontTextColor,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: darkMode,
-                              child: viewMode == ViewMode.dark
-                                  ? darkModeSwitch
-                                  : lightModeSwitch,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(10.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: <Widget>[
+                      //       const Text(
+                      //         'Dark Mode',
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.bold,
+                      //           fontSize: 26.0,
+                      //           color: k_darkModeFontTextColor,
+                      //         ),
+                      //       ),
+                      //       GestureDetector(
+                      //         onTap: darkMode,
+                      //         child: viewMode == ViewMode.dark
+                      //             ? darkModeSwitch
+                      //             : lightModeSwitch,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       ElevatedButton(
                         onPressed: () {
                           AuthServices().signOut(context).then((value) {
