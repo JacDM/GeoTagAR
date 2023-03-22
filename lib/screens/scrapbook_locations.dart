@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geotagar/utils/post_card.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/constants/constants.dart';
 import '../utils/methods.dart';
@@ -22,6 +23,8 @@ class scrapBookLocations extends StatefulWidget {
 class _scrapBookLocationsState extends State<scrapBookLocations> {
   final Completer<GoogleMapController> _controller = Completer();
   static const LatLng sBook1 = LatLng(25.102054, 55.162265);
+  // ignore: prefer_typing_uninitialized_variables
+  var locationSnap;
   Future<Position> position =
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   BitmapDescriptor sBookIcon = BitmapDescriptor.defaultMarker;
@@ -54,14 +57,11 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
       markerId: markerId,
       icon: specify['locked'] ? sBookIcon : sBookIcon1,
       //icon: sBookIcon,
-      onTap: () => BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0)),
-            backgroundColor: Colors.black,
-            child: _dialogContent(specify['postUrl']),
-          )),
+      onTap: () => Dialog(
+        child: Container(
+          child: PostCard(snap: locationSnap),
+        ),
+      ),
       position:
           LatLng(specify['location'].latitude, specify['location'].longitude),
     );
@@ -70,15 +70,10 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
     });
   }
 
-  Widget _dialogContent(String url) {
-    print(url.toString());
-    // ignore: avoid_unnecessary_containers
-    return Container(child: Image.network(url));
-  }
-
   getMarkerData() async {
     FirebaseFirestore.instance.collection('posts').get().then((locations) {
       if (locations.docs.isNotEmpty) {
+        locationSnap = locations;
         for (int i = 0; i < locations.docs.length; i++) {
           initMarker(locations.docs[i].data(), locations.docs[i].id);
         }

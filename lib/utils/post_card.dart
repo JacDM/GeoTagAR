@@ -145,7 +145,7 @@ class _PostCardState extends State<PostCard> {
           // HEADER SECTION OF THE POST
           Container(
             padding: const EdgeInsets.symmetric(
-              vertical: 10,
+              vertical: 8,
               horizontal: 7,
             ).copyWith(right: 0),
             child: Row(
