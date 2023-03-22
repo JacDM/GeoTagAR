@@ -102,7 +102,6 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
       body: GoogleMap(
         initialCameraPosition: const CameraPosition(
           target: sBook1,
-          target: sBook1,
           zoom: 10,
         ),
         markers: Set<Marker>.of(markers.values),
