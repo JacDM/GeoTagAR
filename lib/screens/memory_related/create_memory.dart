@@ -100,56 +100,63 @@ class _CreateMemoryState extends State<CreateMemory> {
         boundary: CroppieBoundary(
             width: (MediaQuery.of(context).size.width * 0.8).round(),
             height: (MediaQuery.of(context).size.height * 0.4).round()),
-        viewPort: CroppieViewPort(type: 'square'),
+        // viewPort: CroppieViewPort(
+        //     width: (MediaQuery.of(context).size.width * (16 / 9)).round(),
+        //     height: (MediaQuery.of(context).size.height *(9 / 16)).round()),
+        enableOrientation: true,
         enableZoom: true,
         mouseWheelZoom: true,
         showZoomer: true,
         context: context,
         presentStyle: CropperPresentStyle.dialog,
-        customDialogBuilder: (cropper, crop, rotate) {
-          return Dialog(
-            backgroundColor: Colors.black,
-            child: Builder(builder: (context) {
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Text(
-                      'Crop/Resize',
-                      textAlign: TextAlign.left,
-                      
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      child: cropper,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.height * 0.5,
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () async {
-                              final res = await crop();
-                              //final List<int> codeUnits = res.codeUnits;
-                              //Navigator.push(context, MaterialPageRoute(builder: (builder) => AddPost(image: image)))
-                            },
-                            icon: Icon(
-                              Icons.done,
-                              color: Colors.blue,
-                            ))
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }),
-          );
-        },
+
+        // customDialogBuilder: (cropper, crop, rotate) {
+        //   return Dialog(
+        //     backgroundColor: Colors.black,
+        //     child: Builder(builder: (context) {
+        //       return Container(
+        //         padding: EdgeInsets.symmetric(horizontal: 20),
+        //         child: Column(
+        //           children: [
+        //             Text(
+        //               'Crop/Resize',
+        //               textAlign: TextAlign.left,
+
+        //             ),
+        //             SizedBox(
+        //               height: 20,
+        //             ),
+        //             Container(
+        //               child: cropper,
+        //               width: MediaQuery.of(context).size.width * 0.9,
+        //               height: MediaQuery.of(context).size.height * 0.5,
+        //             ),
+        //             SizedBox(
+        //               height: 50,
+        //             ),
+        //             Row(
+        //               children: [
+        //                 IconButton(
+        //                     onPressed: () async {
+        //                       final res = await crop();
+        //                       debugPrint('---------------------');
+        //                       debugPrint(res);
+        //                       debugPrint('---------------------');
+        //                       //final List<int> codeUnits = res.codeUnits;
+        //                       //Navigator.push(context, MaterialPageRoute(builder: (builder) => AddPost(image: image)))
+        //                     },
+        //                     icon: Icon(
+        //                       Icons.done,
+        //                       color: Colors.blue,
+        //                     ))
+        //               ],
+        //             )
+        //           ],
+        //         ),
+        //       );
+        //     }),
+        //   );
+        // },
       ),
     ]);
 
