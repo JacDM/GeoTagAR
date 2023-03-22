@@ -5,7 +5,6 @@ const Color k_fontTextColour = Colors.black;
 const Color k_submitButtonBgColour = Colors.teal;
 Widget k_textbox = const TextField(
   textAlign: TextAlign.left,
-  obscureText: true,
   style: TextStyle(fontSize: 23.0, height: 0.75, color: Colors.white),
   cursorColor: Colors.white,
   decoration: InputDecoration(
