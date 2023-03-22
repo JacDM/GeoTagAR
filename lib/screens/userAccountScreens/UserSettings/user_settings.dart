@@ -114,13 +114,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: <Widget>[
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 75.0,
                         backgroundColor: Colors.white38,
                         child: CircleAvatar(
                           radius: 70.0,
-                          backgroundImage:
-                              NetworkImage(Constants.avatarDefault),
+                          backgroundImage: NetworkImage(userData['profilePic']),
                         ),
                       ),
                       Padding(
@@ -129,7 +128,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           userData['username'],
                           style: const TextStyle(
                             fontSize: 25.0,
-                            color: k_UsernameColour,
+                            color: Colors.white,
                           ),
                         ),
                       ),
