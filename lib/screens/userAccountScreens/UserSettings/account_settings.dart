@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geotagar/screens/userAccountScreens/reusableWidgets/page_tabs.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geotagar/screens/userAccountScreens/AccSettings/data_usage.dart';
 import 'package:geotagar/screens/userAccountScreens/AccSettings/personal_info.dart';
 import 'package:geotagar/screens/userAccountScreens/AccSettings/sensitive_content.dart';
@@ -39,7 +39,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                       setState(() {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return const PersonalInfo();
+                          return PersonalInfo(uid: FirebaseAuth.instance.currentUser!.uid);
                         }));
                       });
                     },

@@ -5,25 +5,18 @@ import 'package:geotagar/core/constants/constants.dart';
 import '../../services/firestore.dart';
 import '../../utils/follow_button.dart';
 import '../../utils/methods.dart';
-import 'UserSettings/edit_profile.dart';
 
-class UserProfile extends StatefulWidget {
+class AdminProfile extends StatefulWidget {
   final String uid;
-  const UserProfile({super.key, required this.uid});
+  const AdminProfile({super.key, required this.uid});
 
   @override
-  State<UserProfile> createState() => _UserProfileState();
+  State<AdminProfile> createState() => _AdminProfileState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _AdminProfileState extends State<AdminProfile> {
   late Map<String, dynamic> userData;
-  final TextEditingController _scrapbookNameController =
-      TextEditingController();
 
-  int postLen = 0;
-  int followers = 0;
-  int following = 0;
-  bool isFollowing = false;
   bool isLoading = false;
 
   @override
@@ -42,19 +35,7 @@ class _UserProfileState extends State<UserProfile> {
           .doc(widget.uid)
           .get();
 
-      // get post lENGTH
-      var postSnap = await FirebaseFirestore.instance
-          .collection('posts')
-          .where('uid', isEqualTo: widget.uid)
-          .get();
-
-      postLen = postSnap.docs.length;
       userData = userSnap.data()!;
-      followers = userSnap.data()!['followers'].length;
-      following = userSnap.data()!['following'].length;
-      isFollowing = userSnap
-          .data()!['followers']
-          .contains(FirebaseAuth.instance.currentUser!.uid);
       setState(() {});
     } catch (e) {
       showSnackBar(
@@ -65,116 +46,6 @@ class _UserProfileState extends State<UserProfile> {
     setState(() {
       isLoading = false;
     });
-  }
-
-  Future<void> addScrapbook(String scrapbookName) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.uid)
-        .collection('scrapbooks')
-        .add({'name': scrapbookName, 'posts': []});
-  }
-
-  Future<void> addPostToScrapbook(String scrapbookId, String postId) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.uid)
-        .collection('scrapbooks')
-        .doc(scrapbookId)
-        .update({
-      'posts': FieldValue.arrayUnion([postId])
-    });
-  }
-
-  void _showScrapbookCreationDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Create a new scrapbook',
-              style: TextStyle(color: Colors.white)),
-          content: TextField(
-            controller: _scrapbookNameController,
-            decoration: InputDecoration(
-              hintText: 'Enter scrapbook name',
-              hintStyle: TextStyle(color: Colors.white70),
-            ),
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Color(0xFF121212),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'Cancel',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                addScrapbook(_scrapbookNameController.text.trim());
-                _scrapbookNameController.clear();
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Create',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // Add this function to create the scrapbook selection dialog
-  void _showScrapbookSelectionDialog(String postId) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(widget.uid)
-              .collection('scrapbooks')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
-
-            List<DocumentSnapshot> scrapbooks = snapshot.data!.docs;
-
-            return AlertDialog(
-              title: const Text(
-                'Select a scrapbook',
-                style: TextStyle(color: Colors.white),
-              ),
-              content: Container(
-                width: double.maxFinite,
-                child: ListView.builder(
-                  itemCount: scrapbooks.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        scrapbooks[index]['name'],
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        addPostToScrapbook(scrapbooks[index].id, postId);
-                        Navigator.pop(context);
-                      },
-                    );
-                  },
-                ),
-              ),
-              backgroundColor: Color(0xFF121212),
-            );
-          },
-        );
-      },
-    );
   }
 
   @override
@@ -312,140 +183,7 @@ class _UserProfileState extends State<UserProfile> {
 
                 //Moments, Followers, Following (Row)
 
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text(
-                        postLen.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      Text(
-                        followers.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      Text(
-                        following.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const <Widget>[
-                      Text(
-                        'Moments',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white, // Added
-                        ),
-                      ),
-                      Text(
-                        'Followers',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white, // Added
-                        ),
-                      ),
-                      Text(
-                        'Following',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white, // Added
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
                 //Edit Profile Button  (not inserted yet)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    FirebaseAuth.instance.currentUser!.uid == widget.uid
-                        ? ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditProfile(
-                                      userData:
-                                          userData.cast<String, dynamic>()),
-                                ),
-                              );
-                            },
-                            child: const Text('Edit Profile'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
-                            ),
-                          )
-                        : isFollowing
-                            ? FollowButton(
-                                text: 'Unfollow',
-                                backgroundColor: Colors.white,
-                                textColor: Colors.black,
-                                borderColor: Colors.grey,
-                                function: () async {
-                                  await FireStoreMethods().followUser(
-                                    FirebaseAuth.instance.currentUser!.uid,
-                                    userData['uid'],
-                                  );
-
-                                  setState(() {
-                                    isFollowing = false;
-                                    followers--;
-                                  });
-                                },
-                              )
-                            : FollowButton(
-                                text: 'Follow',
-                                backgroundColor: Colors.blue,
-                                textColor: Colors.white,
-                                borderColor: Colors.blue,
-                                function: () async {
-                                  await FireStoreMethods().followUser(
-                                    FirebaseAuth.instance.currentUser!.uid,
-                                    userData['uid'],
-                                  );
-
-                                  setState(() {
-                                    isFollowing = true;
-                                    followers++;
-                                  });
-                                },
-                              ),
-                    FirebaseAuth.instance.currentUser!.uid == widget.uid
-                        ? ElevatedButton(
-                            onPressed: _showScrapbookCreationDialog,
-                            child: const Text('Create scrapbook'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                  ],
-                ),
 
                 // SizedBox(
                 //   width: MediaQuery.of(context).size.width - 20,
@@ -511,24 +249,6 @@ class _UserProfileState extends State<UserProfile> {
                                         DocumentSnapshot snap =
                                             (snapshot.data! as dynamic)
                                                 .docs[index];
-
-                                        return GestureDetector(
-                                          onLongPress: () {
-                                            if (FirebaseAuth.instance
-                                                    .currentUser!.uid ==
-                                                widget.uid) {
-                                              _showScrapbookSelectionDialog(
-                                                  snap.id);
-                                            }
-                                          },
-                                          child: Container(
-                                            child: Image(
-                                              image:
-                                                  NetworkImage(snap['postUrl']),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        );
                                       },
                                     );
                                   }),
@@ -551,9 +271,7 @@ class _UserProfileState extends State<UserProfile> {
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: scrapbooks.isNotEmpty
-                                      ? scrapbooks.length * 2 - 1
-                                      : 0,
+                                  itemCount: scrapbooks.length * 2 - 1,
                                   itemBuilder: (context, index) {
                                     if (index.isOdd) {
                                       // Add a divider between the list tiles
@@ -574,16 +292,14 @@ class _UserProfileState extends State<UserProfile> {
                                       onTap: () async {
                                         List<String> postIds =
                                             List<String>.from(
-                                                scrapbooks[scrapbookIndex]
-                                                    ['posts']);
+                                                scrapbooks[index]['posts']);
 
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
                                               title: Text(
-                                                  scrapbooks[scrapbookIndex]
-                                                      ['name']),
+                                                  scrapbooks[index]['name']),
                                               content: Container(
                                                 width: double.maxFinite,
                                                 child: FutureBuilder<
@@ -635,7 +351,7 @@ class _UserProfileState extends State<UserProfile> {
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(context),
-                                                  child: const Text('Close'),
+                                                  child: Text('Close'),
                                                 ),
                                               ],
                                             );

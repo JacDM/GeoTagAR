@@ -138,6 +138,7 @@ class _EditProfileState extends State<EditProfile> {
                           }
                           return null;
                         },
+                        maxLength: 30,
                       ),
                       const SizedBox(height: 10.0),
                       ReusableTextField(
@@ -145,13 +146,14 @@ class _EditProfileState extends State<EditProfile> {
                         hintText: 'Bio',
                         obscure: false,
                         textColor: Colors.white,
+                        maxLength: 60,
                         // Might remove validator
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Enter a bio';
-                          }
-                          return null;
-                        },
+                        // validator: (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Enter a bio';
+                        //   }
+                        //   return null;
+                        // },
                       ),
                       const SizedBox(height: 10.0),
                       DropdownButtonFormField<String>(

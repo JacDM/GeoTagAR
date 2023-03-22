@@ -79,7 +79,7 @@ class _SCC extends State<SCC> {
                 ),
                 Text(
                   'Blocks any NSFW content. '
-                  'You may see fewer photos, videos and content tht may be upsetting or offensive.',
+                  'You may see fewer photos, videos and content that may be upsetting or offensive.',
                   style: TextStyle(fontSize: 18.0, color: Colors.grey[700]),
                 ),
               ],

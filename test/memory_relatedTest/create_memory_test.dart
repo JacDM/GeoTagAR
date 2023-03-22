@@ -5,6 +5,7 @@ import 'package:geotagar/screens/memory_related/create_memory.dart';
 import 'package:geotagar/screens/memory_related/post_memory.dart';
 import 'package:image_picker/image_picker.dart';
 
+// Issues with the camera implementation
 void main() {
   late List<CameraDescription> cameras;
 

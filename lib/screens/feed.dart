@@ -110,11 +110,23 @@ class _FeedState extends State<Feed> {
               );
             }
             final List<String> followingList = followingSnapshot.data!;
-            return StreamBuilder(
+            if (followingList.isEmpty) {
+              // show a message or return a Widget that tells the user to follow some users
+              return Center(
+                child: Text(
+                  'Follow some users by visiting the discover page',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              );
+            } else {
+              return StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('posts')
-                    .where('uid', whereIn: followingList)
-                    //.orderBy('datePublished', descending: true)
+                    .where('uid', whereIn: [
+                  FirebaseAuth.instance.currentUser!.uid,
+                  ...followingList
+                ])
+//.orderBy('datePublished', descending: true)
                     .snapshots(),
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -154,7 +166,9 @@ class _FeedState extends State<Feed> {
                       ),
                     );
                   }
-                });
+                },
+              );
+            }
           },
         ),
       );

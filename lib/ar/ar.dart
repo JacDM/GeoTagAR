@@ -269,8 +269,13 @@ class _ARStateState extends State<ARState> {
     this.arSessionManager!.onError(foregroundNode.data!["postid"]);
   }
 
-  Future<void> onPlaneOrPointTapped(
-      List<ARHitTestResult> hitTestResults) async {
+  Future<void> onPlaneOrPointTapped(List<ARHitTestResult> hitTestResults) async {
+    if (_placing) {
+      return;
+    }
+    else if (_placed) {
+      return;
+    }
     var singleHitTestResult = hitTestResults.firstWhere(
         (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
     if (singleHitTestResult != null) {
