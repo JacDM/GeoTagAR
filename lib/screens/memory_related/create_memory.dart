@@ -158,7 +158,7 @@ class _CreateMemoryState extends State<CreateMemory> {
         //   );
         // },
       ),
-    ]);
+    ]); 
 
     if (croppedImg != null) {
       imageCache.clear();

@@ -220,7 +220,7 @@ class _AddPostState extends State<AddPost> {
   @override
   Widget build(BuildContext context) {
     //final UserModel user = Provider.of<UserProvider>(context).getUser;
-    if (isLoading) {
+    if (isLoading) { 
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: const [

@@ -146,7 +146,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
                 onPageChanged: onPageChanged,
               ),
             )
-          : Scaffold(
+          : Scaffold( 
               appBar: AppBar(
                 automaticallyImplyLeading: false,
                 backgroundColor:
