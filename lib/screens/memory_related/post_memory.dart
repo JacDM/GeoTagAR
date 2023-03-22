@@ -20,6 +20,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:geotagar/services/firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geocode/geocode.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/methods.dart';
@@ -160,7 +161,8 @@ class _AddPostState extends State<AddPost> {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return showSnackBar(context, 'Please enable Location services in Settings!');
+      return showSnackBar(
+          context, 'Please enable Location services in Settings!');
       //Future.error('Location services are disabled.');
     }
 
@@ -168,7 +170,8 @@ class _AddPostState extends State<AddPost> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return showSnackBar(context, 'Location permissions were denied!');//Future.error('Location permissions are denied');
+        return showSnackBar(context,
+            'Location permissions were denied!'); //Future.error('Location permissions are denied');
       }
     }
 
@@ -186,14 +189,28 @@ class _AddPostState extends State<AddPost> {
       lat = pos.latitude;
       long = pos.longitude;
     });
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(pos.latitude, pos.longitude);
-    Placemark placemark = placemarks.first;
-    setState(() {
-      locationSet = true;
-      _locationCtrler.value = TextEditingValue(
-          text: '${placemark.administrativeArea}, ${placemark.country}');
-    });
+    //String locationDisplay = '';
+    if (!kIsWeb) {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(pos.latitude, pos.longitude);
+      Placemark placemark = placemarks.first;
+
+      String locationDisplay =
+          '${placemark.administrativeArea}, ${placemark.country}';
+
+      setState(() {
+        locationSet = true;
+        _locationCtrler.value = TextEditingValue(text: '$locationDisplay');
+      });
+    } else {
+      String locationDisplay = '$pos';
+
+      setState(() {
+        locationSet = true;
+        _locationCtrler.value = TextEditingValue(text: '$locationDisplay');
+      });
+    }
+
     //${placemark.thoroughfare},
   }
 
@@ -368,7 +385,7 @@ class _AddPostState extends State<AddPost> {
                           color: Colors.grey.shade700,
                         ),
                         prefixIconColor: Colors.white70,
-                        hintText: 'Add a caption...',
+                        hintText: 'Add a caption... (mandatory)',
                         hintStyle: TextStyle(
                           color: Colors.grey.shade700,
                           fontSize: 15,
@@ -436,9 +453,12 @@ class _AddPostState extends State<AddPost> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: ((isUploading) || (locationSet == false))
+                        onPressed: ((isUploading) ||
+                                (locationSet == false) ||
+                                (_descCtrler == ''))
                             ? null
                             : () {
+                                debugPrint('$_descCtrler');
                                 //print(locationSet);
                                 handleSubmit(
                                     userData['uid'],
