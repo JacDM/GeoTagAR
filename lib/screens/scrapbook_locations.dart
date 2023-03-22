@@ -20,10 +20,10 @@ class scrapBookLocations extends StatefulWidget {
 // ignore: camel_case_types
 class _scrapBookLocationsState extends State<scrapBookLocations> {
   final Completer<GoogleMapController> _controller = Completer();
-  static const LatLng sBook1 = LatLng(37.33500926, -122.03272188);
+  static const LatLng sBook1 = LatLng(25.1022, 55.1622);
+  //HWU = 25.1022° N, 55.1622° E
   static const LatLng sBook2 = LatLng(37.33429383, -122.06600055);
-  Future<Position> position =
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  Future<Position> position = Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   BitmapDescriptor sBookIcon = BitmapDescriptor.defaultMarker;
   late Map<String, dynamic> locations;
   //GoogleMapController myController;
@@ -96,7 +96,7 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
               )),
       body: GoogleMap(
         initialCameraPosition: const CameraPosition(
-          target: position,
+          target: sBook1,
           zoom: 10,
         ),
         markers: Set<Marker>.of(markers.values),

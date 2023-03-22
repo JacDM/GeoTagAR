@@ -14,6 +14,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:geotagar/ar/ar.dart';
 
 class ARLauncher extends StatefulWidget {
   @override
@@ -23,8 +24,8 @@ class ARLauncher extends StatefulWidget {
 class _ARLauncherState extends State<ARLauncher> {
   final double _initFabHeight = 120.0;
   double _fabHeight = 0;
-  double _panelHeightOpen = 0;
-  double _panelHeightClosed = 95.0;
+  double _panelHeightOpen = 10;
+  double _panelHeightClosed = 70.0;
 
   @override
   void initState() {
@@ -35,7 +36,7 @@ class _ARLauncherState extends State<ARLauncher> {
 
   @override
   Widget build(BuildContext context) {
-    _panelHeightOpen = MediaQuery.of(context).size.height * .80;
+    _panelHeightOpen = MediaQuery.of(context).size.height * 0.3;
 
     return Material(
       child: Stack(
@@ -48,7 +49,7 @@ class _ARLauncherState extends State<ARLauncher> {
             parallaxOffset: .5,
             body: _body(),
             panelBuilder: (sc) => _panel(sc),
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(18.0),
                 topRight: Radius.circular(18.0)),
             onPanelSlide: (double pos) => setState(() {
@@ -68,7 +69,7 @@ class _ARLauncherState extends State<ARLauncher> {
         child: ListView(
           controller: sc,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 12.0,
             ),
             Row(
@@ -78,37 +79,39 @@ class _ARLauncherState extends State<ARLauncher> {
                   width: 30,
                   height: 5,
                   decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                      color: Colors.blueGrey[900],
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12.0))),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 15.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              children: const <Widget>[
                 Text(
                   "TAG THE WORLD",
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
-                    fontSize: 16.0,
+                    fontSize: 33.0,
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 3.0,
+            const SizedBox(
+              height: 7.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _button("Create a post", Icons.create, Colors.blue),
-                _button("Find a Post", Icons.filter_hdr_outlined, Colors.red),
+                _button("Create a post", Icons.create, Colors.blue, "CRRoute"),
+                _button(
+                    "Find a Post", Icons.filter_hdr_outlined, Colors.red, "AR"),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 36.0,
             ),
             Container(
@@ -116,11 +119,11 @@ class _ARLauncherState extends State<ARLauncher> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Images",
+                  const Text("Images",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 12.0,
                   ),
                   Row(
@@ -145,14 +148,14 @@ class _ARLauncherState extends State<ARLauncher> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 36.0,
             ),
             Container(
               padding: const EdgeInsets.only(left: 24.0, right: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                children: const <Widget>[
                   Text("About",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -160,14 +163,14 @@ class _ARLauncherState extends State<ARLauncher> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
           ],
         ));
   }
 
-  Widget _button(String label, IconData icon, Color color) {
+  Widget _button(String label, IconData icon, Color color, String route) {
     return Column(
       children: <Widget>[
         Container(
@@ -176,15 +179,17 @@ class _ARLauncherState extends State<ARLauncher> {
             icon,
             color: Colors.white,
           ),
-          decoration:
-              BoxDecoration(color: color, shape: BoxShape.circle, boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.15),
-              blurRadius: 8.0,
-            )
-          ]),
+          decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.15),
+                  blurRadius: 8.0,
+                )
+              ]),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12.0,
         ),
         Text(label),
@@ -193,7 +198,7 @@ class _ARLauncherState extends State<ARLauncher> {
   }
 
   Widget _body() {
-    return GlobePage();
+    return const GlobePage();
   }
 }
 
@@ -238,7 +243,7 @@ class _GlobePageState extends State<GlobePage> {
         child: Stack(
           children: <Widget>[
             AnimatedPositioned(
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
               top: acceleration.y * bgMotionSensitivity,
               bottom: acceleration.y * -bgMotionSensitivity,
               right: acceleration.x * -bgMotionSensitivity,
@@ -252,13 +257,13 @@ class _GlobePageState extends State<GlobePage> {
               ),
             ),
             AnimatedPositioned(
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
               top: acceleration.y * planetMotionSensitivity,
               bottom: acceleration.y * planetMotionSensitivity,
               right: acceleration.x * planetMotionSensitivity,
               left: acceleration.x * planetMotionSensitivity,
               child: Align(
-                alignment: Alignment(0, -0.5),
+                alignment: const Alignment(0, -0.3),
                 child: Image.asset(
                   "assets/images/earth.png",
                   width: 350,
