@@ -203,7 +203,6 @@ class _AddPostState extends State<AddPost> {
         _locationCtrler.value = TextEditingValue(text: '$locationDisplay');
       });
     } else {
-
       String locationDisplay = '$pos';
 
       setState(() {
@@ -220,7 +219,7 @@ class _AddPostState extends State<AddPost> {
   @override
   Widget build(BuildContext context) {
     //final UserModel user = Provider.of<UserProvider>(context).getUser;
-    if (isLoading) { 
+    if (isLoading) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: const [
@@ -386,7 +385,7 @@ class _AddPostState extends State<AddPost> {
                           color: Colors.grey.shade700,
                         ),
                         prefixIconColor: Colors.white70,
-                        hintText: 'Add a caption...',
+                        hintText: 'Add a caption... (mandatory)',
                         hintStyle: TextStyle(
                           color: Colors.grey.shade700,
                           fontSize: 15,
@@ -454,9 +453,12 @@ class _AddPostState extends State<AddPost> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: ((isUploading) || (locationSet == false))
+                        onPressed: ((isUploading) ||
+                                (locationSet == false) ||
+                                (_descCtrler == ''))
                             ? null
                             : () {
+                                debugPrint('$_descCtrler');
                                 //print(locationSet);
                                 handleSubmit(
                                     userData['uid'],
