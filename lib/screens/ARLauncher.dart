@@ -107,8 +107,7 @@ class _ARLauncherState extends State<ARLauncher> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _button("Create a post", Icons.create, Colors.blue, "CRRoute"),
-                _button(
-                    "Find a Post", Icons.filter_hdr_outlined, Colors.red, "AR"),
+                _button("Find a Post", Icons.filter_hdr_outlined, Colors.red, "AR"),
               ],
             ),
             const SizedBox(

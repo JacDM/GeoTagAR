@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:geotagar/screens/ARLauncher.dart';
 import 'package:geotagar/screens/admin_pages/admin_profile.dart';
 import 'package:geotagar/screens/admin_pages/groups_page.dart';
 import 'package:geotagar/screens/discoverPages/discover.dart';
@@ -22,7 +21,7 @@ import '../screens/userAccountScreens/user_profile.dart';
 List<Widget> homeScreenItems = [
   Feed(uid: FirebaseAuth.instance.currentUser!.uid),
   const scrapBookLocations(),
-  ARLauncher(), //ARState(),
+  const CMRoute(), //ARState(),
   const DiscoverPage(),
   UserProfile(
     uid: FirebaseAuth.instance.currentUser!.uid,
