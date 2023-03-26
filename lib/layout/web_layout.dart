@@ -93,7 +93,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
           fit: BoxFit.cover,
         ),
       ),
-      child: (userData['isAdmin'])=='true' //userData['isAdmin']=='true')
+      child: (userData['isAdmin']) //userData['isAdmin']=='true')
           ? Scaffold(
               //admin
               appBar: AppBar(
@@ -123,20 +123,20 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
                   //   ),
                   //   onPressed: () => navigationTapped(2),
                   // ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.groups,
-                      color: _page == 2 ? Colors.green : Pallete.whiteColor,
-                    ),
-                    onPressed: () => navigationTapped(2),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.admin_panel_settings,
-                      color: _page == 3 ? Colors.green : Pallete.whiteColor,
-                    ),
-                    onPressed: () => navigationTapped(3),
-                  ),
+                  // IconButton(
+                  //   icon: Icon(
+                  //     Icons.groups,
+                  //     color: _page == 2 ? Colors.green : Pallete.whiteColor,
+                  //   ),
+                  //   onPressed: () => navigationTapped(2),
+                  // ),
+                  // IconButton(
+                  //   icon: Icon(
+                  //     Icons.admin_panel_settings,
+                  //     color: _page == 3 ? Colors.green : Pallete.whiteColor,
+                  //   ),
+                  //   onPressed: () => navigationTapped(3),
+                  // ),
                 ],
               ),
               body: PageView(
