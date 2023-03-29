@@ -116,7 +116,7 @@ class _FeedState extends State<Feed> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                      "images/replace.jpg",
+                      "assets/bg2.jpg",
                     ),
                     fit: BoxFit.cover,
                     alignment: Alignment(0, -_offset / 4),
