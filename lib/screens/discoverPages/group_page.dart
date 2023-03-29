@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 class GroupPage extends StatefulWidget {
   final String groupId;
+  final bool isAdmin;
 
-  const GroupPage({Key? key, required this.groupId}) : super(key: key);
+  const GroupPage({Key? key, required this.groupId, this.isAdmin = false})
+      : super(key: key);
 
   @override
   _GroupPageState createState() => _GroupPageState();
@@ -97,72 +99,12 @@ class _GroupPageState extends State<GroupPage> {
     }
   }
 
-//   Widget quizSquare(BuildContext context, String quizId, String imageUrl) {
-//   return FutureBuilder<List<Map<String, dynamic>>>(
-//     future: getQuizData(quizId),
-//     builder: (context, snapshot) {
-//       if (!snapshot.hasData) {
-//         return CircularProgressIndicator();
-//       }
-
-//       List<Map<String, dynamic>> quizData = snapshot.data!;
-
-//       return GestureDetector(
-//         onTap: () async {
-//           // ... (previous onTap code)
-//         },
-//         child: Container(
-//           width: MediaQuery.of(context).size.width * 0.4,
-//           height: MediaQuery.of(context).size.height * 0.2,
-//           decoration: BoxDecoration(
-//             image: DecorationImage(
-//               image: NetworkImage(imageUrl),
-//               fit: BoxFit.cover,
-//               colorFilter: ColorFilter.mode(
-//                 Colors.black.withOpacity(0.5),
-//                 BlendMode.dstATop,
-//               ),
-//             ),
-//             borderRadius: BorderRadius.circular(16),
-//             boxShadow: [
-//               BoxShadow(
-//                 color: Colors.black26,
-//                 offset: Offset(0, 2),
-//                 blurRadius: 4,
-//               ),
-//             ],
-//           ),
-//           child: Center(
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 Icon(
-//                   Icons.history,
-//                   color: Colors.white,
-//                   size: 48,
-//                 ),
-//                 Text(
-//                   'Quiz $quizId',
-//                   style: TextStyle(
-//                     fontSize: 20,
-//                     color: Colors.white,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       );
-//     },
-//   );
-// }
-
   Widget quizSquare(BuildContext context, String quizId) {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: getQuizData(quizId),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         List<Map<String, dynamic>> quizData = snapshot.data!;
