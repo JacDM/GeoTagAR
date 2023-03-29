@@ -146,25 +146,30 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                 style: const TextStyle(color: Colors.red),
               ),
             const SizedBox(height: 16),
-            const Text('Group Picture:'),
+            const Text('Group Picture:', style: TextStyle(color: Colors.white)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   icon: const Icon(Icons.camera_alt),
                   onPressed: () => _pickImage(ImageSource.gallery, true),
+                  color: Colors.white,
                 ),
                 if (_groupAvatar != null) Image.file(_groupAvatar!, height: 60),
               ],
             ),
             const SizedBox(height: 16),
-            const Text('Group Banner:'),
+            const Text(
+              'Group Banner:',
+              style: TextStyle(color: Colors.white),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   icon: const Icon(Icons.camera_alt),
                   onPressed: () => _pickImage(ImageSource.gallery, false),
+                  color: Colors.white,
                 ),
                 if (_groupBanner != null) Image.file(_groupBanner!, height: 60),
               ],
