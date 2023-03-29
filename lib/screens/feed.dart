@@ -65,6 +65,9 @@ class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final ScrollController scrollController = ScrollController();
+    double _offset = 0;
+
     if (isLoading) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -76,100 +79,139 @@ class _FeedState extends State<Feed> {
         ],
       );
     } else {
-      return Scaffold(
-        backgroundColor: width > 600 ? Pallete.whiteColor : Pallete.blackColor,
-        appBar: width > 600
-            ? null
-            : AppBar(
-                backgroundColor: Color.fromARGB(255, 29, 29, 29),
-                automaticallyImplyLeading: false,
-                centerTitle: true,
-                toolbarHeight: 90,
-                title: Row(
-                  children: [
-                    Image.asset(
-                      Constants.logoPathBlack,
-                      height: 100.0,
-                      width: 100.0,
-                    ),
-                    Text(
-                      'Hi ' + capitalize(userData["name"]) + '!',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontFamily: "ABeeZee",
+      return NotificationListener<ScrollUpdateNotification>(
+        onNotification: (notification) {
+          setState(() {
+            _offset += notification.scrollDelta!;
+          });
+          return true;
+        },
+        child: Scaffold(
+          appBar: width > 600
+              ? null
+              : AppBar(
+                  backgroundColor: Color.fromARGB(255, 29, 29, 29),
+                  automaticallyImplyLeading: false,
+                  centerTitle: true,
+                  toolbarHeight: 90,
+                  title: Row(
+                    children: [
+                      Image.asset(
+                        Constants.logoPathBlack,
+                        height: 100.0,
+                        width: 100.0,
                       ),
+                      Text(
+                        'Hi ' + capitalize(userData["name"]) + '!',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontFamily: "ABeeZee",
+                        ),
+                      ),
+                    ],
+                  )),
+          body: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      "images/replace.jpg",
                     ),
-                  ],
-                )),
-        body: FutureBuilder<List<String>>(
-          future: _getFollowingList(),
-          builder: (context, followingSnapshot) {
-            if (!followingSnapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final List<String> followingList = followingSnapshot.data!;
-            if (followingList.isEmpty) {
-              // show a message or return a Widget that tells the user to follow some users
-              return const Center(
-                child: Text(
-                  'Follow some users by visiting the discover page',
-                  style: TextStyle(color: Colors.grey),
+                    fit: BoxFit.cover,
+                    alignment: Alignment(0, -_offset / 4),
+                  ),
                 ),
-              );
-            } else {
-              return StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('posts')
-                    .where('uid', whereIn: [
-                  FirebaseAuth.instance.currentUser!.uid,
-                  ...followingList
-                ])
-//.orderBy('datePublished', descending: true)
-                    .snapshots(),
-                builder: (context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  } else if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (ctx, index) => Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: width > 600 ? width * 0.3 : 0,
-                          vertical: width > 600 ? 15 : 0,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment(0, 0.2),
+                    end: Alignment(0, 1),
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.8),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                child: FutureBuilder<List<String>>(
+                  future: _getFollowingList(),
+                  builder: (context, followingSnapshot) {
+                    if (!followingSnapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final List<String> followingList = followingSnapshot.data!;
+                    if (followingList.isEmpty) {
+                      // show a message or return a Widget that tells the user to follow some users
+                      return const Center(
+                        child: Text(
+                          'Follow some users by visiting the discover page',
+                          style: TextStyle(color: Colors.grey),
                         ),
-                        child: Stack(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 2, vertical: 2),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Color.fromARGB(180, 238, 238, 238),
+                      );
+                    } else {
+                      return StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('posts')
+                            .where('uid', whereIn: [
+                          FirebaseAuth.instance.currentUser!.uid,
+                          ...followingList
+                        ])
+                            //.orderBy('datePublished', descending: true)
+                            .snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            return ListView.builder(
+                              controller: scrollController,
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (ctx, index) => Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: width > 600 ? width * 0.3 : 0,
+                                  vertical: width > 600 ? 15 : 0,
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 2, vertical: 2),
+                                      // decoration: BoxDecoration(
+                                      //   borderRadius: BorderRadius.circular(5),
+                                      //   color:
+                                      //       Color.fromARGB(180, 110, 110, 110),
+                                      // ),
+                                      child: PostCard(
+                                        snap: snapshot.data!.docs[index].data(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              child: PostCard(
-                                snap: snapshot.data!.docs[index].data(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-                },
-              );
-            }
-          },
+                            );
+                          }
+                        },
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
