@@ -3,9 +3,11 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "7072e1c829156b858f3255cb8b705cab",
+  "assets/AssetManifest.json": "24832d6fffc45bde4b3b271d0d96dedb",
 "assets/assets/AR.jpg": "06490e826dfe34123c81338a133b5476",
 "assets/assets/AR1.jpg": "abf34865a20df645fb21fad44e97f5b5",
+"assets/assets/bg1.jpg": "24a3ba485adc18f8e505c1717b202cf3",
+"assets/assets/bg2.jpg": "9e93c7e6a6010067df43aa9d58e664fa",
 "assets/assets/discover1.jpg": "0530c08bfb001cc8c5ed9a4281f34b09",
 "assets/assets/flutter.png": "d21f1eecaeaab081ba7efec1721c0712",
 "assets/assets/fullscreen.jpg": "df5a33671f287160298604d3372b5d85",
@@ -19,6 +21,7 @@ const RESOURCES = {
 "assets/assets/images/lock_icon_map.png": "68402b26dbbcfb20e878aaf3329b8646",
 "assets/assets/images/LogIn_bg.png": "86d69a3b8d6a15fbdadaed7630d69e4d",
 "assets/assets/images/registerBG.png": "ba897040e9b4ab59c2e42f8464528454",
+"assets/assets/images/replace.jpg": "9162c04ca841f8baf8fea8e0ceac2c97",
 "assets/assets/images/spaceBg.jpg": "952d581455326b837deb50efca938b53",
 "assets/assets/images/UpscaledLogoBlack.png": "846212c592600c424c1b0f2ca4fa0256",
 "assets/assets/images/UpscaledLogoWhite.png": "8d1cea6ab01a26cd68500f237c9275f7",
@@ -33,7 +36,7 @@ const RESOURCES = {
 "assets/fonts/MaterialIcons-Regular.otf": "e7069dfd19b331be16bed984668fe080",
 "assets/fonts/Nunito-VariableFont_wght.ttf": "bc1d0d2571eadab780ef9f510fb6675c",
 "assets/fonts/OpenSans-VariableFont.ttf": "996d0154a25c63500dee2ae91e4f2ea7",
-"assets/NOTICES": "ee0bc0b32020006799d4790c47a5c9a1",
+"assets/NOTICES": "f91eefcc3199b7d8903c76206f94d435",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/font_awesome_flutter/lib/fonts/fa-brands-400.ttf": "b00363533ebe0bfdb95f3694d7647f6d",
 "assets/packages/font_awesome_flutter/lib/fonts/fa-regular-400.ttf": "0a94bab8e306520dc6ae14c2573972ad",
@@ -48,9 +51,9 @@ const RESOURCES = {
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "17e28aa50df23f78ce2d8de130bbfd35",
-"/": "17e28aa50df23f78ce2d8de130bbfd35",
-"main.dart.js": "36780d5252d6418c53e3c0d645b49cdc",
+"index.html": "e9da0490eea99fe514eeca8b6d8c22e3",
+"/": "e9da0490eea99fe514eeca8b6d8c22e3",
+"main.dart.js": "22efc64f027c9bb9ceefdf823528e65a",
 "manifest.json": "73d4615e699eb0edcad671a8e212e728",
 "version.json": "c64daf4c35b350f5d64f10b8e99b1e67"
 };
