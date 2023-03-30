@@ -44,6 +44,18 @@ class AuthServices {
       required String accountType}) async {
     String errorCheck = "Error signing up";
     try {
+      // Check if username or email already exist
+      final usernameSnapshot =
+          await _users.where('username', isEqualTo: username).get();
+      if (usernameSnapshot.docs.isNotEmpty) {
+        return "Account already exists for that username.";
+      }
+
+      final emailSnapshot = await _users.where('email', isEqualTo: email).get();
+      if (emailSnapshot.docs.isNotEmpty) {
+        return "Account already exists for that email.";
+      }
+
       if (email.isNotEmpty || password.isNotEmpty || username.isNotEmpty) {
         UserCredential userCredential = await _auth
             .createUserWithEmailAndPassword(email: email, password: password);

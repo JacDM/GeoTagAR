@@ -60,19 +60,23 @@ class _RegisterPageState extends State<RegisterPage> {
     if (passwordMatch()) {
       int age = calculateAge(_birthdateController.text.trim());
       if (age >= 18) {
-        await AuthServices()
-            .signUp(
-              email: email,
-              username: username,
-              password: _passwordTextController.text.trim(),
-              name: name,
-              gender: _selectedGender,
-              accountType: _selectedAccountType,
-              age: age,
-            )
-            .then((value) => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => LogIn()))
-                .onError((error, stackTrace) => print("#${error.toString()}")));
+        String signUpResult = await AuthServices().signUp(
+          email: email,
+          username: username,
+          password: _passwordTextController.text.trim(),
+          name: name,
+          gender: _selectedGender,
+          accountType: _selectedAccountType,
+          age: age,
+        );
+
+        if (signUpResult == "Signed up successfully") {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => LogIn()));
+        } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(signUpResult)));
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Usage is restricted to users below 18!")));
