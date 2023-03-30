@@ -414,7 +414,7 @@ class _AddPostState extends State<AddPost> {
                           color: Colors.grey.shade700,
                         ),
                         prefixIconColor: Colors.white70,
-                        hintText: 'Add a caption... (mandatory)',
+                        hintText: 'Add a caption...',
                         hintStyle: TextStyle(
                           color: Colors.grey.shade700,
                           fontSize: 15,
