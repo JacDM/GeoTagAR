@@ -343,13 +343,13 @@ class _PostCardState extends State<PostCard> {
                       ),
                     ),
                   ),
-                  IconButton(
-                      icon: const Icon(
-                        Icons.send_rounded,
-                        color: Colors.white,
-                        size: 25,
-                      ),
-                      onPressed: () {}),
+                  // IconButton(
+                  //     icon: const Icon(
+                  //       Icons.send_rounded,
+                  //       color: Colors.white,
+                  //       size: 25,
+                  //     ),
+                  //     onPressed: () {}),
                   Expanded(
                       child: Align(
                     alignment: Alignment.bottomRight,
