@@ -461,7 +461,7 @@ class _UserProfileState extends State<UserProfile> {
                   height: 10.0,
                 ),
                 DefaultTabController(
-                  length: 3,
+                  length: 2,
                   child: Column(
                     children: [
                       const TabBar(
@@ -470,7 +470,7 @@ class _UserProfileState extends State<UserProfile> {
                         tabs: [
                           Tab(text: 'Posts'),
                           Tab(text: 'Scrapbooks'),
-                          Tab(text: 'Tags'),
+                          //Tab(text: 'Tags'),
                         ],
                       ),
                       SizedBox(
@@ -647,17 +647,17 @@ class _UserProfileState extends State<UserProfile> {
                                 );
                               },
                             ),
-                            Container(
-                              child: const Center(
-                                child: Text(
-                                  "Tags functionality not implemented yet.",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // Container(
+                            //   child: const Center(
+                            //     child: Text(
+                            //       "Tags functionality not implemented yet.",
+                            //       style: TextStyle(
+                            //         fontSize: 16,
+                            //         color: Colors.grey,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
