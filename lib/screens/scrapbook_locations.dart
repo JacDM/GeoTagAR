@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:geocoding/geocoding.dart';
 import 'package:geotagar/screens/singlePost.dart';
 import 'package:geotagar/utils/post_card.dart';
@@ -12,7 +14,8 @@ import '../../core/constants/constants.dart';
 import '../utils/methods.dart';
 import 'package:geolocator/geolocator.dart';
 
-// ignore: camel_case_types
+import 'scrapbook_help.dart';
+
 class scrapBookLocations extends StatefulWidget {
   const scrapBookLocations({super.key});
 
@@ -20,59 +23,101 @@ class scrapBookLocations extends StatefulWidget {
   State<scrapBookLocations> createState() => _scrapBookLocationsState();
 }
 
-// ignore: camel_case_types
 class _scrapBookLocationsState extends State<scrapBookLocations> {
   final Completer<GoogleMapController> _controller = Completer();
   static const LatLng sBook1 = LatLng(25.102054, 55.162265);
-  // ignore: prefer_typing_uninitialized_variables
   var locationSnap;
   Future<Position> position =
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   BitmapDescriptor sBookIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor sBookIcon1 = BitmapDescriptor.defaultMarker;
   late Map<String, dynamic> locations;
-  //GoogleMapController myController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  final Map<MarkerId, Uint8List> _markerThumbnails = <MarkerId, Uint8List>{};
+  final Map<MarkerId, String> _markerCaptions = <MarkerId, String>{};
+  final Map<MarkerId, String> _markerUsernames = <MarkerId, String>{};
+  final Map<MarkerId, String> _markerPostId = <MarkerId, String>{};
 
-  void setCustomMarkerIcon() {
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, 'assets/images/lock_icon_map.png')
-        .then(
-      (icon) {
-        sBookIcon = icon;
-      },
-    );
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, 'assets/images/icon_map.png')
-        .then(
-      (icon) {
-        sBookIcon1 = icon;
-      },
-    );
+  Uint8List _thumbnailBytes = Uint8List(0);
+  String _caption = '';
+  String _username = '';
+  String _postId = '';
+
+  // New method to download the thumbnail
+  Future<Uint8List> getThumbnailFromUrl(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      } else {
+        throw Exception('Failed to load thumbnail');
+      }
+    } on SocketException {
+      throw Exception('No Internet connection');
+    } on HttpException {
+      throw Exception('Could not find the post');
+    } on FormatException {
+      throw Exception('Invalid URL');
+    }
   }
 
   void initMarker(specify, specifyId) async {
     var markerIdVal = specifyId;
     final MarkerId markerId = MarkerId(markerIdVal);
-    var postId = specify['postId'];
+
+    String postUrl = specify['postUrl']; // Get the postUrl from the document
+
+    // Download the thumbnail
+    Uint8List thumbnailBytes;
+    try {
+      thumbnailBytes = await getThumbnailFromUrl(postUrl);
+    } catch (e) {
+      // Handle exceptions and show a default image
+      ByteData defaultImageData =
+          await rootBundle.load('assets/images/default_thumbnail.png');
+      thumbnailBytes = defaultImageData.buffer.asUint8List();
+    }
+    _markerThumbnails[markerId] = thumbnailBytes;
+    _markerCaptions[markerId] = specify['description']; // Store the caption
+    _markerUsernames[markerId] = specify['username']; // Store the username
+    _markerPostId[markerId] = specify['postId']; // Store the username
+
+    //_markerThumbnails[markerId] = thumbnailBytes; // Store the thumbnail bytes
+
     final Marker marker = Marker(
       markerId: markerId,
       icon: specify['locked'] ? sBookIcon : sBookIcon1,
-      //icon: sBookIcon,
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (builder) =>
-                LayoutBuilder(builder: (context, constraints) {
-                  dispose();
-                  return SingleFeed(postID: postId);
-                })),
-      ),
+      onTap: () {
+        _onMarkerTap(markerId);
+      },
       position:
           LatLng(specify['location'].latitude, specify['location'].longitude),
     );
+
     setState(() {
       markers[markerId] = marker;
+      _caption = specify['description'];
+      _username = specify['username'];
+      _postId = specify['postId'];
+    });
+  }
+
+  void _onMarkerTap(MarkerId markerId) async {
+    final GoogleMapController controller = await _controller.future;
+    setState(() {
+      _thumbnailBytes = _markerThumbnails[markerId] ?? Uint8List(0);
+      _caption = _markerCaptions[markerId] ?? '';
+      _username = _markerUsernames[markerId] ?? '';
+      _postId = _markerPostId[markerId] ?? '';
+    });
+  }
+
+  void _onMapTap(LatLng position) {
+    setState(() {
+      _thumbnailBytes = Uint8List(0);
+      _caption = '';
+      _username = '';
+      _postId = '';
     });
   }
 
@@ -89,7 +134,6 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
 
   @override
   void initState() {
-    setCustomMarkerIcon();
     getMarkerData();
     super.initState();
   }
@@ -116,16 +160,48 @@ class _scrapBookLocationsState extends State<scrapBookLocations> {
                   ),
                 ],
               )),
-      body: GoogleMap(
-        initialCameraPosition: const CameraPosition(
-          target: sBook1,
-          zoom: 10,
-        ),
-        markers: Set<Marker>.of(markers.values),
-        myLocationEnabled: true,
-        onMapCreated: (GoogleMapController controller) {
-          controller = controller;
-        },
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              _onMapTap(LatLng(0, 0));
+            },
+            child: GoogleMap(
+              initialCameraPosition: const CameraPosition(
+                target: sBook1,
+                zoom: 10,
+              ),
+              markers: Set<Marker>.of(markers.values),
+              myLocationEnabled: true,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+          ),
+          Positioned(
+            top: 16,
+            left: 16,
+            child: GestureDetector(
+              onTap: () {
+                if (_thumbnailBytes.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SingleFeed(
+                        postID: _postId,
+                      ), // The new screen
+                    ),
+                  );
+                }
+              },
+              child: CustomInfoWindow(
+                caption: _caption,
+                username: _username,
+                thumbnailBytes: _thumbnailBytes,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
