@@ -21,6 +21,7 @@ import 'package:geotagar/services/firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geocode/geocode.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/methods.dart';
@@ -52,6 +53,7 @@ class _AddPostState extends State<AddPost> {
   double long = 15000;
   bool locationSet = false;
   bool normalmode = true;
+  bool locked = true;
 
   @override
   void initState() {
@@ -106,7 +108,7 @@ class _AddPostState extends State<AddPost> {
       if (lat != 15000 && long != 15000) {
         setState(() => locationSet = true);
         String res = await FireStoreMethods().uploadPost(_descCtrler.text,
-            file!, uid, username, profImage, lat, long, postId);
+            file!, uid, username, profImage, lat, long, postId, locked);
         if (res == 'success') {
           setState(() {
             isUploading = false;
@@ -265,7 +267,7 @@ class _AddPostState extends State<AddPost> {
                 children: <Widget>[
                   //the pic
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.43,
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Center(
                       child: AspectRatio(
@@ -286,8 +288,35 @@ class _AddPostState extends State<AddPost> {
                 ],
               ),
             ),
+
+            Container(
+                //color: Colors.red,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Row(
+                  children: [
+                    Text(
+                      'Lock post from being viewed publicly?',
+                      style: TextStyle(
+                          fontSize: 11,
+                          color: Color.fromARGB(255, 188, 185, 185)),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Switch(
+                          value: locked,
+                          activeColor: Color.fromARGB(255, 70, 0, 209),
+                          inactiveTrackColor: Colors.grey,
+                          onChanged: (bool value) {
+                            setState(() {
+                              locked = value;
+                            });
+                          }),
+                    )
+                  ],
+                )),
+
             SizedBox(
-              height: 20,
+              height: 33,
             ),
 
             Container(
@@ -449,7 +478,7 @@ class _AddPostState extends State<AddPost> {
                       const Visibility(
                         visible: (!kIsWeb),
                         child: SizedBox(
-                          width: 35,
+                          width: 25,
                         ),
                       ),
                       ElevatedButton(

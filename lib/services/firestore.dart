@@ -18,7 +18,8 @@ class FireStoreMethods {
       String profImage,
       double lat,
       double long,
-      String postId) async {
+      String postId,
+      bool locked) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
@@ -34,7 +35,8 @@ class FireStoreMethods {
         datePublished: DateTime.now(),
         postUrl: photoUrl,
         profImage: profImage,
-        location: GeoPoint(lat, long), locked: false,
+        location: GeoPoint(lat, long), 
+        locked: locked,
       );
       _firestore.collection('posts').doc(postId).set(post.toJson());
       res = "success";
