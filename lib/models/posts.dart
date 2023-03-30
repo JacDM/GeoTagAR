@@ -5,7 +5,7 @@ class Post {
   final String uid;
   final String username;
   final likes;
-  
+  final bool locked;
   final String postId;
   final DateTime datePublished;
   final String postUrl;
@@ -21,7 +21,8 @@ class Post {
     required this.datePublished,
     required this.postUrl,
     required this.profImage,
-    this.location = const GeoPoint(0, 0), 
+    required this.locked,
+    this.location = const GeoPoint(0, 0),
   });
 
   static Post fromSnap(DocumentSnapshot snap) {
@@ -36,8 +37,8 @@ class Post {
         username: snapshot["username"],
         postUrl: snapshot['postUrl'],
         profImage: snapshot['profImage'],
-        location: snapshot['location']
-        );
+        location: snapshot['location'],
+        locked: snapshot['locked']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +50,7 @@ class Post {
         "datePublished": datePublished,
         'postUrl': postUrl,
         'profImage': profImage,
-        'location': location
+        'location': location,
+        'locked': locked
       };
 }
