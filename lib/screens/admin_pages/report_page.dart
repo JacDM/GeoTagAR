@@ -53,6 +53,21 @@ class _ReportedPostsPageState extends State<ReportedPostsPage> {
             height: double.infinity,
             fit: BoxFit.cover,
           ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              color: Colors.grey.withOpacity(0.6),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  'Reasons: ${post['reasons']}',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
           if (isAdmin)
             Positioned(
               top: 8,
@@ -116,10 +131,10 @@ class _ReportedPostsPageState extends State<ReportedPostsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text
-      //   title: Text('Reported Posts'),
-      // ),
+// appBar: AppBar(
+// title: Text
+// title: Text('Reported Posts'),
+// ),
       body: isAdmin
           ? Padding(
               padding: const EdgeInsets.all(4.0),
