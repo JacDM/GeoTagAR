@@ -59,7 +59,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
         appBar: width > 600
             ? null
             : AppBar(
-                backgroundColor: Color.fromARGB(255, 29, 29, 29),
+                backgroundColor: Color.fromARGB(68, 0, 0, 0),
                 automaticallyImplyLeading: false,
                 centerTitle: true,
                 toolbarHeight: 90,
@@ -73,8 +73,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     const Text(
                       'Discover',
                       style: TextStyle(
-                        fontSize: 25,
-                        fontFamily: "ABeeZee",
+                        fontSize: 40,
+                        //fontFamily: "ABeeZee",
                       ),
                     ),
                   ],
@@ -249,9 +249,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                         horizontal: 12, vertical: 16),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
-                                      color: Colors.grey.shade200,
+                                      color: Color.fromARGB(55, 223, 223, 223),
                                     ),
-
                                     // Try fixing the length of the rectangle box and the circle icon which is exceeding its limits
                                     child: Row(
                                       children: [
@@ -276,8 +275,10 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                                 (snapshot.data! as dynamic)
                                                     .docs[index]['groupName'],
                                                 style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 16),
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 16,
+                                                    color: Colors.white),
                                               ),
                                               const SizedBox(height: 4),
                                               Text(
@@ -287,7 +288,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                                 style: const TextStyle(
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    fontSize: 12),
+                                                    fontSize: 12,
+                                                    color: Colors.white),
                                               ),
                                             ],
                                           ),
@@ -351,7 +353,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                           shape: BoxShape.circle,
                                           color: isSelected
                                               ? Colors.green
-                                              : Colors.blue,
+                                              : Color.fromARGB(255, 95, 95, 95),
                                         ),
                                         child: Icon(
                                           isSelected ? Icons.check : Icons.add,
