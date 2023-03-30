@@ -246,7 +246,7 @@ class _AddPostState extends State<AddPost> {
               color: Colors.white,
             ),
           ),
-          title: const Text('Post Memory'),
+          title: const Text('Post'),
           centerTitle: false,
         ),
         backgroundColor: bgcol,
