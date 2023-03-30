@@ -26,9 +26,4 @@ List<Widget> homeScreenItems = [
 
 List<Widget> webScreenItems = [
   ReportedPostsPage(uid: FirebaseAuth.instance.currentUser!.uid),
-  //const uSERSPage(),
-  const GroupsPage(), //ARState(),
-  // AdminProfile(
-  //   uid: FirebaseAuth.instance.currentUser!.uid,
-  // ),
 ];
